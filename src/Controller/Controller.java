@@ -27,11 +27,6 @@ public class Controller{
         home.setVisible(true);
     }
 
-
-
-
-
-
     //GETTER SETTER
     public Contatti getContatti() {
         return contatti;
