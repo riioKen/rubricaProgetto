@@ -11,7 +11,6 @@ public class Contatti {
     private String fisso; //Il numero di telefono fisso del contatto
 
 
-
     //COSTRUTTORE
     public Contatti(String nome, String cognome, String foto, String email, String indirizzo, String cellulare, String fisso) {
         this.nome = nome;
