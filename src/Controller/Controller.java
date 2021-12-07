@@ -7,12 +7,13 @@ import com.formdev.flatlaf.FlatDarculaLaf;
 import javax.swing.*;
 
 public class Controller{
-    //ATTRIBUTI
-    Homepage home;
-
+    //ATTRIBUTI CLASSI
     Contatti contatti;
     Messaging messaging;
     GruppoContatti gruppoContatti;
+
+    //ATTRIBUTI GUI
+    Homepage home;
 
 
     //MAIN
@@ -22,7 +23,7 @@ public class Controller{
 
     //COSTRUTTORE
     public Controller(){
-        FlatDarculaLaf.setup();
+
         home = new Homepage(this); //Serve a creare l'oggetto della GUI
         home.setVisible(true);
 
@@ -31,6 +32,15 @@ public class Controller{
 
 
     //GETTER SETTER
+
+    public Homepage getHome() {
+        return home;
+    }
+
+    public void setHome(Homepage home) {
+        this.home = home;
+    }
+
     public Contatti getContatti() {
         return contatti;
     }
