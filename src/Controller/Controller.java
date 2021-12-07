@@ -4,7 +4,6 @@ import CLASSI.*;
 import GUI.*;
 import com.formdev.flatlaf.FlatDarculaLaf;
 
-
 import javax.swing.*;
 
 public class Controller{
@@ -28,6 +27,8 @@ public class Controller{
         home.setVisible(true);
 
     }
+
+
 
     //GETTER SETTER
     public Contatti getContatti() {
