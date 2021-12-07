@@ -47,6 +47,7 @@
             </constraints>
             <properties>
               <text value=""/>
+              <toolTipText value="Switch Dark Mode - Light Mode"/>
             </properties>
           </component>
         </children>
