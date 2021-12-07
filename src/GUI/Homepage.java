@@ -64,12 +64,12 @@ public class Homepage extends JFrame {
 
 
     //TEMA SCURO SET BY DEFAULT
-    public void TemaScuro(){
+    public void TemaScuro(){        //SOLO TEMA SCURO: CAMBIARE LE ICONE. Attuali 24px Cambiare a quelle da 32px
         FlatDarculaLaf.setup();
         SwingUtilities.updateComponentTreeUI(homepage);
 
         try {
-            Image imgSwitchTema = ImageIO.read(new File("Immagini/imgTemaScuro.png")); //Da settare la dimensione (PRESI DI MISURA GIUSTA COSI DA NON
+            Image imgSwitchTema = ImageIO.read(new File("Immagini/imgTemaScuro.png")); //Da settare la dimensione delle ICONE (PRESI DI MISURA GIUSTA COSI DA NON
             btnSwitchTema.setIcon(new ImageIcon(imgSwitchTema));
         } catch (Exception e) {                                                                                //AVERE NECESSITA' PER IL MOMENTO)
             System.out.println("Icona btnTemaScuro non caricata");
