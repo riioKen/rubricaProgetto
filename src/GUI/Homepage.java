@@ -13,6 +13,8 @@ import java.io.File;
 
 
 public class Homepage extends JFrame {
+
+    //ATTRIBUTI
     private JButton btnCreaNuovoContatto;
     private JPanel homepage;
     private JButton btnEliminaContatto;
@@ -33,7 +35,7 @@ public class Homepage extends JFrame {
         setLocation(300, 300);
 
 
-        TemaScuro();
+        TemaScuro();  //INIZIALIZAZZIONE DEL TEMA SCURO BY DEFAULT
 
 
         //TIMER CHE FA DA SWITCH PER LA DARK MODE E LA LIGHT MODE
