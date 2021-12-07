@@ -2,18 +2,18 @@ package Controller;
 
 import CLASSI.*;
 import GUI.*;
-import com.formdev.flatlaf.FlatDarculaLaf;
 
 import javax.swing.*;
 
 public class Controller{
-    //ATTRIBUTI CLASSI
+
     Contatti contatti;
     Messaging messaging;
     GruppoContatti gruppoContatti;
 
-    //ATTRIBUTI GUI
-    Homepage home;
+
+    Homepage homepage;
+    CreaContatto creaContatto;
 
 
     //MAIN
@@ -24,21 +24,37 @@ public class Controller{
     //COSTRUTTORE
     public Controller(){
 
-        home = new Homepage(this); //Serve a creare l'oggetto della GUI
-        home.setVisible(true);
+        homepage = new Homepage(this); //Serve a creare l'oggetto della GUI
+        creaContatto = new CreaContatto(this);
+        homepage.setVisible(true);
 
+    }
+
+    //METODI
+    public void cambioFinestra(JFrame spegni, JFrame accendi){
+        spegni.setVisible(false);
+        accendi.setVisible(true);
     }
 
 
 
     //GETTER SETTER
 
-    public Homepage getHome() {
-        return home;
+
+    public CreaContatto getCreaContatto() {
+        return creaContatto;
     }
 
-    public void setHome(Homepage home) {
-        this.home = home;
+    public void setCreaContatto(CreaContatto creaContatto) {
+        this.creaContatto = creaContatto;
+    }
+
+    public Homepage getHomepage() {
+        return homepage;
+    }
+
+    public void setHomepage(Homepage homepage) {
+        this.homepage = homepage;
     }
 
     public Contatti getContatti() {

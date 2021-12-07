@@ -25,6 +25,7 @@ public class Homepage extends JFrame {
     Controller control;
 
 
+
     public Homepage(Controller controller) {
 
         control = controller; //Serve a linkare il controller al JPanel
@@ -60,6 +61,12 @@ public class Homepage extends JFrame {
             }
         });
 
+        btnCreaNuovoContatto.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                control.cambioFinestra(control.getHomepage(), control.getCreaContatto());
+            }
+        });
     }
 
 
@@ -131,7 +138,45 @@ public class Homepage extends JFrame {
         btnEliminaContatto.setFocusable(false);
     }
 
+    public JButton getBtnCreaNuovoContatto() {
+        return btnCreaNuovoContatto;
+    }
 
+    public void setBtnCreaNuovoContatto(JButton btnCreaNuovoContatto) {
+        this.btnCreaNuovoContatto = btnCreaNuovoContatto;
+    }
+
+    public JPanel getHomepage() {
+        return homepage;
+    }
+
+    public void setHomepage(JPanel homepage) {
+        this.homepage = homepage;
+    }
+
+    public JButton getBtnEliminaContatto() {
+        return btnEliminaContatto;
+    }
+
+    public void setBtnEliminaContatto(JButton btnEliminaContatto) {
+        this.btnEliminaContatto = btnEliminaContatto;
+    }
+
+    public JButton getBtnSwitchTema() {
+        return btnSwitchTema;
+    }
+
+    public void setBtnSwitchTema(JButton btnSwitchTema) {
+        this.btnSwitchTema = btnSwitchTema;
+    }
+
+    public Timer getTimer() {
+        return timer;
+    }
+
+    public void setTimer(Timer timer) {
+        this.timer = timer;
+    }
 }
 
 
