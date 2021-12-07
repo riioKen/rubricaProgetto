@@ -31,7 +31,7 @@ public class Homepage extends JFrame {
             System.out.println("Icona btnCreaNuovoContatto non caricata");
         }
 
-
+        //Modifica del JButton ********* TESTING **********
         try {
             Image imgEliminaContatto = ImageIO.read(new File("Immagini/imgEliminaContatto.png"));
             btnEliminaContatto.setIcon(new ImageIcon(imgEliminaContatto));
