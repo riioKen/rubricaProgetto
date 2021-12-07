@@ -21,6 +21,8 @@ public class CreaContatto extends JFrame{
     private JPanel creaContatto;
     private JButton svuotaCampiButton;
     private JButton confermaButton;
+    private JComboBox comboBox1;
+    private JComboBox comboBox2;
 
 
     Controller control;
