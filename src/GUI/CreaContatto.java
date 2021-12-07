@@ -3,6 +3,8 @@ package GUI;
 import Controller.Controller;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class CreaContatto extends JFrame{
     //ATTRIBUTI
@@ -23,6 +25,7 @@ public class CreaContatto extends JFrame{
     private JButton confermaButton;
     private JComboBox comboBox1;
     private JComboBox comboBox2;
+    private JButton button1;
 
 
     Controller control;
@@ -37,6 +40,12 @@ public class CreaContatto extends JFrame{
         setLocation(300, 300);
 
 
+        button1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                control.cambioFinestra(control.getCreaContatto(),control.getHomepage());
+            }
+        });
     }
 
     //GETTER SETTER
