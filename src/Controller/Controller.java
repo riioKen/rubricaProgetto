@@ -6,12 +6,14 @@ import GUI.*;
 import javax.swing.*;
 
 public class Controller{
-    //ATTRIBUTI
-    Homepage home;
 
     Contatti contatti;
     Messaging messaging;
     GruppoContatti gruppoContatti;
+
+
+    Homepage homepage;
+    CreaContatto creaContatto;
 
 
     //MAIN
@@ -21,13 +23,40 @@ public class Controller{
 
     //COSTRUTTORE
     public Controller(){
-        home = new Homepage(this); //Serve a creare l'oggetto della GUI
 
+        homepage = new Homepage(this); //Serve a creare l'oggetto della GUI
+        creaContatto = new CreaContatto(this);
+        homepage.setVisible(true);
 
-        home.setVisible(true);
     }
 
+    //METODI
+    public void cambioFinestra(JFrame spegni, JFrame accendi){
+        spegni.setVisible(false);
+        accendi.setVisible(true);
+    }
+
+
+
     //GETTER SETTER
+
+
+    public CreaContatto getCreaContatto() {
+        return creaContatto;
+    }
+
+    public void setCreaContatto(CreaContatto creaContatto) {
+        this.creaContatto = creaContatto;
+    }
+
+    public Homepage getHomepage() {
+        return homepage;
+    }
+
+    public void setHomepage(Homepage homepage) {
+        this.homepage = homepage;
+    }
+
     public Contatti getContatti() {
         return contatti;
     }
