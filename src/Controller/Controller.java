@@ -2,6 +2,8 @@ package Controller;
 
 import CLASSI.*;
 import GUI.*;
+import com.formdev.flatlaf.FlatDarculaLaf;
+
 
 import javax.swing.*;
 
@@ -21,10 +23,10 @@ public class Controller{
 
     //COSTRUTTORE
     public Controller(){
+        FlatDarculaLaf.setup();
         home = new Homepage(this); //Serve a creare l'oggetto della GUI
-
-
         home.setVisible(true);
+
     }
 
     //GETTER SETTER
