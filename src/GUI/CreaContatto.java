@@ -2,9 +2,14 @@ package GUI;
 
 import Controller.Controller;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
 
 public class CreaContatto extends JFrame{
     //ATTRIBUTI
@@ -25,7 +30,7 @@ public class CreaContatto extends JFrame{
     private JButton confermaButton;
     private JComboBox comboBox1;
     private JComboBox comboBox2;
-    private JButton button1;
+    private JLabel lbTastoHome;
 
 
     Controller control;
@@ -38,14 +43,25 @@ public class CreaContatto extends JFrame{
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(500,500);
         setLocation(300, 300);
+        TemaScuro();
 
-
-        button1.addActionListener(new ActionListener() {
+        lbTastoHome.addMouseListener(new MouseAdapter() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                control.cambioFinestra(control.getCreaContatto(),control.getHomepage());
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                control.cambioFinestra(control.getCreaContatto(), control.getHomepage());
+
             }
         });
+    }
+
+    public void TemaScuro() {
+        try{
+            ImageIcon tastoHomeScuro = new ImageIcon("Immagini/imgRitornoHomeFrecciaSCURO.png");
+            lbTastoHome.setIcon(tastoHomeScuro);
+        }catch (Exception e) {
+            System.out.println("L'immagine tastoHomeScuro non e' stata caricata correttamente");
+        }
     }
 
     //GETTER SETTER
