@@ -15,7 +15,6 @@ public class Controller{
     Homepage homepage;
     CreaContatto creaContatto;
 
-
     //MAIN
     public static void main(String[] args){
         Controller controller = new Controller();
