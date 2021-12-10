@@ -1,5 +1,7 @@
 package CLASSI;
 
+import java.util.ArrayList;
+
 public class Contatti {
     //ATTRIBUTI
     private String nome; //Il nome del contatto
@@ -9,6 +11,8 @@ public class Contatti {
     private String indirizzo; //L'indirizzo di casa del contatto
     private String cellulare; //Il numero di celullare del contatto
     private String fisso; //Il numero di telefono fisso del contatto
+    private String whatsapp;
+
 
 
     //COSTRUTTORE
@@ -20,11 +24,23 @@ public class Contatti {
         this.indirizzo = indirizzo;
         this.cellulare = cellulare;
         this.fisso = fisso;
+
+    }
+
+    public Contatti() {
+
     }
 
 
-
     //GETTER SETTER
+
+    public String getWhatsapp() {
+        return whatsapp;
+    }
+
+    public void setWhatsapp(String whatsapp) {
+        this.whatsapp = whatsapp;
+    }
     public String getNome() {
         return nome;
     }
