@@ -19,10 +19,12 @@ public class Homepage extends JFrame {
     private JPanel homepage;
     private JButton btnEliminaContatto;
     private JButton btnSwitchTema;
+    private JButton stampaListaContattiButton;
 
     private Timer timer;
 
     Controller control;
+
 
 
 
@@ -46,7 +48,6 @@ public class Homepage extends JFrame {
                 if (timer == null) {
                     timer = new Timer(100, new ActionListener() {
                         public void actionPerformed(ActionEvent event) {
-
                         }
                     });
                     timer.start();
@@ -67,11 +68,17 @@ public class Homepage extends JFrame {
                 control.cambioFinestra(control.getHomepage(), control.getCreaContatto());
             }
         });
+        stampaListaContattiButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CreaContatto.stampaProva();
+            }
+        });
     }
 
 
     //TEMA SCURO SET BY DEFAULT
-    public void TemaScuro(){        //SOLO TEMA SCURO: CAMBIARE LE ICONE. Attuali 24px Cambiare a quelle da 32px
+    public void TemaScuro(){
         FlatDarculaLaf.setup();
         SwingUtilities.updateComponentTreeUI(homepage);
 

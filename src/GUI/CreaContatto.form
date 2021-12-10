@@ -125,7 +125,7 @@
               <text value="Whatsapp"/>
             </properties>
           </component>
-          <component id="4f77d" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
+          <component id="4f77d" class="javax.swing.JComboBox" binding="cbWhatsapp">
             <constraints/>
             <properties>
               <model>
@@ -142,7 +142,7 @@
               <text value="Telegram"/>
             </properties>
           </component>
-          <component id="4eb55" class="javax.swing.JComboBox" binding="comboBox2" default-binding="true">
+          <component id="4eb55" class="javax.swing.JComboBox" binding="cbTelegram">
             <constraints/>
             <properties>
               <model>
