@@ -1,15 +1,15 @@
 package GUI;
 
-import CLASSI.Contatti;
 import Controller.Controller;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Objects;
 
 public class CreaContatto extends JFrame{
     //ATTRIBUTI
@@ -28,17 +28,13 @@ public class CreaContatto extends JFrame{
     private JPanel creaContatto;
     private JButton svuotaCampiButton;
     private JButton confermaButton;
-    private JComboBox cbWhatsapp;
-    private JComboBox cbTelegram;
+    private JComboBox comboBox1;
+    private JComboBox comboBox2;
     private JLabel lbTastoHome;
 
 
     Controller control;
     Homepage homepage;
-    Contatti contatti = new Contatti();
-
-    //Arraylist che contiene i nuovi dati inseriti dalla GUI CreaContatti
-    static ArrayList<Contatti> insContatti = new ArrayList<>();
 
     public CreaContatto(Controller controller){
 
@@ -57,58 +53,6 @@ public class CreaContatto extends JFrame{
 
             }
         });
-        
-        //Inserimento dei dati del contatto all'interno dell'Arraylist "insContatti"
-        confermaButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                contatti.setNome(txtNome.getText());
-                contatti.setCognome(txtCognome.getText());
-                contatti.setEmail(txtEmail.getText());
-                contatti.setCellulare(txtCellulare.getText());
-                contatti.setFisso(txtFisso.getText());
-                contatti.setIndirizzo(txtIndirizzo.getText());
-                contatti.setWhatsapp(Objects.requireNonNull(cbWhatsapp.getSelectedItem()).toString()); //Objects.requireNonNull necessario in caso di valore NULL all'interno della CB
-
-                insContatti.add(contatti);
-
-                txtNome.setText("");
-                txtCognome.setText("");
-                txtCellulare.setText("");
-                txtFisso.setText("");
-                txtEmail.setText("");
-                txtIndirizzo.setText("");
-
-            }
-        });
-
-        svuotaCampiButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                txtNome.setText("");
-                txtCognome.setText("");
-                txtCellulare.setText("");
-                txtFisso.setText("");
-                txtEmail.setText("");
-                txtIndirizzo.setText("");
-            }
-        });
-
-
-    }
-
-    public CreaContatto() {
-
-
-    }
-
-    public static void stampaProva(){
-        int i = 0;
-        while(i < insContatti.size()){
-            System.out.println("Stampa contatto N°"+ (i+1));
-            System.out.println(insContatti.get(i).getNome() + "\n" + insContatti.get(i).getCognome() + "\n" + insContatti.get(i).getCellulare() + "\n" + insContatti.get(i).getFisso() +"\n" + insContatti.get(i).getEmail() + "\n" + insContatti.get(i).getIndirizzo() +"\n"+ insContatti.get(i).getWhatsapp());
-            i++;
-        }
     }
 
     public void TemaScuro() {
@@ -121,46 +65,6 @@ public class CreaContatto extends JFrame{
     }
 
     //GETTER SETTER
-
-    public JButton getSvuotaCampiButton() {
-        return svuotaCampiButton;
-    }
-
-    public void setSvuotaCampiButton(JButton svuotaCampiButton) {
-        this.svuotaCampiButton = svuotaCampiButton;
-    }
-
-    public JButton getConfermaButton() {
-        return confermaButton;
-    }
-
-    public void setConfermaButton(JButton confermaButton) {
-        this.confermaButton = confermaButton;
-    }
-
-    public JComboBox getCbWhatsapp() {
-        return cbWhatsapp;
-    }
-
-    public void setCbWhatsapp(JComboBox cbWhatsapp) {
-        this.cbWhatsapp = cbWhatsapp;
-    }
-
-    public JComboBox getCbTelegram() {
-        return cbTelegram;
-    }
-
-    public void setCbTelegram(JComboBox cbTelegram) {
-        this.cbTelegram = cbTelegram;
-    }
-
-    public JLabel getLbTastoHome() {
-        return lbTastoHome;
-    }
-
-    public void setLbTastoHome(JLabel lbTastoHome) {
-        this.lbTastoHome = lbTastoHome;
-    }
 
     public JTextField getTxtNome() {
         return txtNome;
