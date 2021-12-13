@@ -1,13 +1,10 @@
-package GUI;
+package Gui;
 
-import CLASSI.Contatti;
+import Classi.Contatti;
 import Controller.Controller;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -34,8 +31,8 @@ public class CreaContatto extends JFrame{
 
 
     Controller control;
-    Homepage homepage;
-    Contatti contatti = new Contatti();
+    Homepage homepage = new Homepage();
+    Contatti contatti;
 
     //Arraylist che contiene i nuovi dati inseriti dalla GUI CreaContatti
     static ArrayList<Contatti> insContatti = new ArrayList<>();
@@ -62,6 +59,7 @@ public class CreaContatto extends JFrame{
         confermaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                contatti = new Contatti();
                 contatti.setNome(txtNome.getText());
                 contatti.setCognome(txtCognome.getText());
                 contatti.setEmail(txtEmail.getText());
@@ -71,6 +69,8 @@ public class CreaContatto extends JFrame{
                 contatti.setWhatsapp(Objects.requireNonNull(cbWhatsapp.getSelectedItem()).toString()); //Objects.requireNonNull necessario in caso di valore NULL all'interno della CB
 
                 insContatti.add(contatti);
+
+                //homepage.inserimentoContattiLista();
 
                 txtNome.setText("");
                 txtCognome.setText("");

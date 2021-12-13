@@ -1,6 +1,4 @@
-package CLASSI;
-
-import java.util.ArrayList;
+package Classi;
 
 public class Contatti {
     //ATTRIBUTI

@@ -1,4 +1,4 @@
-package CLASSI;
+package Classi;
 
 
 public class Messaging {

@@ -1,7 +1,7 @@
 package Controller;
 
-import CLASSI.*;
-import GUI.*;
+import Classi.*;
+import Gui.*;
 
 import javax.swing.*;
 

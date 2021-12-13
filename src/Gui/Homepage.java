@@ -1,5 +1,6 @@
-package GUI;
+package Gui;
 
+import Classi.Contatti;
 import Controller.*;
 import com.formdev.flatlaf.FlatDarculaLaf;
 import com.formdev.flatlaf.FlatLightLaf;
@@ -20,10 +21,13 @@ public class Homepage extends JFrame {
     private JButton btnEliminaContatto;
     private JButton btnSwitchTema;
     private JButton stampaListaContattiButton;
+    private JScrollPane JScrollBarListaContatti;
+    private JPanel paneBase;
 
     private Timer timer;
 
     Controller control;
+    Contatti contatti = new Contatti();
 
 
 
@@ -68,13 +72,80 @@ public class Homepage extends JFrame {
                 control.cambioFinestra(control.getHomepage(), control.getCreaContatto());
             }
         });
-        stampaListaContattiButton.addActionListener(new ActionListener() {
+
+
+
+
+        //CERCHERO' DI COMMENTARE IL CODICE QUANTO MEGLIO
+        stampaListaContattiButton.addActionListener(new ActionListener() { //Per il momento mi accontento che la rubrica venga aggiornata dopo la pressione di un tasto "aggiorna"
+            int i = 0;
+            int j = 1;
             @Override
             public void actionPerformed(ActionEvent e) {
-                CreaContatto.stampaProva();
+                while(i  < CreaContatto.insContatti.size()){ //Scorro un ArrayList dove sono contenuti i dati di ogni contatto
+
+                    JPanel paneLista = new JPanel(); //L'intenzione è quella di creare dinamicamente un JPanel dove successivamente si andrà ad inserire il JButton collegato ad uno specifico elemento dell'ArrayList
+                    paneLista.setLayout(new GridLayout(0,1)); //Setto il layout, il flow mi sembra indicato in quanto inizia in maniera centrale ad aggiungere i componenti
+                    JButton btnSchedaContatto = new JButton(); //Creazione del JButton che sarà poi collegato ad uno specifico elemento dell'ArrayList
+                    btnSchedaContatto.setText(CreaContatto.insContatti.get(i).getNome() +" "+ CreaContatto.insContatti.get(i).getCognome()); //Per il momento mi accontento solo di dargli queste informazioni al JButton
+                    paneLista.add(btnSchedaContatto); //Aggiungo il JButton al JPanel
+                    paneBase.setLayout(new GridLayout(j,0));
+                    paneBase.add(paneLista);
+                    validate();
+                    i++;
+                    j++;
+                }
             }
         });
     }
+    /*TO DO
+   Aggiungere accanto al nome l'icona di quale fornitore ha "Whatsapp oppure Telegram o entrambi"
+     */
+
+    public Homepage() {
+
+    }
+
+    /*CODICE DA TENERE DA PARTE IN CASO DI NECESSITA'
+    stampaListaContattiButton.addActionListener(new ActionListener() { //Per il momento mi accontento che la rubrica venga aggiornata dopo la pressione di un tasto "aggiorna"
+            int i = 0;
+            int j = 1;
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                while(i  < CreaContatto.insContatti.size()){ //Scorro un ArrayList dove sono contenuti i dati di ogni contatto
+
+                    JPanel paneLista = new JPanel(); //L'intenzione è quella di creare dinamicamente un JPanel dove successivamente si andrà ad inserire il JButton collegato ad uno specifico elemento dell'ArrayList
+                    //paneLista.setLayout(new GridLayout(0,1)); //Setto il layout, il flow mi sembra indicato in quanto inizia in maniera centrale ad aggiungere i componenti
+                    paneLista.setLayout(new BorderLayout());
+                    JButton btnSchedaContatto = new JButton(); //Creazione del JButton che sarà poi collegato ad uno specifico elemento dell'ArrayList
+                    btnSchedaContatto.setText(CreaContatto.insContatti.get(i).getNome() +" "+ CreaContatto.insContatti.get(i).getCognome()); //Per il momento mi accontento solo di dargli queste informazioni al JButton
+                    paneLista.add(btnSchedaContatto, BorderLayout.NORTH); //Aggiungo il JButton al JPanel
+                    paneBase.setLayout(new GridLayout(j,0));
+                    btnSchedaContatto.setPreferredSize(new Dimension(200,50));
+                    paneBase.add(paneLista);
+                    validate();
+                    i++;
+                    j++;
+                }
+            }
+        });
+    */
+
+
+    //****************************** CODICE NON PIU NECESSARIO ******************************
+    /*public void inserimentoContattiLista(){
+
+            JPanel paneLista = new JPanel(); //L'intenzione è quella di creare dinamicamente un JPanel dove successivamente si andrà ad inserire il JButton collegato ad uno specifico elemento dell'ArrayList
+            paneLista.setLayout(new FlowLayout()); //Setto il layout, il flow mi sembra indicato in quanto inizia in maniera centrale ad aggiungere i componenti
+            JButton btnSchedaContatto = new JButton(); //Creazione del JButton che sarà poi collegato ad uno specifico elemento dell'ArrayList
+            btnSchedaContatto.setText(contatti.getNome() + " " + contatti.getCognome()); //Per il momento mi accontento solo di dargli queste informazioni al JButton
+            paneLista.add(btnSchedaContatto); //Aggiungo il JButton al JPanel
+            paneBase.add(paneLista);
+            validate();
+
+    }*/
+
+
 
 
     //TEMA SCURO SET BY DEFAULT

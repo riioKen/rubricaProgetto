@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="GUI.Homepage">
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="Gui.Homepage">
   <grid id="27dc6" binding="homepage" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
       <xy x="47" y="32" width="451" height="473"/>
@@ -89,6 +89,30 @@
         <properties/>
         <border type="none"/>
         <children/>
+      </grid>
+      <grid id="a74a2" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints border-constraint="Center"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <scrollpane id="7c568" binding="JScrollBarListaContatti">
+            <constraints border-constraint="Center"/>
+            <properties>
+              <autoscrolls value="false"/>
+              <enabled value="true"/>
+              <horizontalScrollBarPolicy value="31"/>
+            </properties>
+            <border type="etched" title="Lista dei Contatti"/>
+            <children>
+              <grid id="70c31" binding="paneBase" layout-manager="GridBagLayout">
+                <constraints/>
+                <properties/>
+                <border type="none"/>
+                <children/>
+              </grid>
+            </children>
+          </scrollpane>
+        </children>
       </grid>
     </children>
   </grid>
