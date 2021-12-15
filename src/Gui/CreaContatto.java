@@ -40,11 +40,13 @@ public class CreaContatto extends JFrame{
     public CreaContatto(Controller controller){
 
         control = controller;
+
         setContentPane(creaContatto);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(500,500);
         setLocation(300, 300);
-        TemaScuro();
+
+        TemaScuro(); //SET Tema scuro By DEFAULT
 
         lbTastoHome.addMouseListener(new MouseAdapter() {
             @Override
@@ -59,7 +61,11 @@ public class CreaContatto extends JFrame{
         confermaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+<<<<<<< HEAD
                popolamentoArrayList();
+=======
+                insContattoArrayList();
+>>>>>>> parent of ffed0de (Revert "Risolto "PARZIALMENTE" problema visualizzazione della lista contatti")
             }
         });
 
@@ -79,8 +85,14 @@ public class CreaContatto extends JFrame{
 
     }
 
+<<<<<<< HEAD
     //METODI
     public void popolamentoArrayList(){
+=======
+   //METODI
+
+    public void insContattoArrayList(){
+>>>>>>> parent of ffed0de (Revert "Risolto "PARZIALMENTE" problema visualizzazione della lista contatti")
         contatti = new Contatti();
         contatti.setNome(txtNome.getText());
         contatti.setCognome(txtCognome.getText());
@@ -92,13 +104,21 @@ public class CreaContatto extends JFrame{
 
         insContatti.add(contatti);
 
+<<<<<<< HEAD
+=======
+
+        //Svuotamento dei campo dopo inserimento
+>>>>>>> parent of ffed0de (Revert "Risolto "PARZIALMENTE" problema visualizzazione della lista contatti")
         txtNome.setText("");
         txtCognome.setText("");
         txtCellulare.setText("");
         txtFisso.setText("");
         txtEmail.setText("");
         txtIndirizzo.setText("");
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of ffed0de (Revert "Risolto "PARZIALMENTE" problema visualizzazione della lista contatti")
     }
 
     public void svuotaCampi(){

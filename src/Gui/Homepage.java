@@ -18,9 +18,10 @@ public class Homepage extends JFrame {
     //ATTRIBUTI
     private JButton btnCreaNuovoContatto;
     private JPanel homepage;
+    private JPanel cardHomepage;
     private JButton btnEliminaContatto;
     private JButton btnSwitchTema;
-    private JButton stampaListaContattiButton;
+    private JButton btnStampaListaContatti;
     private JScrollPane JScrollBarListaContatti;
     private JPanel paneBase;
 
@@ -28,7 +29,7 @@ public class Homepage extends JFrame {
 
     Controller control;
     Contatti contatti = new Contatti();
-
+    CreaContatto guiCreaNuovoContatto;
 
 
 
@@ -36,7 +37,12 @@ public class Homepage extends JFrame {
 
         control = controller; //Serve a linkare il controller al JPanel
         setTitle("Homepage");
-        setContentPane(homepage);
+
+        guiCreaNuovoContatto = new CreaContatto();
+        cardHomepage = new JPanel();
+        cardHomepage.setLayout(new CardLayout());
+        cardHomepage.add(homepage);
+        setContentPane(cardHomepage);
         setSize(500,500);
         setDefaultCloseOperation(EXIT_ON_CLOSE); //Serve a terminare il programma quando si preme la X
         setLocation(300, 300);
@@ -45,13 +51,20 @@ public class Homepage extends JFrame {
         TemaScuro();  //INIZIALIZAZZIONE DEL TEMA SCURO BY DEFAULT
 
 
+
+
         //TIMER CHE FA DA SWITCH PER LA DARK MODE E LA LIGHT MODE
         btnSwitchTema.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+<<<<<<< HEAD
                 timerSwitchTema();
+=======
+                switchTemi();
+>>>>>>> parent of ffed0de (Revert "Risolto "PARZIALMENTE" problema visualizzazione della lista contatti")
             }
         });
+
 
         btnCreaNuovoContatto.addActionListener(new ActionListener() {
             @Override
@@ -60,7 +73,11 @@ public class Homepage extends JFrame {
             }
         });
 
+<<<<<<< HEAD
         stampaListaContattiButton.addActionListener(new ActionListener() { //Per il momento mi accontento che la rubrica venga aggiornata dopo la pressione di un tasto "aggiorna"
+=======
+        btnStampaListaContatti.addActionListener(new ActionListener() { //Per il momento mi accontento che la rubrica venga aggiornata dopo la pressione di un tasto "aggiorna"
+>>>>>>> parent of ffed0de (Revert "Risolto "PARZIALMENTE" problema visualizzazione della lista contatti")
             @Override
             public void actionPerformed(ActionEvent e) {
                 insContattiRubrica();
@@ -68,14 +85,41 @@ public class Homepage extends JFrame {
         });
     }
 
+<<<<<<< HEAD
+=======
+    //COSTRUTTORE VUOTO
+    public Homepage() {
+>>>>>>> parent of ffed0de (Revert "Risolto "PARZIALMENTE" problema visualizzazione della lista contatti")
 
 
+<<<<<<< HEAD
     //COSTRUTTORE VUOTO
     public Homepage() {
 
     }
 
     //METODI
+=======
+
+    //METODI
+    public void switchTemi(){
+        if (timer == null) {
+            timer = new Timer(100, new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                }
+            });
+            timer.start();
+            TemaChiaro();
+        } else if (timer.isRunning()) {
+            timer.stop();
+            TemaScuro();
+        } else {
+            timer.start();
+            TemaChiaro();
+        }
+    }
+
+>>>>>>> parent of ffed0de (Revert "Risolto "PARZIALMENTE" problema visualizzazione della lista contatti")
     public void insContattiRubrica(){
         int i = 0;
         int j = 1;
@@ -94,6 +138,7 @@ public class Homepage extends JFrame {
         }
     }
 
+<<<<<<< HEAD
     public void timerSwitchTema(){
         if (timer == null) {
             timer = new Timer(100, new ActionListener() {
@@ -110,12 +155,30 @@ public class Homepage extends JFrame {
             TemaChiaro();
         }
     }
+=======
+    //FUNZIONI DI PROVA CARDLAYOUT
+    /*
+    btnCreaNuovoContatto.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardHomepage.removeAll();
+                cardHomepage.repaint();
+                cardHomepage.revalidate();
 
+                cardHomepage.add(newContact.getCreaContatto());
+                cardHomepage.repaint();
+                cardHomepage.revalidate();
+
+>>>>>>> parent of ffed0de (Revert "Risolto "PARZIALMENTE" problema visualizzazione della lista contatti")
+
+            }
+        });
+     */
 
     //TEMA SCURO SET BY DEFAULT
     public void TemaScuro(){
         FlatDarculaLaf.setup();
-        SwingUtilities.updateComponentTreeUI(homepage);
+        SwingUtilities.updateComponentTreeUI(cardHomepage);
 
         try {
             Image imgSwitchTema = ImageIO.read(new File("Immagini/imgTemaScuro.png")); //Da settare la dimensione delle ICONE (PRESI DI MISURA GIUSTA COSI DA NON
@@ -149,7 +212,7 @@ public class Homepage extends JFrame {
 
 
         FlatLightLaf.setup();
-        SwingUtilities.updateComponentTreeUI(homepage);     //Serve a fare il refresh dei componenti a runtime (UTILE PER DARK MODE TO LIGHT)
+        SwingUtilities.updateComponentTreeUI(cardHomepage);     //Serve a fare il refresh dei componenti a runtime (UTILE PER DARK MODE TO LIGHT)
 
 
         try {
