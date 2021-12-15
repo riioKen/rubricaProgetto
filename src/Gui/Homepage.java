@@ -58,7 +58,11 @@ public class Homepage extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 <<<<<<< HEAD
+<<<<<<< HEAD
                 timerSwitchTema();
+=======
+                switchTemi();
+>>>>>>> parent of ffed0de (Revert "Risolto "PARZIALMENTE" problema visualizzazione della lista contatti")
 =======
                 switchTemi();
 >>>>>>> parent of ffed0de (Revert "Risolto "PARZIALMENTE" problema visualizzazione della lista contatti")
@@ -74,7 +78,11 @@ public class Homepage extends JFrame {
         });
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         stampaListaContattiButton.addActionListener(new ActionListener() { //Per il momento mi accontento che la rubrica venga aggiornata dopo la pressione di un tasto "aggiorna"
+=======
+        btnStampaListaContatti.addActionListener(new ActionListener() { //Per il momento mi accontento che la rubrica venga aggiornata dopo la pressione di un tasto "aggiorna"
+>>>>>>> parent of ffed0de (Revert "Risolto "PARZIALMENTE" problema visualizzazione della lista contatti")
 =======
         btnStampaListaContatti.addActionListener(new ActionListener() { //Per il momento mi accontento che la rubrica venga aggiornata dopo la pressione di un tasto "aggiorna"
 >>>>>>> parent of ffed0de (Revert "Risolto "PARZIALMENTE" problema visualizzazione della lista contatti")
@@ -86,6 +94,7 @@ public class Homepage extends JFrame {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     //COSTRUTTORE VUOTO
     public Homepage() {
@@ -93,13 +102,18 @@ public class Homepage extends JFrame {
 
 
 <<<<<<< HEAD
+=======
+>>>>>>> parent of ffed0de (Revert "Risolto "PARZIALMENTE" problema visualizzazione della lista contatti")
     //COSTRUTTORE VUOTO
     public Homepage() {
 
     }
 
+<<<<<<< HEAD
     //METODI
 =======
+=======
+>>>>>>> parent of ffed0de (Revert "Risolto "PARZIALMENTE" problema visualizzazione della lista contatti")
 
     //METODI
     public void switchTemi(){
@@ -119,6 +133,9 @@ public class Homepage extends JFrame {
         }
     }
 
+<<<<<<< HEAD
+>>>>>>> parent of ffed0de (Revert "Risolto "PARZIALMENTE" problema visualizzazione della lista contatti")
+=======
 >>>>>>> parent of ffed0de (Revert "Risolto "PARZIALMENTE" problema visualizzazione della lista contatti")
     public void insContattiRubrica(){
         int i = 0;
@@ -139,6 +156,7 @@ public class Homepage extends JFrame {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     public void timerSwitchTema(){
         if (timer == null) {
             timer = new Timer(100, new ActionListener() {
@@ -156,6 +174,8 @@ public class Homepage extends JFrame {
         }
     }
 =======
+=======
+>>>>>>> parent of ffed0de (Revert "Risolto "PARZIALMENTE" problema visualizzazione della lista contatti")
     //FUNZIONI DI PROVA CARDLAYOUT
     /*
     btnCreaNuovoContatto.addActionListener(new ActionListener() {
