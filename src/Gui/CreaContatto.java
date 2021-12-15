@@ -63,7 +63,11 @@ public class CreaContatto extends JFrame{
             public void actionPerformed(ActionEvent e) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                popolamentoArrayList();
+=======
+                insContattoArrayList();
+>>>>>>> parent of ffed0de (Revert "Risolto "PARZIALMENTE" problema visualizzazione della lista contatti")
 =======
                 insContattoArrayList();
 >>>>>>> parent of ffed0de (Revert "Risolto "PARZIALMENTE" problema visualizzazione della lista contatti")
@@ -91,8 +95,14 @@ public class CreaContatto extends JFrame{
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     //METODI
     public void popolamentoArrayList(){
+=======
+   //METODI
+
+    public void insContattoArrayList(){
+>>>>>>> parent of ffed0de (Revert "Risolto "PARZIALMENTE" problema visualizzazione della lista contatti")
 =======
    //METODI
 
@@ -114,6 +124,7 @@ public class CreaContatto extends JFrame{
 
         insContatti.add(contatti);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -139,12 +150,19 @@ public class CreaContatto extends JFrame{
     }
 
     public void svuotaCampi(){
+=======
+
+        //Svuotamento dei campo dopo inserimento
+>>>>>>> parent of ffed0de (Revert "Risolto "PARZIALMENTE" problema visualizzazione della lista contatti")
         txtNome.setText("");
         txtCognome.setText("");
         txtCellulare.setText("");
         txtFisso.setText("");
         txtEmail.setText("");
         txtIndirizzo.setText("");
+<<<<<<< HEAD
+>>>>>>> parent of ffed0de (Revert "Risolto "PARZIALMENTE" problema visualizzazione della lista contatti")
+=======
 >>>>>>> parent of ffed0de (Revert "Risolto "PARZIALMENTE" problema visualizzazione della lista contatti")
     }
 
