@@ -18,9 +18,10 @@ public class Homepage extends JFrame {
     //ATTRIBUTI
     private JButton btnCreaNuovoContatto;
     private JPanel homepage;
+    private JPanel cardHomepage;
     private JButton btnEliminaContatto;
     private JButton btnSwitchTema;
-    private JButton stampaListaContattiButton;
+    private JButton btnStampaListaContatti;
     private JScrollPane JScrollBarListaContatti;
     private JPanel paneBase;
 
@@ -28,7 +29,7 @@ public class Homepage extends JFrame {
 
     Controller control;
     Contatti contatti = new Contatti();
-
+    CreaContatto guiCreaNuovoContatto;
 
 
 
@@ -36,7 +37,12 @@ public class Homepage extends JFrame {
 
         control = controller; //Serve a linkare il controller al JPanel
         setTitle("Homepage");
-        setContentPane(homepage);
+
+        guiCreaNuovoContatto = new CreaContatto();
+        cardHomepage = new JPanel();
+        cardHomepage.setLayout(new CardLayout());
+        cardHomepage.add(homepage);
+        setContentPane(cardHomepage);
         setSize(500,500);
         setDefaultCloseOperation(EXIT_ON_CLOSE); //Serve a terminare il programma quando si preme la X
         setLocation(300, 300);
@@ -45,26 +51,16 @@ public class Homepage extends JFrame {
         TemaScuro();  //INIZIALIZAZZIONE DEL TEMA SCURO BY DEFAULT
 
 
+
+
         //TIMER CHE FA DA SWITCH PER LA DARK MODE E LA LIGHT MODE
         btnSwitchTema.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (timer == null) {
-                    timer = new Timer(100, new ActionListener() {
-                        public void actionPerformed(ActionEvent event) {
-                        }
-                    });
-                    timer.start();
-                    TemaChiaro();
-                } else if (timer.isRunning()) {
-                    timer.stop();
-                    TemaScuro();
-                } else {
-                    timer.start();
-                    TemaChiaro();
-                }
+                switchTemi();
             }
         });
+
 
         btnCreaNuovoContatto.addActionListener(new ActionListener() {
             @Override
@@ -73,85 +69,78 @@ public class Homepage extends JFrame {
             }
         });
 
-
-
-
-        //CERCHERO' DI COMMENTARE IL CODICE QUANTO MEGLIO
-        stampaListaContattiButton.addActionListener(new ActionListener() { //Per il momento mi accontento che la rubrica venga aggiornata dopo la pressione di un tasto "aggiorna"
-            int i = 0;
-            int j = 1;
+        btnStampaListaContatti.addActionListener(new ActionListener() { //Per il momento mi accontento che la rubrica venga aggiornata dopo la pressione di un tasto "aggiorna"
             @Override
             public void actionPerformed(ActionEvent e) {
-                while(i  < CreaContatto.insContatti.size()){ //Scorro un ArrayList dove sono contenuti i dati di ogni contatto
-
-                    JPanel paneLista = new JPanel(); //L'intenzione è quella di creare dinamicamente un JPanel dove successivamente si andrà ad inserire il JButton collegato ad uno specifico elemento dell'ArrayList
-                    paneLista.setLayout(new GridLayout(0,1)); //Setto il layout, il flow mi sembra indicato in quanto inizia in maniera centrale ad aggiungere i componenti
-                    JButton btnSchedaContatto = new JButton(); //Creazione del JButton che sarà poi collegato ad uno specifico elemento dell'ArrayList
-                    btnSchedaContatto.setText(CreaContatto.insContatti.get(i).getNome() +" "+ CreaContatto.insContatti.get(i).getCognome()); //Per il momento mi accontento solo di dargli queste informazioni al JButton
-                    paneLista.add(btnSchedaContatto); //Aggiungo il JButton al JPanel
-                    paneBase.setLayout(new GridLayout(j,0));
-                    paneBase.add(paneLista);
-                    validate();
-                    i++;
-                    j++;
-                }
+                insContattiRubrica();
             }
         });
     }
-    /*TO DO
-   Aggiungere accanto al nome l'icona di quale fornitore ha "Whatsapp oppure Telegram o entrambi"
-     */
 
+    //COSTRUTTORE VUOTO
     public Homepage() {
 
     }
 
-    /*CODICE DA TENERE DA PARTE IN CASO DI NECESSITA'
-    stampaListaContattiButton.addActionListener(new ActionListener() { //Per il momento mi accontento che la rubrica venga aggiornata dopo la pressione di un tasto "aggiorna"
-            int i = 0;
-            int j = 1;
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                while(i  < CreaContatto.insContatti.size()){ //Scorro un ArrayList dove sono contenuti i dati di ogni contatto
 
-                    JPanel paneLista = new JPanel(); //L'intenzione è quella di creare dinamicamente un JPanel dove successivamente si andrà ad inserire il JButton collegato ad uno specifico elemento dell'ArrayList
-                    //paneLista.setLayout(new GridLayout(0,1)); //Setto il layout, il flow mi sembra indicato in quanto inizia in maniera centrale ad aggiungere i componenti
-                    paneLista.setLayout(new BorderLayout());
-                    JButton btnSchedaContatto = new JButton(); //Creazione del JButton che sarà poi collegato ad uno specifico elemento dell'ArrayList
-                    btnSchedaContatto.setText(CreaContatto.insContatti.get(i).getNome() +" "+ CreaContatto.insContatti.get(i).getCognome()); //Per il momento mi accontento solo di dargli queste informazioni al JButton
-                    paneLista.add(btnSchedaContatto, BorderLayout.NORTH); //Aggiungo il JButton al JPanel
-                    paneBase.setLayout(new GridLayout(j,0));
-                    btnSchedaContatto.setPreferredSize(new Dimension(200,50));
-                    paneBase.add(paneLista);
-                    validate();
-                    i++;
-                    j++;
+    //METODI
+    public void switchTemi(){
+        if (timer == null) {
+            timer = new Timer(100, new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
                 }
-            }
-        });
-    */
+            });
+            timer.start();
+            TemaChiaro();
+        } else if (timer.isRunning()) {
+            timer.stop();
+            TemaScuro();
+        } else {
+            timer.start();
+            TemaChiaro();
+        }
+    }
 
-
-    //****************************** CODICE NON PIU NECESSARIO ******************************
-    /*public void inserimentoContattiLista(){
+    public void insContattiRubrica(){
+        int i = 0;
+        int j = 1;
+        while(i  < CreaContatto.insContatti.size()){ //Scorro un ArrayList dove sono contenuti i dati di ogni contatto
 
             JPanel paneLista = new JPanel(); //L'intenzione è quella di creare dinamicamente un JPanel dove successivamente si andrà ad inserire il JButton collegato ad uno specifico elemento dell'ArrayList
-            paneLista.setLayout(new FlowLayout()); //Setto il layout, il flow mi sembra indicato in quanto inizia in maniera centrale ad aggiungere i componenti
+            paneLista.setLayout(new GridLayout(0,1)); //Setto il layout, il flow mi sembra indicato in quanto inizia in maniera centrale ad aggiungere i componenti
             JButton btnSchedaContatto = new JButton(); //Creazione del JButton che sarà poi collegato ad uno specifico elemento dell'ArrayList
-            btnSchedaContatto.setText(contatti.getNome() + " " + contatti.getCognome()); //Per il momento mi accontento solo di dargli queste informazioni al JButton
+            btnSchedaContatto.setText(CreaContatto.insContatti.get(i).getNome() +" "+ CreaContatto.insContatti.get(i).getCognome()); //Per il momento mi accontento solo di dargli queste informazioni al JButton
             paneLista.add(btnSchedaContatto); //Aggiungo il JButton al JPanel
+            paneBase.setLayout(new GridLayout(j,0));
             paneBase.add(paneLista);
             validate();
+            i++;
+            j++;
+        }
+    }
 
-    }*/
+    //FUNZIONI DI PROVA CARDLAYOUT
+    /*
+    btnCreaNuovoContatto.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cardHomepage.removeAll();
+                cardHomepage.repaint();
+                cardHomepage.revalidate();
+
+                cardHomepage.add(newContact.getCreaContatto());
+                cardHomepage.repaint();
+                cardHomepage.revalidate();
 
 
-
+            }
+        });
+     */
 
     //TEMA SCURO SET BY DEFAULT
     public void TemaScuro(){
         FlatDarculaLaf.setup();
-        SwingUtilities.updateComponentTreeUI(homepage);
+        SwingUtilities.updateComponentTreeUI(cardHomepage);
 
         try {
             Image imgSwitchTema = ImageIO.read(new File("Immagini/imgTemaScuro.png")); //Da settare la dimensione delle ICONE (PRESI DI MISURA GIUSTA COSI DA NON
@@ -185,7 +174,7 @@ public class Homepage extends JFrame {
 
 
         FlatLightLaf.setup();
-        SwingUtilities.updateComponentTreeUI(homepage);     //Serve a fare il refresh dei componenti a runtime (UTILE PER DARK MODE TO LIGHT)
+        SwingUtilities.updateComponentTreeUI(cardHomepage);     //Serve a fare il refresh dei componenti a runtime (UTILE PER DARK MODE TO LIGHT)
 
 
         try {
