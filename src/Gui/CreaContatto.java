@@ -40,13 +40,11 @@ public class CreaContatto extends JFrame{
     public CreaContatto(Controller controller){
 
         control = controller;
-
         setContentPane(creaContatto);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(500,500);
         setLocation(300, 300);
-
-        TemaScuro(); //SET Tema scuro By DEFAULT
+        TemaScuro();
 
         lbTastoHome.addMouseListener(new MouseAdapter() {
             @Override
@@ -61,57 +59,56 @@ public class CreaContatto extends JFrame{
         confermaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                insContattoArrayList();
+                contatti = new Contatti();
+                contatti.setNome(txtNome.getText());
+                contatti.setCognome(txtCognome.getText());
+                contatti.setEmail(txtEmail.getText());
+                contatti.setCellulare(txtCellulare.getText());
+                contatti.setFisso(txtFisso.getText());
+                contatti.setIndirizzo(txtIndirizzo.getText());
+                contatti.setWhatsapp(Objects.requireNonNull(cbWhatsapp.getSelectedItem()).toString()); //Objects.requireNonNull necessario in caso di valore NULL all'interno della CB
+
+                insContatti.add(contatti);
+
+                //homepage.inserimentoContattiLista();
+
+                txtNome.setText("");
+                txtCognome.setText("");
+                txtCellulare.setText("");
+                txtFisso.setText("");
+                txtEmail.setText("");
+                txtIndirizzo.setText("");
+
             }
         });
 
         svuotaCampiButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                svuotaCampi();
+                txtNome.setText("");
+                txtCognome.setText("");
+                txtCellulare.setText("");
+                txtFisso.setText("");
+                txtEmail.setText("");
+                txtIndirizzo.setText("");
             }
         });
 
 
     }
 
-    //COSTRUTTORE VUOTO
     public CreaContatto() {
 
 
     }
 
-   //METODI
-
-    public void insContattoArrayList(){
-        contatti = new Contatti();
-        contatti.setNome(txtNome.getText());
-        contatti.setCognome(txtCognome.getText());
-        contatti.setEmail(txtEmail.getText());
-        contatti.setCellulare(txtCellulare.getText());
-        contatti.setFisso(txtFisso.getText());
-        contatti.setIndirizzo(txtIndirizzo.getText());
-        contatti.setWhatsapp(Objects.requireNonNull(cbWhatsapp.getSelectedItem()).toString()); //Objects.requireNonNull necessario in caso di valore NULL all'interno della CB
-
-        insContatti.add(contatti);
-
-
-        //Svuotamento dei campo dopo inserimento
-        txtNome.setText("");
-        txtCognome.setText("");
-        txtCellulare.setText("");
-        txtFisso.setText("");
-        txtEmail.setText("");
-        txtIndirizzo.setText("");
-    }
-
-    public void svuotaCampi(){
-        txtNome.setText("");
-        txtCognome.setText("");
-        txtCellulare.setText("");
-        txtFisso.setText("");
-        txtEmail.setText("");
-        txtIndirizzo.setText("");
+    public static void stampaProva(){
+        int i = 0;
+        while(i < insContatti.size()){
+            System.out.println("Stampa contatto N°"+ (i+1));
+            System.out.println(insContatti.get(i).getNome() + "\n" + insContatti.get(i).getCognome() + "\n" + insContatti.get(i).getCellulare() + "\n" + insContatti.get(i).getFisso() +"\n" + insContatti.get(i).getEmail() + "\n" + insContatti.get(i).getIndirizzo() +"\n"+ insContatti.get(i).getWhatsapp());
+            i++;
+        }
     }
 
     public void TemaScuro() {
