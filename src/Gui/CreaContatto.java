@@ -1,14 +1,14 @@
 package Gui;
 
-import Classi.Contatti;
-import Controller.Controller;
+import Classi.*;
+import Controller.*;
 
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class CreaContatto extends JFrame{
+public class CreaContatto extends JPanel{
     //ATTRIBUTI
     private JTextField txtNome;
     private JTextField txtCognome;
@@ -40,37 +40,6 @@ public class CreaContatto extends JFrame{
     public CreaContatto(Controller controller){
 
         control = controller;
-        setContentPane(creaContatto);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(500,500);
-        setLocation(300, 300);
-        TemaScuro();
-
-        lbTastoHome.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                control.cambioFinestra(control.getCreaContatto(), control.getHomepage());
-
-            }
-        });
-        
-        //Inserimento dei dati del contatto all'interno dell'Arraylist "insContatti"
-        confermaButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-               popolamentoArrayList();
-            }
-        });
-
-        svuotaCampiButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                svuotaCampi();
-            }
-        });
-
-
     }
 
     //COSTRUTTORE VUOTO
@@ -127,7 +96,7 @@ public class CreaContatto extends JFrame{
     }
 
     public void setSvuotaCampiButton(JButton svuotaCampiButton) {
-        this.svuotaCampiButton = svuotaCampiButton;
+        svuotaCampi();
     }
 
     public JButton getConfermaButton() {
@@ -135,7 +104,7 @@ public class CreaContatto extends JFrame{
     }
 
     public void setConfermaButton(JButton confermaButton) {
-        this.confermaButton = confermaButton;
+        popolamentoArrayList();
     }
 
     public JComboBox getCbWhatsapp() {
