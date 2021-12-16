@@ -25,7 +25,7 @@ public class Homepage extends JFrame {
     private JButton stampaListaContattiButton;
     private JScrollPane JScrollBarListaContatti;
     private JPanel paneBase;
-    private JPanel cardHomepage = new JPanel();
+    private JPanel cardHomepage;
 
     private Timer timer;
 
@@ -36,7 +36,9 @@ public class Homepage extends JFrame {
 
 
 
+
     public Homepage(Controller controller) {
+        cardHomepage = new JPanel();
         cardHomepage.setLayout(new CardLayout());
         cardHomepage.add(homepage);
         control = controller; //Serve a linkare il controller al JPanel
@@ -59,14 +61,13 @@ public class Homepage extends JFrame {
         });
 
 
-        //JPanel creaContatto
         guiCreaContatto = new CreaContatto();
         btnCreaNuovoContatto.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 switchJPanel(guiCreaContatto.getCreaContatto());
                 guiCreaContatto.TemaScuro();
-                //TESTING
+
                 guiCreaContatto.getLbTastoHome().addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
@@ -93,11 +94,9 @@ public class Homepage extends JFrame {
         });
 
         stampaListaContattiButton.addActionListener(new ActionListener() { //Per il momento mi accontento che la rubrica venga aggiornata dopo la pressione di un tasto "aggiorna"
-            int i = 0;
-            int j = 1;
             @Override
             public void actionPerformed(ActionEvent e) {
-                insContattiRubrica(i, j);
+                insContattiRubrica();
             }
         });
     }
@@ -110,17 +109,21 @@ public class Homepage extends JFrame {
     }
 
     //METODI
+
     public void switchJPanel(JPanel accendi){
         cardHomepage.removeAll();
+        cardHomepage.repaint();
+        cardHomepage.revalidate();
 
         cardHomepage.add(accendi);
-
         cardHomepage.repaint();
         cardHomepage.revalidate();
 
 
     }
-    public void insContattiRubrica(int i, int j){
+    public void insContattiRubrica(){
+        int i = 0;
+        int j = 1;
         while(i  < CreaContatto.insContatti.size()){ //Scorro un ArrayList dove sono contenuti i dati di ogni contatto
 
             JPanel paneLista = new JPanel(); //L'intenzione è quella di creare dinamicamente un JPanel dove successivamente si andrà ad inserire il JButton collegato ad uno specifico elemento dell'ArrayList
@@ -134,7 +137,6 @@ public class Homepage extends JFrame {
             i++;
             j++;
         }
-
     }
 
     public void timerSwitchTema(){
@@ -221,40 +223,6 @@ public class Homepage extends JFrame {
         }
 
         btnEliminaContatto.setFocusable(false);
-    }
-
-
-    //GETTER SETTER
-    public JButton getStampaListaContattiButton() {
-        return stampaListaContattiButton;
-    }
-
-    public void setStampaListaContattiButton(JButton stampaListaContattiButton) {
-        this.stampaListaContattiButton = stampaListaContattiButton;
-    }
-
-    public JScrollPane getJScrollBarListaContatti() {
-        return JScrollBarListaContatti;
-    }
-
-    public void setJScrollBarListaContatti(JScrollPane JScrollBarListaContatti) {
-        this.JScrollBarListaContatti = JScrollBarListaContatti;
-    }
-
-    public JPanel getPaneBase() {
-        return paneBase;
-    }
-
-    public void setPaneBase(JPanel paneBase) {
-        this.paneBase = paneBase;
-    }
-
-    public JPanel getCardHomepage() {
-        return cardHomepage;
-    }
-
-    public void setCardHomepage(JPanel cardHomepage) {
-        this.cardHomepage = cardHomepage;
     }
 
     public JButton getBtnCreaNuovoContatto() {
