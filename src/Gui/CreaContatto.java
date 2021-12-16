@@ -41,7 +41,10 @@ public class CreaContatto extends JPanel{
 
         control = controller;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> parent of 5a5a53f (codice fixato, GIT MERDA)
 
         setContentPane(creaContatto);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
