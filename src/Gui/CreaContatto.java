@@ -40,6 +40,54 @@ public class CreaContatto extends JPanel{
     public CreaContatto(Controller controller){
 
         control = controller;
+<<<<<<< HEAD
+=======
+
+        setContentPane(creaContatto);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setSize(500,500);
+        setLocation(300, 300);
+
+        TemaScuro(); //SET Tema scuro By DEFAULT
+
+        lbTastoHome.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                control.cambioFinestra(control.getCreaContatto(), control.getHomepage());
+
+            }
+        });
+        
+        //Inserimento dei dati del contatto all'interno dell'Arraylist "insContatti"
+        confermaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+               popolamentoArrayList();
+=======
+                insContattoArrayList();
+>>>>>>> parent of ffed0de (Revert "Risolto "PARZIALMENTE" problema visualizzazione della lista contatti")
+=======
+                insContattoArrayList();
+>>>>>>> parent of ffed0de (Revert "Risolto "PARZIALMENTE" problema visualizzazione della lista contatti")
+=======
+                insContattoArrayList();
+>>>>>>> parent of ffed0de (Revert "Risolto "PARZIALMENTE" problema visualizzazione della lista contatti")
+            }
+        });
+
+        svuotaCampiButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                svuotaCampi();
+            }
+        });
+
+
+>>>>>>> parent of 5a5a53f (codice fixato, GIT MERDA)
     }
 
     //COSTRUTTORE VUOTO
@@ -48,8 +96,26 @@ public class CreaContatto extends JPanel{
 
     }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
     //METODI
     public void popolamentoArrayList(){
+=======
+   //METODI
+
+    public void insContattoArrayList(){
+>>>>>>> parent of ffed0de (Revert "Risolto "PARZIALMENTE" problema visualizzazione della lista contatti")
+=======
+   //METODI
+
+    public void insContattoArrayList(){
+>>>>>>> parent of ffed0de (Revert "Risolto "PARZIALMENTE" problema visualizzazione della lista contatti")
+=======
+   //METODI
+
+    public void insContattoArrayList(){
+>>>>>>> parent of ffed0de (Revert "Risolto "PARZIALMENTE" problema visualizzazione della lista contatti")
         contatti = new Contatti();
         contatti.setNome(txtNome.getText());
         contatti.setCognome(txtCognome.getText());
@@ -61,13 +127,46 @@ public class CreaContatto extends JPanel{
 
         insContatti.add(contatti);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+        //Svuotamento dei campo dopo inserimento
+>>>>>>> parent of ffed0de (Revert "Risolto "PARZIALMENTE" problema visualizzazione della lista contatti")
+=======
+
+        //Svuotamento dei campo dopo inserimento
+>>>>>>> parent of ffed0de (Revert "Risolto "PARZIALMENTE" problema visualizzazione della lista contatti")
         txtNome.setText("");
         txtCognome.setText("");
         txtCellulare.setText("");
         txtFisso.setText("");
         txtEmail.setText("");
         txtIndirizzo.setText("");
+<<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of ffed0de (Revert "Risolto "PARZIALMENTE" problema visualizzazione della lista contatti")
+=======
+    }
+
+    public void svuotaCampi(){
+=======
+
+        //Svuotamento dei campo dopo inserimento
+>>>>>>> parent of ffed0de (Revert "Risolto "PARZIALMENTE" problema visualizzazione della lista contatti")
+        txtNome.setText("");
+        txtCognome.setText("");
+        txtCellulare.setText("");
+        txtFisso.setText("");
+        txtEmail.setText("");
+        txtIndirizzo.setText("");
+<<<<<<< HEAD
+>>>>>>> parent of ffed0de (Revert "Risolto "PARZIALMENTE" problema visualizzazione della lista contatti")
+=======
+>>>>>>> parent of ffed0de (Revert "Risolto "PARZIALMENTE" problema visualizzazione della lista contatti")
     }
 
     public void svuotaCampi(){
