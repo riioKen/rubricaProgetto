@@ -1,6 +1,6 @@
 package Gui;
 
-import Classi.Contatti;
+import Classi.*;
 import Controller.*;
 import com.formdev.flatlaf.FlatDarculaLaf;
 import com.formdev.flatlaf.FlatLightLaf;
@@ -23,20 +23,25 @@ public class Homepage extends JFrame {
     private JButton stampaListaContattiButton;
     private JScrollPane JScrollBarListaContatti;
     private JPanel paneBase;
+    private JPanel cardHomepage;
 
     private Timer timer;
 
     Controller control;
     Contatti contatti = new Contatti();
+    CreaContatto guiCreaContatto;
+
 
 
 
 
     public Homepage(Controller controller) {
-
+        cardHomepage = new JPanel();
+        cardHomepage.setLayout(new CardLayout());
+        cardHomepage.add(homepage);
         control = controller; //Serve a linkare il controller al JPanel
         setTitle("Homepage");
-        setContentPane(homepage);
+        setContentPane(cardHomepage);
         setSize(500,500);
         setDefaultCloseOperation(EXIT_ON_CLOSE); //Serve a terminare il programma quando si preme la X
         setLocation(300, 300);
@@ -53,10 +58,13 @@ public class Homepage extends JFrame {
             }
         });
 
+
+        guiCreaContatto = new CreaContatto();
         btnCreaNuovoContatto.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                control.cambioFinestra(control.getHomepage(), control.getCreaContatto());
+                switchJPanel(guiCreaContatto.getCreaContatto());
+
             }
         });
 
@@ -76,6 +84,18 @@ public class Homepage extends JFrame {
     }
 
     //METODI
+
+    public void switchJPanel(JPanel accendi){
+        cardHomepage.removeAll();
+        cardHomepage.repaint();
+        cardHomepage.revalidate();
+
+        cardHomepage.add(accendi);
+        cardHomepage.repaint();
+        cardHomepage.revalidate();
+
+
+    }
     public void insContattiRubrica(){
         int i = 0;
         int j = 1;
