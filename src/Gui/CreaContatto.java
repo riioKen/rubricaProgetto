@@ -8,7 +8,7 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class CreaContatto extends JFrame{
+public class CreaContatto extends JPanel{
     //ATTRIBUTI
     private JTextField txtNome;
     private JTextField txtCognome;
