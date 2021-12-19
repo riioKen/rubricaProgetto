@@ -10,8 +10,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.File;
 
 
@@ -26,12 +24,16 @@ public class Homepage extends JFrame {
     private JScrollPane JScrollBarListaContatti;
     private JPanel paneBase;
     private JPanel paneTendina;
+    private JButton lineeApertura;
+    private JButton lineeChiusura;
     private JPanel cardHomepage;
 
     private Timer timer;
 
     Controller control;
     Contatti contatti = new Contatti();
+
+    int posizioneTendina = 50;
 
 
     public Homepage(Controller controller) {
@@ -43,7 +45,7 @@ public class Homepage extends JFrame {
 
         setTitle("Homepage");
         setContentPane(cardHomepage);
-        setSize(500,500);
+        setSize(500, 500);
         setDefaultCloseOperation(EXIT_ON_CLOSE); //Serve a terminare il programma quando si preme la X
         setLocation(300, 300);
 
@@ -69,19 +71,45 @@ public class Homepage extends JFrame {
         });
 
 
+        lineeChiusura.setVisible(false);
+        lineeApertura.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                apriTendina();
+            }
+        });
     }
 
 
     //METODI
+    public void apriTendina() {
+        if (posizioneTendina == 50) {
+            paneTendina.setSize(posizioneTendina, 150);
+            Thread th = new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        for (int i = 50; i <= 150; i = i + 5) {
+                            Thread.sleep(0, 01);
+                            paneTendina.setSize(i - 2, 150);
+                        }
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(null, e);
+                    }
+                    lineeChiusura.setVisible(true);
+                }
+            };
+            th.start();
+            posizioneTendina = 150;
+        }
+    }
 
 
-
-
-    public void insContattiRubrica(){
+    public void insContattiRubrica() {
 
     }
 
-    public void timerSwitchTema(){
+    public void timerSwitchTema() {
         if (timer == null) {
             timer = new Timer(100, new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
@@ -100,7 +128,7 @@ public class Homepage extends JFrame {
 
 
     //TEMA SCURO SET BY DEFAULT
-    public void TemaScuro(){
+    public void TemaScuro() {
         FlatDarculaLaf.setup();
         SwingUtilities.updateComponentTreeUI(homepage);
 
@@ -132,7 +160,7 @@ public class Homepage extends JFrame {
     }
 
     //TEMA CHIARO
-    public void TemaChiaro(){
+    public void TemaChiaro() {
 
 
         FlatLightLaf.setup();
@@ -168,6 +196,31 @@ public class Homepage extends JFrame {
     }
 
     //GETTER SETTER
+
+
+    public JButton getLineeApertura() {
+        return lineeApertura;
+    }
+
+    public void setLineeApertura(JButton lineeApertura) {
+        this.lineeApertura = lineeApertura;
+    }
+
+    public JButton getLineeChiusura() {
+        return lineeApertura;
+    }
+
+    public void setLineeChiusura(JButton lineeChiusura) {
+        this.lineeApertura = lineeChiusura;
+    }
+
+    public JPanel getPaneTendina() {
+        return paneTendina;
+    }
+
+    public void setPaneTendina(JPanel paneTendina) {
+        this.paneTendina = paneTendina;
+    }
 
     public JButton getStampaListaContattiButton() {
         return stampaListaContattiButton;
