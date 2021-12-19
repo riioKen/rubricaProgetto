@@ -4,11 +4,12 @@ import Classi.Contatti;
 import Controller.Controller;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class CreaContatto extends JPanel{
+public class CreaContatto extends JPanel {
     //ATTRIBUTI
     private JTextField txtNome;
     private JTextField txtCognome;
@@ -23,34 +24,74 @@ public class CreaContatto extends JPanel{
     private JTextField txtCellulare;
     private JTextField txtFisso;
     private JPanel creaContatto;
-    private JButton svuotaCampiButton;
-    private JButton confermaButton;
+    private JButton btnSvuotaCampi;
+    private JButton btnConferma;
     private JComboBox cbWhatsapp;
     private JComboBox cbTelegram;
     private JLabel lbTastoHome;
 
 
     Controller control;
-    Homepage homepage = new Homepage();
     Contatti contatti;
 
     //Arraylist che contiene i nuovi dati inseriti dalla GUI CreaContatti
     static ArrayList<Contatti> insContatti = new ArrayList<>();
-
+    static ArrayList<Contatti> insContattiCopia = new ArrayList<>();
     public CreaContatto(Controller controller) {
         control = controller;
+
+        setVisible(true);
+        TemaScuro();
+
+        //TEST
+        getLbTastoHome().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+                super.mouseClicked(e);
+                control.switchJPanel(control.getHomepage().getHomepage());
+            }
+
+        });
+
+        getBtnConferma().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                popolamentoArrayList();
+            }
+        });
+
+        getBtnSvuotaCampi().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                svuotaCampi();
+            }
+        });
 
     }
 
 
     //COSTRUTTORE VUOTO
-    public CreaContatto() {
 
+    public void stampaContatti(){
+        int i = 0;
+        while(i < insContattiCopia.size()){
+            JPanel paneLista = new JPanel();
+            paneLista.setLayout(new GridLayout(0, 1));
+            JButton btnSchedaContatto = new JButton();
+            btnSchedaContatto.setText(CreaContatto.getInsContattiCopia().get(i).getNome() +" "+ CreaContatto.getInsContattiCopia().get(i).getCognome()); //Per il momento mi accontento solo di dargli queste informazioni al JButton
+            paneLista.add(btnSchedaContatto);
+            control.getHomepage().getPaneBase().setLayout(new GridLayout(0,1));
+            control.getHomepage().getPaneBase().add(paneLista);
 
+            insContattiCopia.remove(i);
+            validate();
+            i++;
+        }
     }
 
     //METODI
-    public void popolamentoArrayList(){
+    public void popolamentoArrayList() {
         contatti = new Contatti();
         contatti.setNome(txtNome.getText());
         contatti.setCognome(txtCognome.getText());
@@ -61,17 +102,14 @@ public class CreaContatto extends JPanel{
         contatti.setWhatsapp(Objects.requireNonNull(cbWhatsapp.getSelectedItem()).toString()); //Objects.requireNonNull necessario in caso di valore NULL all'interno della CB
 
         insContatti.add(contatti);
+        insContattiCopia.add(contatti);
 
-        txtNome.setText("");
-        txtCognome.setText("");
-        txtCellulare.setText("");
-        txtFisso.setText("");
-        txtEmail.setText("");
-        txtIndirizzo.setText("");
+        svuotaCampi();
 
+        stampaContatti();
     }
 
-    public void svuotaCampi(){
+    public void svuotaCampi() {
         txtNome.setText("");
         txtCognome.setText("");
         txtCellulare.setText("");
@@ -82,31 +120,41 @@ public class CreaContatto extends JPanel{
 
 
     public void TemaScuro() {
-        try{
+        try {
             ImageIcon tastoHomeScuro = new ImageIcon("Immagini/imgRitornoHomeFrecciaSCURO.png");
             lbTastoHome.setIcon(tastoHomeScuro);
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("L'immagine tastoHomeScuro non e' stata caricata correttamente");
         }
     }
 
     //GETTER SETTER
 
-    public JButton getSvuotaCampiButton() {
-        return svuotaCampiButton;
+
+    public static ArrayList<Contatti> getInsContattiCopia() {
+        return insContattiCopia;
     }
 
-    public void setSvuotaCampiButton(JButton svuotaCampiButton) {
+    public static void setInsContattiCopia(ArrayList<Contatti> insContattiCopia) {
+        CreaContatto.insContattiCopia = insContattiCopia;
+    }
+
+    public JButton getBtnSvuotaCampi() {
+        return btnSvuotaCampi;
+    }
+
+    public void setBtnSvuotaCampi(JButton btnSvuotaCampi) {
         svuotaCampi();
     }
 
-    public JButton getConfermaButton() {
-        return confermaButton;
+    public JButton getBtnConferma() {
+        return btnConferma;
     }
 
-    public void setConfermaButton(JButton confermaButton) {
+    public void setBtnConferma(JButton btnConferma) {
         popolamentoArrayList();
     }
+
 
     public JComboBox getCbWhatsapp() {
         return cbWhatsapp;
@@ -234,5 +282,13 @@ public class CreaContatto extends JPanel{
 
     public void setCreaContatto(JPanel creaContatto) {
         this.creaContatto = creaContatto;
+    }
+
+    public static ArrayList<Contatti> getInsContatti() {
+        return insContatti;
+    }
+
+    public static void setInsContatti(ArrayList<Contatti> insContatti) {
+        CreaContatto.insContatti = insContatti;
     }
 }

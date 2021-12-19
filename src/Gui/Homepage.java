@@ -25,22 +25,22 @@ public class Homepage extends JFrame {
     private JButton stampaListaContattiButton;
     private JScrollPane JScrollBarListaContatti;
     private JPanel paneBase;
+    private JPanel paneTendina;
     private JPanel cardHomepage;
 
     private Timer timer;
 
     Controller control;
     Contatti contatti = new Contatti();
-    CreaContatto guiCreaContatto;
-
-
 
 
     public Homepage(Controller controller) {
+        control = controller; //Serve a linkare il controller al JPanel
+
         cardHomepage = new JPanel();
         cardHomepage.setLayout(new CardLayout());
         cardHomepage.add(homepage);
-        control = controller; //Serve a linkare il controller al JPanel
+
         setTitle("Homepage");
         setContentPane(cardHomepage);
         setSize(500,500);
@@ -60,81 +60,23 @@ public class Homepage extends JFrame {
         });
 
 
-        guiCreaContatto = new CreaContatto();
         btnCreaNuovoContatto.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                switchJPanel(guiCreaContatto.getCreaContatto());
-                guiCreaContatto.TemaScuro();
 
-                guiCreaContatto.getLbTastoHome().addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        super.mouseClicked(e);
-                        switchJPanel(homepage);
-                    }
-                });
-
-                guiCreaContatto.getSvuotaCampiButton().addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        guiCreaContatto.setSvuotaCampiButton(guiCreaContatto.getSvuotaCampiButton());
-                    }
-                });
-
-                guiCreaContatto.getConfermaButton().addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        guiCreaContatto.setConfermaButton(guiCreaContatto.getConfermaButton());
-                    }
-                });
-
+                control.switchJPanel(control.getCreaContatto().getCreaContatto());
             }
         });
 
-        stampaListaContattiButton.addActionListener(new ActionListener() { //Per il momento mi accontento che la rubrica venga aggiornata dopo la pressione di un tasto "aggiorna"
-            int i = 0;
-            int j = 1;
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                while(i  < CreaContatto.insContatti.size()){ //Scorro un ArrayList dove sono contenuti i dati di ogni contatto
-                    JPanel paneLista = new JPanel(); //L'intenzione è quella di creare dinamicamente un JPanel dove successivamente si andrà ad inserire il JButton collegato ad uno specifico elemento dell'ArrayList
-                    paneLista.setLayout(new GridLayout(0,1)); //Setto il layout, il flow mi sembra indicato in quanto inizia in maniera centrale ad aggiungere i componenti
-                    JButton btnSchedaContatto = new JButton(); //Creazione del JButton che sarà poi collegato ad uno specifico elemento dell'ArrayList
-                    btnSchedaContatto.setText(CreaContatto.insContatti.get(i).getNome() +" "+ CreaContatto.insContatti.get(i).getCognome()); //Per il momento mi accontento solo di dargli queste informazioni al JButton
-                    paneLista.add(btnSchedaContatto); //Aggiungo il JButton al JPanel
-                    paneBase.setLayout(new GridLayout(j,0));
-                    paneBase.add(paneLista);
-                    repaint();
-                    revalidate();
-                    i++;
-                    j++;
-                }
-            }
-        });
-    }
-
-
-
-    //COSTRUTTORE VUOTO
-    public Homepage() {
 
     }
+
 
     //METODI
 
-    public void switchJPanel(JPanel accendi){
-        cardHomepage.removeAll();
-        cardHomepage.repaint();
-        cardHomepage.revalidate();
-
-        cardHomepage.add(accendi);
-        cardHomepage.repaint();
-        cardHomepage.revalidate();
 
 
-    }
+
     public void insContattiRubrica(){
 
     }
@@ -223,6 +165,40 @@ public class Homepage extends JFrame {
         }
 
         btnEliminaContatto.setFocusable(false);
+    }
+
+    //GETTER SETTER
+
+    public JButton getStampaListaContattiButton() {
+        return stampaListaContattiButton;
+    }
+
+    public void setStampaListaContattiButton(JButton stampaListaContattiButton) {
+        this.stampaListaContattiButton = stampaListaContattiButton;
+    }
+
+    public JScrollPane getJScrollBarListaContatti() {
+        return JScrollBarListaContatti;
+    }
+
+    public void setJScrollBarListaContatti(JScrollPane JScrollBarListaContatti) {
+        this.JScrollBarListaContatti = JScrollBarListaContatti;
+    }
+
+    public JPanel getPaneBase() {
+        return paneBase;
+    }
+
+    public void setPaneBase(JPanel paneBase) {
+        this.paneBase = paneBase;
+    }
+
+    public JPanel getCardHomepage() {
+        return cardHomepage;
+    }
+
+    public void setCardHomepage(JPanel cardHomepage) {
+        this.cardHomepage = cardHomepage;
     }
 
     public JButton getBtnCreaNuovoContatto() {
