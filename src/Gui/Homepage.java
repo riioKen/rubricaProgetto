@@ -61,15 +61,17 @@ public class Homepage extends JFrame {
             }
         });
 
-
+        //
         btnCreaNuovoContatto.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                control.switchJPanel(control.getCreaContatto().getCreaContatto());
+                //control.switchJPanel(control.getCreaContatto().getCreaContatto());
+                control.switchCreaContatto(control.getCreaContatto().getCreaContatto());    //TESTING
             }
         });
 
 
+        //GESTIONE TENDINA SCORRIMENTO
         lineeChiusura.setVisible(false);
         lineeApertura.addActionListener(new ActionListener() {
             @Override
@@ -104,7 +106,6 @@ public class Homepage extends JFrame {
     }
 
 
-
     public void timerSwitchTema() {
         if (timer == null) {
             timer = new Timer(100, new ActionListener() {
@@ -121,7 +122,6 @@ public class Homepage extends JFrame {
             TemaChiaro();
         }
     }
-
 
     //TEMA SCURO SET BY DEFAULT
     public void TemaScuro() {
@@ -153,11 +153,13 @@ public class Homepage extends JFrame {
             System.out.println("Icona btnCreaNuovoContattoSCURO non caricata");
         }
         btnEliminaContatto.setFocusable(false);
+
+        lineeApertura.setFocusable(false);
+        lineeChiusura.setFocusable(false);
     }
 
     //TEMA CHIARO
     public void TemaChiaro() {
-
 
         FlatLightLaf.setup();
         SwingUtilities.updateComponentTreeUI(homepage);     //Serve a fare il refresh dei componenti a runtime (UTILE PER DARK MODE TO LIGHT)
@@ -189,6 +191,9 @@ public class Homepage extends JFrame {
         }
 
         btnEliminaContatto.setFocusable(false);
+
+        lineeApertura.setFocusable(false);
+        lineeChiusura.setFocusable(false);
     }
 
     //GETTER SETTER

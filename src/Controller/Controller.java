@@ -41,8 +41,10 @@ public class Controller{
         homepage.getCardHomepage().repaint();
         homepage.getCardHomepage().revalidate();
 
-        /*homepage.setContentPane(accendi);
-        homepage.revalidate();*/
+    }
+
+    public void switchCreaContatto(JPanel accendi){
+        homepage.getJScrollBarListaContatti().setViewportView(accendi);    //TESTING
 
     }
 
