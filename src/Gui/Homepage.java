@@ -16,22 +16,22 @@ import java.io.File;
 public class Homepage extends JFrame {
 
     //ATTRIBUTI
-    private JButton btnCreaNuovoContatto;
+    private JPanel cardHomepage;
     private JPanel homepage;
+    private JPanel paneBase;
+    private JPanel paneTendina;
+    private JScrollPane JScrollBarListaContatti;
+    private JButton btnCreaNuovoContatto;
     private JButton btnEliminaContatto;
     private JButton btnSwitchTema;
     private JButton stampaListaContattiButton;
-    private JScrollPane JScrollBarListaContatti;
-    private JPanel paneBase;
-    private JPanel paneTendina;
     private JButton lineeApertura;
     private JButton lineeChiusura;
-    private JPanel cardHomepage;
 
+    //OGGETTI
     private Timer timer;
-
     Controller control;
-    Contatti contatti = new Contatti();
+
 
     int posizioneTendina = 50;
 
@@ -65,7 +65,6 @@ public class Homepage extends JFrame {
         btnCreaNuovoContatto.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 control.switchJPanel(control.getCreaContatto().getCreaContatto());
             }
         });
@@ -105,9 +104,6 @@ public class Homepage extends JFrame {
     }
 
 
-    public void insContattiRubrica() {
-
-    }
 
     public void timerSwitchTema() {
         if (timer == null) {
@@ -149,7 +145,7 @@ public class Homepage extends JFrame {
         }
         btnCreaNuovoContatto.setFocusable(false);
 
-        //Modifica del JButton ********* TESTING **********
+        //Modifica del JButton ********* TESTING *********
         try {
             Image imgEliminaContatto = ImageIO.read(new File("Immagini/imgEliminaContatto.png"));     //STESSO DISCORSO
             btnEliminaContatto.setIcon(new ImageIcon(imgEliminaContatto));
@@ -196,6 +192,7 @@ public class Homepage extends JFrame {
     }
 
     //GETTER SETTER
+
 
 
     public JButton getLineeApertura() {

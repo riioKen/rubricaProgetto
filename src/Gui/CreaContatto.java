@@ -11,43 +11,44 @@ import java.util.Objects;
 
 public class CreaContatto extends JPanel {
     //ATTRIBUTI
+    private JPanel creaContatto;
+    private JButton btnSvuotaCampi;
+    private JButton btnConferma;
     private JTextField txtNome;
     private JTextField txtCognome;
+    private JTextField txtEmail;
+    private JTextField txtIndirizzo;
+    private JTextField txtCellulare;
+    private JTextField txtFisso;
     private JLabel lbNome;
     private JLabel lbIndirizzo;
     private JLabel lbCognome;
     private JLabel lbEmail;
     private JLabel lbCellulare;
     private JLabel lbFisso;
-    private JTextField txtEmail;
-    private JTextField txtIndirizzo;
-    private JTextField txtCellulare;
-    private JTextField txtFisso;
-    private JPanel creaContatto;
-    private JButton btnSvuotaCampi;
-    private JButton btnConferma;
     private JComboBox cbWhatsapp;
     private JComboBox cbTelegram;
     private JLabel lbTastoHome;
 
-
+    //OGGETTI
     Controller control;
     Contatti contatti;
 
-    //Arraylist che contiene i nuovi dati inseriti dalla GUI CreaContatti
+    //Arraylist per stampa, DEBUG, dovrà essere sostituito con inserimento da DATABASE
     static ArrayList<Contatti> insContatti = new ArrayList<>();
     static ArrayList<Contatti> insContattiCopia = new ArrayList<>();
+
+    //COSTRUTTORE
     public CreaContatto(Controller controller) {
         control = controller;
 
         setVisible(true);
         TemaScuro();
 
-        //TEST
+
         getLbTastoHome().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
                 super.mouseClicked(e);
                 control.switchJPanel(control.getHomepage().getHomepage());
             }
@@ -71,26 +72,9 @@ public class CreaContatto extends JPanel {
     }
 
 
-    //COSTRUTTORE VUOTO
-
-    public void stampaContatti(){
-        int i = 0;
-        while(i < insContattiCopia.size()){
-            JPanel paneLista = new JPanel();
-            paneLista.setLayout(new GridLayout(0, 1));
-            JButton btnSchedaContatto = new JButton();
-            btnSchedaContatto.setText(CreaContatto.getInsContattiCopia().get(i).getNome() +" "+ CreaContatto.getInsContattiCopia().get(i).getCognome()); //Per il momento mi accontento solo di dargli queste informazioni al JButton
-            paneLista.add(btnSchedaContatto);
-            control.getHomepage().getPaneBase().setLayout(new GridLayout(0,1));
-            control.getHomepage().getPaneBase().add(paneLista);
-
-            insContattiCopia.remove(i);
-            validate();
-            i++;
-        }
-    }
-
     //METODI
+
+
     public void popolamentoArrayList() {
         contatti = new Contatti();
         contatti.setNome(txtNome.getText());
@@ -107,6 +91,23 @@ public class CreaContatto extends JPanel {
         svuotaCampi();
 
         stampaContatti();
+    }
+
+    public void stampaContatti(){
+        int i = 0;
+        while(i < insContattiCopia.size()){
+            JPanel paneLista = new JPanel();
+            paneLista.setLayout(new GridLayout(0, 1));
+            JButton btnSchedaContatto = new JButton();
+            btnSchedaContatto.setText(CreaContatto.getInsContattiCopia().get(i).getNome() +" "+ CreaContatto.getInsContattiCopia().get(i).getCognome()); //Per il momento mi accontento solo di dargli queste informazioni al JButton
+            paneLista.add(btnSchedaContatto);
+            control.getHomepage().getPaneBase().setLayout(new GridLayout(0,1));
+            control.getHomepage().getPaneBase().add(paneLista);
+
+            insContattiCopia.remove(i);
+            validate();
+            i++;
+        }
     }
 
     public void svuotaCampi() {
@@ -129,6 +130,7 @@ public class CreaContatto extends JPanel {
     }
 
     //GETTER SETTER
+
 
 
     public static ArrayList<Contatti> getInsContattiCopia() {
