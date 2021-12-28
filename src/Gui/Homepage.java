@@ -66,7 +66,8 @@ public class Homepage extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //control.switchJPanel(control.getCreaContatto().getCreaContatto());
-                control.switchCreaContatto(control.getCreaContatto().getCreaContatto());    //TESTING
+                control.switchCreaContatto(control.getCreaContatto().getCreaContatto()); //TESTING
+                JScrollBarListaContatti.setBorder(BorderFactory.createTitledBorder(""));
             }
         });
 
@@ -128,6 +129,7 @@ public class Homepage extends JFrame {
         FlatDarculaLaf.setup();
         SwingUtilities.updateComponentTreeUI(homepage);
 
+        //GUI HOMEPAGE
         try {
             Image imgSwitchTema = ImageIO.read(new File("Immagini/imgTemaScuro.png")); //Da settare la dimensione delle ICONE (PRESI DI MISURA GIUSTA COSI DA NON
             btnSwitchTema.setIcon(new ImageIcon(imgSwitchTema));
@@ -152,11 +154,10 @@ public class Homepage extends JFrame {
         } catch (Exception e) {
             System.out.println("Icona btnCreaNuovoContattoSCURO non caricata");
         }
-        btnEliminaContatto.setFocusable(false);
 
-        lineeApertura.setFocusable(false);
-        lineeChiusura.setFocusable(false);
+        textureTasti();
     }
+
 
     //TEMA CHIARO
     public void TemaChiaro() {
@@ -190,6 +191,10 @@ public class Homepage extends JFrame {
             System.out.println("Icona btnEliminaContattoCHIARO non caricata");
         }
 
+        textureTasti();
+    }
+
+    public void textureTasti(){
         btnEliminaContatto.setFocusable(false);
 
         lineeApertura.setFocusable(false);
@@ -197,9 +202,6 @@ public class Homepage extends JFrame {
     }
 
     //GETTER SETTER
-
-
-
     public JButton getLineeApertura() {
         return lineeApertura;
     }

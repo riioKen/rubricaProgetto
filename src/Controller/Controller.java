@@ -48,25 +48,8 @@ public class Controller{
 
     }
 
-    /*public void testCiclo(int i, int j){
-        while(i  < CreaContatto.getInsContatti().size()){ //Scorro un ArrayList dove sono contenuti i dati di ogni contatto
-            JPanel paneLista = new JPanel(); //L'intenzione è quella di creare dinamicamente un JPanel dove successivamente si andrà ad inserire il JButton collegato ad uno specifico elemento dell'ArrayList
-            paneLista.setLayout(new GridLayout(0,1));
-            JButton btnSchedaContatto = new JButton(); //Creazione del JButton che sarà poi collegato ad uno specifico elemento dell'ArrayList
-            btnSchedaContatto.setText(CreaContatto.getInsContatti().get(i).getNome() +" "+ CreaContatto.getInsContatti().get(i).getCognome()); //Per il momento mi accontento solo di dargli queste informazioni al JButton
-            paneLista.add(btnSchedaContatto); //Aggiungo il JButton al JPanel
-            homepage.getPaneBase().setLayout(new GridLayout(j,0));
-            homepage.getPaneBase().add(paneLista);
-            i++;
-            j++;
-        }
-    }*/
-
-
 
     //GETTER SETTER
-
-
     public CreaContatto getCreaContatto() {
         return creaContatto;
     }

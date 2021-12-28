@@ -51,7 +51,8 @@ public class CreaContatto extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 //control.switchJPanel(control.getHomepage().getHomepage());
-                control.switchCreaContatto(control.getHomepage().getPaneBase());    //TESTING
+                control.switchCreaContatto(control.getHomepage().getPaneBase());
+                control.getHomepage().getJScrollBarListaContatti().setBorder(BorderFactory.createTitledBorder("Lista dei Contatti"));//TESTING
             }
 
         });
