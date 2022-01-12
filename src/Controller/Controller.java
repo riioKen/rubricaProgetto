@@ -2,9 +2,8 @@ package Controller;
 
 import Classi.*;
 import Gui.*;
-import SQL.*;
+import ConnessioneDB.*;
 import javax.swing.*;
-import java.awt.*;
 
 public class Controller{
 
@@ -15,8 +14,6 @@ public class Controller{
 
     Homepage homepage;
     CreaContatto creaContatto;
-    Connessione connessione;
-
 
     //MAIN
     public static void main(String[] args){
@@ -29,7 +26,6 @@ public class Controller{
         homepage = new Homepage(this); //Serve a creare l'oggetto della GUI
         creaContatto = new CreaContatto(this);
         homepage.setVisible(true);
-        connessione = new Connessione(this);
 
     }
 
