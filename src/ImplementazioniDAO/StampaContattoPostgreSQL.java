@@ -3,7 +3,7 @@ package ImplementazioniDAO;
 
 import Classi.Contatti;
 import ConnessioneDB.*;
-import DAO.StampaContattoDAO;
+import DAO.*;
 
 import java.sql.*;
 import java.util.ArrayList;
