@@ -2,8 +2,10 @@ package Controller;
 
 import Classi.*;
 import Gui.*;
-import ConnessioneDB.*;
+
 import javax.swing.*;
+import java.sql.SQLException;
+
 
 public class Controller{
 
@@ -16,15 +18,16 @@ public class Controller{
     CreaContatto creaContatto;
 
     //MAIN
-    public static void main(String[] args){
+    public static void main(String[] args) throws SQLException {
         Controller controller = new Controller();
     }
 
     //COSTRUTTORE
-    public Controller(){
+    public Controller() throws SQLException {
 
         homepage = new Homepage(this); //Serve a creare l'oggetto della GUI
         creaContatto = new CreaContatto(this);
+
         homepage.setVisible(true);
 
     }
@@ -87,4 +90,6 @@ public class Controller{
     public void setGruppoContatti(GruppoContatti gruppoContatti) {
         this.gruppoContatti = gruppoContatti;
     }
+
+
 }

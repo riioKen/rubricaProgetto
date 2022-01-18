@@ -27,10 +27,7 @@ public class Connessione {
 
     }
 
-    public Connection getConnection() {
-        return connection;
-    }
-
+    //METODI
     public static Connessione getInstance() throws SQLException {
         if (instance == null) {
             instance = new Connessione();
@@ -38,5 +35,18 @@ public class Connessione {
             instance = new Connessione();
         }
         return instance;
+    }
+
+    //GETTER SETTER
+    public static void setInstance(Connessione instance) {
+        Connessione.instance = instance;
+    }
+
+    public Connection getConnection() {
+        return connection;
+    }
+
+    public void setConnection(Connection connection) {
+        this.connection = connection;
     }
 }

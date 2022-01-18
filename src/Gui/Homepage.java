@@ -2,6 +2,7 @@ package Gui;
 
 import Classi.*;
 import Controller.*;
+
 import com.formdev.flatlaf.FlatDarculaLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 
@@ -11,7 +12,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
+import DAO.StampaContattoDAO;
+import ImplementazioniDAO.*;
 
 public class Homepage extends JFrame {
 
@@ -31,12 +36,13 @@ public class Homepage extends JFrame {
     //OGGETTI
     private Timer timer;
     Controller control;
-
-
+    //StampaContattoDAO stampaContatto = new StampaContattoPostgreSQL();
     int posizioneTendina = 50;
+    StampaContattoDAO stampaContatto = new StampaContattoPostgreSQL();
+    static ArrayList<Contatti> contattiDB = new ArrayList<>();
 
 
-    public Homepage(Controller controller) {
+    public Homepage(Controller controller) throws SQLException {
         control = controller; //Serve a linkare il controller al JPanel
 
         cardHomepage = new JPanel();
@@ -80,10 +86,34 @@ public class Homepage extends JFrame {
                 apriTendina();
             }
         });
+
+        //Stampa dei contatti dal database ******** TESTING ********
+        contattiDB = stampaContatto.stampaContatti();
+        stampaContatti();
+
+    }
+
+    //METODI
+
+    public void stampaContatti(){
+        int i = 0;
+
+        while(i < contattiDB.size()){
+            JPanel paneLista = new JPanel();
+            paneLista.setLayout(new GridLayout(0, 1));
+            JButton btnSchedaContatto = new JButton();
+            btnSchedaContatto.setText(contattiDB.get(i).getNome() +" "+ contattiDB.get(i).getCognome()); //Per il momento mi accontento solo di dargli queste informazioni al JButton
+            paneLista.add(btnSchedaContatto);
+            paneBase.setLayout(new GridLayout(0,1));
+            paneBase.add(paneLista);
+
+            contattiDB.remove(i);
+            validate();
+            i++;
+        }
     }
 
 
-    //METODI
     public void apriTendina() {
         if (posizioneTendina == 50) {
             paneTendina.setSize(posizioneTendina, 150);
@@ -297,6 +327,8 @@ public class Homepage extends JFrame {
     public void setTimer(Timer timer) {
         this.timer = timer;
     }
+
+
 }
 
 

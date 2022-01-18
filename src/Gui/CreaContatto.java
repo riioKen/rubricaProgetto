@@ -2,6 +2,8 @@ package Gui;
 
 import Classi.Contatti;
 import Controller.Controller;
+import DAO.StampaContattoDAO;
+import ImplementazioniDAO.StampaContattoPostgreSQL;
 
 import javax.swing.*;
 import java.awt.*;
@@ -92,10 +94,10 @@ public class CreaContatto extends JPanel {
 
         svuotaCampi();
 
-        stampaContatti();
+        //stampaContatti();
     }
 
-    public void stampaContatti(){
+    /*public void stampaContatti(){
         int i = 0;
         while(i < insContattiCopia.size()){
             JPanel paneLista = new JPanel();
@@ -110,7 +112,7 @@ public class CreaContatto extends JPanel {
             validate();
             i++;
         }
-    }
+    }*/
 
     public void svuotaCampi() {
         txtNome.setText("");
