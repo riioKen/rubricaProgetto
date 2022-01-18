@@ -38,7 +38,7 @@ public class CreaContatto extends JPanel {
     //OGGETTI
     Controller control;
     Contatti contatti;
-    CreaContattoDAO creaContattoDAO = new CreaContattoPostgreSQL();
+
 
     //Arraylist per stampa, DEBUG, dovrà essere sostituito con inserimento da DATABASE
     static ArrayList<Contatti> insContatti = new ArrayList<>();
@@ -86,8 +86,8 @@ public class CreaContatto extends JPanel {
 
     //METODI
 
-
     public void popolamentoArrayList() throws SQLException {
+        CreaContattoDAO creaContattoDAO = new CreaContattoPostgreSQL();
         contatti = new Contatti();
         contatti.setNome(txtNome.getText());
         contatti.setCognome(txtCognome.getText());
@@ -98,15 +98,13 @@ public class CreaContatto extends JPanel {
         contatti.setWhatsapp(Objects.requireNonNull(cbWhatsapp.getSelectedItem()).toString()); //Objects.requireNonNull necessario in caso di valore NULL all'interno della CB
 
         creaContattoDAO.creaContatto(contatti.getNome(), contatti.getCellulare(), contatti.getCognome(), contatti.getFisso());
+
         /*
         insContatti.add(contatti);
         insContattiCopia.add(contatti);*/
 
-
-
         svuotaCampi();
-
-        //stampaContatti();
+        control.getHomepage().stampaContatti();
     }
 
     //STAMPA DIRETTA *** NON DAL DATABASE ***
