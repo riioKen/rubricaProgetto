@@ -17,7 +17,6 @@ public class CreaContattoPostgreSQL implements CreaContattoDAO{
         }
     }
 
-
     //METODI
     @Override
     public void creaContatto(String nome, String cellulare, String cognome, String fisso) throws SQLException {
