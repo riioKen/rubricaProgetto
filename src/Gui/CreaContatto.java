@@ -91,10 +91,8 @@ public class CreaContatto extends JPanel {
         contatti = new Contatti();
         contatti.setNome(txtNome.getText());
         contatti.setCognome(txtCognome.getText());
-        contatti.setEmail(txtEmail.getText());
         contatti.setCellulare(txtCellulare.getText());
         contatti.setFisso(txtFisso.getText());
-        contatti.setIndirizzo(txtIndirizzo.getText());
         contatti.setWhatsapp(Objects.requireNonNull(cbWhatsapp.getSelectedItem()).toString()); //Objects.requireNonNull necessario in caso di valore NULL all'interno della CB
 
         creaContattoDAO.creaContatto(contatti.getNome(), contatti.getCellulare(), contatti.getCognome(), contatti.getFisso());

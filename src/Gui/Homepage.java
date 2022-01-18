@@ -95,6 +95,7 @@ public class Homepage extends JFrame {
     //METODI
 
     public void stampaContatti() throws SQLException {
+        contattiDB.clear();
         StampaContattoDAO stampaContatto = new StampaContattoPostgreSQL();
         contattiDB = stampaContatto.stampaContatti();
         int i = 0;
@@ -113,7 +114,6 @@ public class Homepage extends JFrame {
         }
         paneBase.repaint();
         paneBase.validate();
-        contattiDB.clear();
 
     }
 
@@ -230,7 +230,6 @@ public class Homepage extends JFrame {
 
     public void textureTasti(){
         btnEliminaContatto.setFocusable(false);
-
         lineeApertura.setFocusable(false);
         lineeChiusura.setFocusable(false);
     }

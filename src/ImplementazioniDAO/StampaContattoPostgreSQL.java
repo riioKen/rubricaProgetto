@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class StampaContattoPostgreSQL implements StampaContattoDAO {
 
-    ArrayList<Contatti> contattiDB = new ArrayList<Contatti>();
+    ArrayList<Contatti> contattiDB = new ArrayList<>();
 
     private Connection conn;
 
@@ -31,10 +31,16 @@ public class StampaContattoPostgreSQL implements StampaContattoDAO {
 
         while (rs.next()){
             Contatti contatti =  new Contatti();
+
             String nome = rs.getString("nome");
             contatti.setNome(nome);
             String cognome = rs.getString("cognome");
             contatti.setCognome(cognome);
+            String cellulare = rs.getString("cellulare");
+            contatti.setCellulare(cellulare);
+            String fisso = rs.getString("fisso");
+            contatti.setFisso(fisso);
+
             contattiDB.add(contatti);
         }
         st.close();
