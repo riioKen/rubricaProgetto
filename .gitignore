@@ -110,3 +110,4 @@ fabric.properties
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij
 out/production/rubricaProgetto/com/intellij/uiDesigner/core/Util.class
+*.class
