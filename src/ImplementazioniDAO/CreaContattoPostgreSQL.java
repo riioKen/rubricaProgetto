@@ -23,7 +23,7 @@ public class CreaContattoPostgreSQL implements CreaContattoDAO{
        try {
            PreparedStatement inserisciContatto = conn.prepareStatement("Insert into Contatto(cellulare, nome, cognome, fisso) VALUES ('"+cellulare+"','"+nome + "', '"+cognome+"', '"+fisso+"');");
 
-           inserisciContatto.executeQuery();
+           inserisciContatto.executeUpdate();
            conn.close();
        }catch(SQLException e){
            e.printStackTrace();
