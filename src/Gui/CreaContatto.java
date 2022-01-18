@@ -97,6 +97,7 @@ public class CreaContatto extends JPanel {
         //stampaContatti();
     }
 
+    //STAMPA DIRETTA *** NON DAL DATABASE ***
     /*public void stampaContatti(){
         int i = 0;
         while(i < insContattiCopia.size()){

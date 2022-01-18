@@ -107,7 +107,6 @@ public class Homepage extends JFrame {
             paneBase.setLayout(new GridLayout(0,1));
             paneBase.add(paneLista);
 
-            contattiDB.remove(i);
             validate();
             i++;
         }

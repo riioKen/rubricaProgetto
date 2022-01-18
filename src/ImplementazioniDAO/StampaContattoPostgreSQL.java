@@ -32,8 +32,8 @@ public class StampaContattoPostgreSQL implements StampaContattoDAO {
         while (rs.next()){
             Contatti contatti =  new Contatti();
             String nome = rs.getString("nome");
-            String cognome = rs.getString("cognome");
             contatti.setNome(nome);
+            String cognome = rs.getString("cognome");
             contatti.setCognome(cognome);
             contattiDB.add(contatti);
         }
