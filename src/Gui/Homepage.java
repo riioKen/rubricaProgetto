@@ -36,9 +36,8 @@ public class Homepage extends JFrame {
     //OGGETTI
     private Timer timer;
     Controller control;
-    //StampaContattoDAO stampaContatto = new StampaContattoPostgreSQL();
     int posizioneTendina = 50;
-    StampaContattoDAO stampaContatto = new StampaContattoPostgreSQL();
+
     static ArrayList<Contatti> contattiDB = new ArrayList<>();
 
 
@@ -88,16 +87,19 @@ public class Homepage extends JFrame {
         });
 
         //Stampa dei contatti dal database ******** TESTING ********
-        contattiDB = stampaContatto.stampaContatti();
+
         stampaContatti();
 
     }
 
     //METODI
 
-    public void stampaContatti(){
+    public void stampaContatti() throws SQLException {
+        contattiDB.clear();
+        StampaContattoDAO stampaContatto = new StampaContattoPostgreSQL();
+        contattiDB = stampaContatto.stampaContatti();
         int i = 0;
-
+        paneBase.removeAll();
         while(i < contattiDB.size()){
             JPanel paneLista = new JPanel();
             paneLista.setLayout(new GridLayout(0, 1));
@@ -110,6 +112,9 @@ public class Homepage extends JFrame {
             validate();
             i++;
         }
+        paneBase.repaint();
+        paneBase.validate();
+
     }
 
 
@@ -225,12 +230,20 @@ public class Homepage extends JFrame {
 
     public void textureTasti(){
         btnEliminaContatto.setFocusable(false);
-
         lineeApertura.setFocusable(false);
         lineeChiusura.setFocusable(false);
     }
 
     //GETTER SETTER
+
+    public static ArrayList<Contatti> getContattiDB() {
+        return contattiDB;
+    }
+
+    public static void setContattiDB(ArrayList<Contatti> contattiDB) {
+        Homepage.contattiDB = contattiDB;
+    }
+
     public JButton getLineeApertura() {
         return lineeApertura;
     }

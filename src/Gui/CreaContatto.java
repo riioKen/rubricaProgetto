@@ -2,12 +2,15 @@ package Gui;
 
 import Classi.Contatti;
 import Controller.Controller;
+import DAO.CreaContattoDAO;
 import DAO.StampaContattoDAO;
+import ImplementazioniDAO.CreaContattoPostgreSQL;
 import ImplementazioniDAO.StampaContattoPostgreSQL;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -36,6 +39,7 @@ public class CreaContatto extends JPanel {
     Controller control;
     Contatti contatti;
 
+
     //Arraylist per stampa, DEBUG, dovrà essere sostituito con inserimento da DATABASE
     static ArrayList<Contatti> insContatti = new ArrayList<>();
     static ArrayList<Contatti> insContattiCopia = new ArrayList<>();
@@ -62,7 +66,11 @@ public class CreaContatto extends JPanel {
         getBtnConferma().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                popolamentoArrayList();
+                try {
+                    popolamentoArrayList();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
 
@@ -78,23 +86,23 @@ public class CreaContatto extends JPanel {
 
     //METODI
 
-
-    public void popolamentoArrayList() {
+    public void popolamentoArrayList() throws SQLException {
+        CreaContattoDAO creaContattoDAO = new CreaContattoPostgreSQL();
         contatti = new Contatti();
         contatti.setNome(txtNome.getText());
         contatti.setCognome(txtCognome.getText());
-        contatti.setEmail(txtEmail.getText());
         contatti.setCellulare(txtCellulare.getText());
         contatti.setFisso(txtFisso.getText());
-        contatti.setIndirizzo(txtIndirizzo.getText());
         contatti.setWhatsapp(Objects.requireNonNull(cbWhatsapp.getSelectedItem()).toString()); //Objects.requireNonNull necessario in caso di valore NULL all'interno della CB
 
+        creaContattoDAO.creaContatto(contatti.getNome(), contatti.getCellulare(), contatti.getCognome(), contatti.getFisso());
+
+        /*
         insContatti.add(contatti);
-        insContattiCopia.add(contatti);
+        insContattiCopia.add(contatti);*/
 
         svuotaCampi();
-
-        //stampaContatti();
+        control.getHomepage().stampaContatti();
     }
 
     //STAMPA DIRETTA *** NON DAL DATABASE ***
@@ -158,7 +166,7 @@ public class CreaContatto extends JPanel {
         return btnConferma;
     }
 
-    public void setBtnConferma(JButton btnConferma) {
+    public void setBtnConferma(JButton btnConferma) throws SQLException {
         popolamentoArrayList();
     }
 
