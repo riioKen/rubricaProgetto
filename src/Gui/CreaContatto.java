@@ -306,4 +306,5 @@ public class CreaContatto extends JPanel {
     public static void setInsContatti(ArrayList<Contatti> insContatti) {
         CreaContatto.insContatti = insContatti;
     }
+    
 }
