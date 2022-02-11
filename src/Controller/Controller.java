@@ -16,6 +16,7 @@ public class Controller{
 
     Homepage homepage;
     CreaContatto creaContatto;
+    SchedaInfoContatto infoContatto;
 
     //MAIN
     public static void main(String[] args) throws SQLException {
@@ -27,7 +28,7 @@ public class Controller{
 
         homepage = new Homepage(this); //Serve a creare l'oggetto della GUI
         creaContatto = new CreaContatto(this);
-
+        infoContatto = new SchedaInfoContatto(this);
         homepage.setVisible(true);
 
     }
@@ -44,13 +45,22 @@ public class Controller{
 
     }
 
-    public void switchCreaContatto(JPanel accendi){
+    public void switchJPanelInView(JPanel accendi){
         homepage.getJScrollBarListaContatti().setViewportView(accendi);    //TESTING
 
     }
 
 
     //GETTER SETTER
+
+    public SchedaInfoContatto getInfoContatto() {
+        return infoContatto;
+    }
+
+    public void setInfoContatto(SchedaInfoContatto infoContatto) {
+        this.infoContatto = infoContatto;
+    }
+
     public CreaContatto getCreaContatto() {
         return creaContatto;
     }
