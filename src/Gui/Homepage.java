@@ -71,7 +71,7 @@ public class Homepage extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //control.switchJPanel(control.getCreaContatto().getCreaContatto());
-                control.switchCreaContatto(control.getCreaContatto().getCreaContatto()); //TESTING
+                control.switchJPanelInView(control.getCreaContatto().getCreaContatto()); //TESTING
                 JScrollBarListaContatti.setBorder(BorderFactory.createTitledBorder(""));
             }
         });
