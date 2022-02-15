@@ -70,14 +70,13 @@ public class Homepage extends JFrame {
         btnCreaNuovoContatto.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //control.switchJPanel(control.getCreaContatto().getCreaContatto());
-                control.switchJPanelInView(control.getCreaContatto().getCreaContatto()); //TESTING
+                control.switchJPanelInView(control.getCreaContatto().getCreaContatto());
                 JScrollBarListaContatti.setBorder(BorderFactory.createTitledBorder(""));
             }
         });
 
 
-        //GESTIONE TENDINA SCORRIMENTO
+        /*GESTIONE TENDINA SCORRIMENTO
         lineeChiusura.setVisible(false);
         lineeApertura.addActionListener(new ActionListener() {
             @Override
@@ -85,6 +84,7 @@ public class Homepage extends JFrame {
                 apriTendina();
             }
         });
+         */
 
         //Stampa dei contatti dal database ******** TESTING ********
 
@@ -108,7 +108,6 @@ public class Homepage extends JFrame {
             btnSchedaContatto.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    //System.out.println(e.getActionCommand());
                     try {
                         control.getInfoContatto().riempimentoInfoContatto(e.getActionCommand());
                         control.switchJPanelInView(control.getInfoContatto().getSchedaInfoContattoPane());
@@ -129,7 +128,7 @@ public class Homepage extends JFrame {
 
     }
 
-
+/*
     public void apriTendina() {
         if (posizioneTendina == 50) {
             paneTendina.setSize(posizioneTendina, 150);
@@ -151,6 +150,8 @@ public class Homepage extends JFrame {
             posizioneTendina = 150;
         }
     }
+
+ */
 
 
     public void timerSwitchTema() {
@@ -242,8 +243,7 @@ public class Homepage extends JFrame {
 
     public void textureTasti(){
         btnEliminaContatto.setFocusable(false);
-        lineeApertura.setFocusable(false);
-        lineeChiusura.setFocusable(false);
+
     }
 
     //GETTER SETTER

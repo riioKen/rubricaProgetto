@@ -59,6 +59,7 @@ public class SchedaInfoContatto {
         getTxtCognome().setText(contatto.getCognome());
         getTxtCellulare().setText(contatto.getCellulare());
         getTxtFisso().setText(contatto.getFisso());
+        getTxtEmail().setText(contatto.getEmail());
 
     }
 

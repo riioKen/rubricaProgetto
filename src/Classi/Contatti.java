@@ -14,12 +14,13 @@ public class Contatti {
 
 
     //COSTRUTTORE
-    public Contatti(String nome, String cognome, String cellulare, String fisso) {
+    public Contatti(String nome, String cognome, String cellulare, String fisso, String indirizzo, String email) {
         this.nome = nome;
         this.cognome = cognome;
         this.cellulare = cellulare;
         this.fisso = fisso;
-
+        this.email = email;
+        this.indirizzo = indirizzo;
     }
 
     public Contatti() {
@@ -67,5 +68,21 @@ public class Contatti {
 
     public void setFisso(String fisso) {
         this.fisso = fisso;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getIndirizzo() {
+        return indirizzo;
+    }
+
+    public void setIndirizzo(String indirizzo) {
+        this.indirizzo = indirizzo;
     }
 }

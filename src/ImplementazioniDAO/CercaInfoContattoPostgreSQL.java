@@ -30,9 +30,14 @@ public class CercaInfoContattoPostgreSQL implements CercaInfoContattoDAO{
         String[] split = dati.split("\\s+");
         nomeSQL = split[0];
         cognomeSQL = split[1];
-
-
-        String queryCercaInfoContatto = ("SELECT * FROM Contatto WHERE nome = '"+nomeSQL+"' AND cognome = '"+cognomeSQL+"'");
+        int dim = split.length;
+        if(dim == 3){
+            cognomeSQL = split[1] +" "+ split[2];
+        }
+        else if(dim == 4){
+            cognomeSQL = split[1] +" "+ split[2] +" "+split[3];
+        }
+        String queryCercaInfoContatto = ("SELECT * FROM Contatto as c JOIN Email as e ON c.cellulare = e.cellulare WHERE nome = '"+nomeSQL+"' AND cognome = '"+cognomeSQL+"'");
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(queryCercaInfoContatto);
 
@@ -45,6 +50,8 @@ public class CercaInfoContattoPostgreSQL implements CercaInfoContattoDAO{
             contatto.setCellulare(cellulare);
             String fisso = rs.getString("fisso");
             contatto.setFisso(fisso);
+            String email = rs.getString("email");
+            contatto.setEmail(email);
         }
         return contatto;
     }
