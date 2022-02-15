@@ -82,7 +82,8 @@ public class Homepage extends JFrame {
             JPanel paneLista = new JPanel();
             paneLista.setLayout(new GridLayout(0, 1));
             JButton btnSchedaContatto = new JButton();
-            btnSchedaContatto.setText(contattiDB.get(i).getNome() +" "+ contattiDB.get(i).getCognome()); //Per il momento mi accontento solo di dargli queste informazioni al JButton
+            btnSchedaContatto.setText(contattiDB.get(i).getNome() +" "+ contattiDB.get(i).getCognome());//Per il momento mi accontento solo di dargli queste informazioni al JButton
+            btnSchedaContatto.setActionCommand(contattiDB.get(i).getCellulare());
             btnSchedaContatto.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {

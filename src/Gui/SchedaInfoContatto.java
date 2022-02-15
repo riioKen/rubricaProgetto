@@ -58,9 +58,9 @@ public class SchedaInfoContatto {
         });
     }
 
-    public void riempimentoInfoContatto(String dati) throws SQLException {
+    public void riempimentoInfoContatto(String numero) throws SQLException {
         Contatti contatto = new Contatti();
-        contatto = cercaInfoContattoDAO.cercaInfoContatti(dati);
+        contatto = cercaInfoContattoDAO.cercaInfoContatti(numero);
 
         getTxtNome().setText(contatto.getNome());
         getTxtCognome().setText(contatto.getCognome());

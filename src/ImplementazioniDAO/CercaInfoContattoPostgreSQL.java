@@ -25,7 +25,7 @@ public class CercaInfoContattoPostgreSQL implements CercaInfoContattoDAO{
     @Override
     public Contatti cercaInfoContatti(String dati) throws SQLException {
         Contatti contatto = new Contatti();
-        String nomeSQL;
+        /*String nomeSQL;
         String cognomeSQL;
         String[] split = dati.split("\\s+");
         nomeSQL = split[0];
@@ -37,8 +37,10 @@ public class CercaInfoContattoPostgreSQL implements CercaInfoContattoDAO{
         else if(dim == 4){
             cognomeSQL = split[1] +" "+ split[2] +" "+split[3];
         }
+         */
+
         String queryCercaInfoContatto = ("SELECT * FROM Contatto as c JOIN Email as e ON c.cellulare = e.cellulare " +
-                                         "JOIN Indirizzo as i ON c.cellulare = i.cellulare WHERE nome = '"+nomeSQL+"' AND cognome = '"+cognomeSQL+"'");
+                                         "JOIN Indirizzo as i ON c.cellulare = i.cellulare WHERE c.cellulare = '"+dati+"'");
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(queryCercaInfoContatto);
 
