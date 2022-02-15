@@ -1,8 +1,14 @@
 package Gui;
 
+import Classi.Contatti;
 import Controller.*;
-
 import javax.swing.*;
+import DAO.CercaInfoContattoDAO;
+import ImplementazioniDAO.CercaInfoContattoPostgreSQL;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 
 public class SchedaInfoContatto {
     private JPanel SchedaInfoContattoPane;
@@ -24,14 +30,60 @@ public class SchedaInfoContatto {
     private JLabel lbRispostaWA;
     private JLabel lbTelegram;
     private JLabel lbRispostaTG;
+    private JLabel lbTastoHome;
 
     Controller control;
 
+    CercaInfoContattoDAO cercaInfoContattoDAO = new CercaInfoContattoPostgreSQL();
     public  SchedaInfoContatto(Controller controller){
         control = controller;
+
+        texturetasti();
+
+        lbTastoHome.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                control.switchJPanelInView(control.getHomepage().getPaneBase());
+            }
+        });
     }
 
 
+    //METODI
+    public void riempimentoInfoContatto(String dati) throws SQLException {
+        Contatti contatto = new Contatti();
+        contatto = cercaInfoContattoDAO.cercaInfoContatti(dati);
+
+        getTxtNome().setText(contatto.getNome());
+        getTxtCognome().setText(contatto.getCognome());
+        getTxtCellulare().setText(contatto.getCellulare());
+        getTxtFisso().setText(contatto.getFisso());
+
+    }
+
+    public void texturetasti(){
+        txtNome.setEditable(false);
+        txtNome.setFocusable(false);
+
+        txtCognome.setEditable(false);
+        txtCognome.setFocusable(false);
+
+        txtCellulare.setEditable(false);
+        txtCellulare.setFocusable(false);
+
+        txtFisso.setEditable(false);
+        txtFisso.setFocusable(false);
+
+        txtEmail.setEditable(false);
+        txtEmail.setFocusable(false);
+
+        txtIndirizzo.setEditable(false);
+        txtIndirizzo.setFocusable(false);
+
+        ImageIcon tastoHomeScuro = new ImageIcon("Immagini/imgRitornoHomeFrecciaSCURO.png");
+        lbTastoHome.setIcon(tastoHomeScuro);
+    }
 
     //GETTER SETTER
 

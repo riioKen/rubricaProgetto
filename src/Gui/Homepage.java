@@ -108,7 +108,13 @@ public class Homepage extends JFrame {
             btnSchedaContatto.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println("Hello");
+                    //System.out.println(e.getActionCommand());
+                    try {
+                        control.getInfoContatto().riempimentoInfoContatto(e.getActionCommand());
+                        control.switchJPanelInView(control.getInfoContatto().getSchedaInfoContattoPane());
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
                 }
             });
             paneLista.add(btnSchedaContatto);
