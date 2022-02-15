@@ -25,7 +25,7 @@ public class StampaContattoPostgreSQL implements StampaContattoDAO {
     @Override
     public ArrayList<Contatti> stampaContatti() throws SQLException {
 
-        String queryStampaContatti = "SELECT * FROM Contatto ORDER BY nome";
+        String queryStampaContatti = "Select * from Contatto order by nome";
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(queryStampaContatti);
 

@@ -105,18 +105,6 @@ public class Homepage extends JFrame {
             paneLista.setLayout(new GridLayout(0, 1));
             JButton btnSchedaContatto = new JButton();
             btnSchedaContatto.setText(contattiDB.get(i).getNome() +" "+ contattiDB.get(i).getCognome()); //Per il momento mi accontento solo di dargli queste informazioni al JButton
-            btnSchedaContatto.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    //System.out.println(e.getActionCommand());
-                    try {
-                        control.getInfoContatto().riempimentoInfoContatto(e.getActionCommand());
-                        control.switchJPanelInView(control.getInfoContatto().getSchedaInfoContattoPane());
-                    } catch (SQLException ex) {
-                        ex.printStackTrace();
-                    }
-                }
-            });
             paneLista.add(btnSchedaContatto);
             paneBase.setLayout(new GridLayout(0,1));
             paneBase.add(paneLista);
