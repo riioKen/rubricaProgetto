@@ -42,31 +42,19 @@ public class Homepage extends JFrame {
 
 
     public Homepage(Controller controller) throws SQLException {
+
         control = controller; //Serve a linkare il controller al JPanel
-
-        cardHomepage = new JPanel();
-        cardHomepage.setLayout(new CardLayout());
-        cardHomepage.add(homepage);
-
-        setTitle("Homepage");
-        setContentPane(cardHomepage);
-        setSize(500, 500);
-        setDefaultCloseOperation(EXIT_ON_CLOSE); //Serve a terminare il programma quando si preme la X
-        setLocation(300, 300);
-        JScrollBarListaContatti.getVerticalScrollBar().setUnitIncrement(7);
-
-        TemaScuro();  //INIZIALIZAZZIONE DEL TEMA SCURO BY DEFAULT
-
-
+        impostazioniGeneraliHomepage();
         //TIMER CHE FA DA SWITCH PER LA DARK MODE E LA LIGHT MODE
-        btnSwitchTema.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                timerSwitchTema();
-            }
-        });
+        btnSwitchTema();
+        btnCreaNuovoContatto();
+        stampaContatti();
 
-        //
+    }
+
+    //METODI
+
+    public void btnCreaNuovoContatto(){
         btnCreaNuovoContatto.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -74,25 +62,15 @@ public class Homepage extends JFrame {
                 JScrollBarListaContatti.setBorder(BorderFactory.createTitledBorder(""));
             }
         });
-
-
-        /*GESTIONE TENDINA SCORRIMENTO
-        lineeChiusura.setVisible(false);
-        lineeApertura.addActionListener(new ActionListener() {
+    }
+    public void btnSwitchTema(){
+        btnSwitchTema.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                apriTendina();
+                timerSwitchTema();
             }
         });
-         */
-
-        //Stampa dei contatti dal database ******** TESTING ********
-
-        stampaContatti();
-
     }
-
-    //METODI
 
     public void stampaContatti() throws SQLException {
         contattiDB.clear();
@@ -111,6 +89,7 @@ public class Homepage extends JFrame {
                     try {
                         control.getInfoContatto().riempimentoInfoContatto(e.getActionCommand());
                         control.switchJPanelInView(control.getInfoContatto().getSchedaInfoContattoPane());
+                        JScrollBarListaContatti.setBorder(BorderFactory.createTitledBorder(""));
                     } catch (SQLException ex) {
                         ex.printStackTrace();
                     }
@@ -153,6 +132,30 @@ public class Homepage extends JFrame {
 
  */
 
+    public void impostazioniGeneraliHomepage(){
+        cardHomepage = new JPanel();
+        cardHomepage.setLayout(new CardLayout());
+        cardHomepage.add(homepage);
+
+        setTitle("Homepage");
+        setContentPane(cardHomepage);
+        setSize(500, 500);
+        setDefaultCloseOperation(EXIT_ON_CLOSE); //Serve a terminare il programma quando si preme la X
+        setLocation(300, 300);
+        JScrollBarListaContatti.getVerticalScrollBar().setUnitIncrement(7);
+
+        TemaScuro();  //INIZIALIZAZZIONE DEL TEMA SCURO BY DEFAULT
+
+        /*GESTIONE TENDINA SCORRIMENTO
+        lineeChiusura.setVisible(false);
+        lineeApertura.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                apriTendina();
+            }
+        });
+         */
+    }
 
     public void timerSwitchTema() {
         if (timer == null) {

@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 
 public class SchedaInfoContatto {
+
     private JPanel SchedaInfoContattoPane;
     private JComboBox cbGruppo;
     private JTextField txtNome;
@@ -38,19 +39,25 @@ public class SchedaInfoContatto {
     public  SchedaInfoContatto(Controller controller){
         control = controller;
 
+        lbTastoHome();
         texturetasti();
 
+    }
+
+
+    //METODI
+
+    public void lbTastoHome(){
         lbTastoHome.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 control.switchJPanelInView(control.getHomepage().getPaneBase());
+                control.getHomepage().getJScrollBarListaContatti().setBorder(BorderFactory.createTitledBorder("Lista dei Contatti"));
             }
         });
     }
 
-
-    //METODI
     public void riempimentoInfoContatto(String dati) throws SQLException {
         Contatti contatto = new Contatti();
         contatto = cercaInfoContattoDAO.cercaInfoContatti(dati);
@@ -64,6 +71,7 @@ public class SchedaInfoContatto {
     }
 
     public void texturetasti(){
+
         txtNome.setEditable(false);
         txtNome.setFocusable(false);
 

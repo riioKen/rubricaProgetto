@@ -48,18 +48,23 @@ public class CreaContatto extends JPanel {
         setVisible(true);
         TemaScuro();
 
+        lbTastoHome();
+        btnConferma();
+        btnSvuotaCampi();
+    }
 
-        getLbTastoHome().addMouseListener(new MouseAdapter() {
+
+
+    //FUNZIONALITA' PULSANTI GUI
+    public void btnSvuotaCampi(){
+        getBtnSvuotaCampi().addActionListener(new ActionListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-                //control.switchJPanel(control.getHomepage().getHomepage());
-                control.switchJPanelInView(control.getHomepage().getPaneBase());
-                control.getHomepage().getJScrollBarListaContatti().setBorder(BorderFactory.createTitledBorder("Lista dei Contatti"));//TESTING
+            public void actionPerformed(ActionEvent e) {
+                svuotaCampi();
             }
-
         });
-
+    }
+    public void btnConferma(){
         getBtnConferma().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -70,16 +75,27 @@ public class CreaContatto extends JPanel {
                 }
             }
         });
-
-        getBtnSvuotaCampi().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                svuotaCampi();
-            }
-        });
-
     }
+    public void lbTastoHome(){
+        getLbTastoHome().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                control.switchJPanelInView(control.getHomepage().getPaneBase());
+                control.getHomepage().getJScrollBarListaContatti().setBorder(BorderFactory.createTitledBorder("Lista dei Contatti"));//TESTING
+            }
 
+        });
+    }
+    public void svuotaCampi() {
+        txtNome.setText("");
+        txtCognome.setText("");
+        txtCellulare.setText("");
+        txtFisso.setText("");
+        txtEmail.setText("");
+        txtIndirizzo.setText("");
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //METODI
 
@@ -102,7 +118,7 @@ public class CreaContatto extends JPanel {
         control.getHomepage().stampaContatti();
     }
 
-    //STAMPA DIRETTA *** NON DAL DATABASE ***
+    //STAMPA DIRETTA *** NON DAL DATABASE ***   DEBUGGING PURPOSE
     /*public void stampaContatti(){
         int i = 0;
         while(i < insContattiCopia.size()){
@@ -119,15 +135,6 @@ public class CreaContatto extends JPanel {
             i++;
         }
     }*/
-
-    public void svuotaCampi() {
-        txtNome.setText("");
-        txtCognome.setText("");
-        txtCellulare.setText("");
-        txtFisso.setText("");
-        txtEmail.setText("");
-        txtIndirizzo.setText("");
-    }
 
 
     public void TemaScuro() {
