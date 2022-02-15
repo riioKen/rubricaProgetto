@@ -60,7 +60,7 @@ public class SchedaInfoContatto {
         getTxtCellulare().setText(contatto.getCellulare());
         getTxtFisso().setText(contatto.getFisso());
         getTxtEmail().setText(contatto.getEmail());
-
+        getTxtIndirizzo().setText(contatto.getIndirizzo());
     }
 
     public void texturetasti(){
