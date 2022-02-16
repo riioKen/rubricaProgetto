@@ -12,11 +12,6 @@ public class CercaInfoContattoPostgreSQL implements CercaInfoContattoDAO{
 
 
     public CercaInfoContattoPostgreSQL(){
-        try{
-            conn = Connessione.getInstance().getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
 
     }
 
@@ -24,6 +19,11 @@ public class CercaInfoContattoPostgreSQL implements CercaInfoContattoDAO{
     //METODI
     @Override
     public Contatti cercaInfoContatti(String dati) throws SQLException {
+        try{
+            conn = Connessione.getInstance().getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         Contatti contatto = new Contatti();
         /*String nomeSQL;
         String cognomeSQL;
@@ -62,6 +62,7 @@ public class CercaInfoContattoPostgreSQL implements CercaInfoContattoDAO{
             String nazione = rs.getString("nazione");
             contatto.setIndirizzo(indirizzo+", "+civico+", "+cap+", "+citta+", "+nazione);
         }
+        conn.close();
         return contatto;
     }
 

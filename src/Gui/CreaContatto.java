@@ -82,6 +82,11 @@ public class CreaContatto extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 control.switchJPanelInView(control.getHomepage().getPaneBase());
+                try {
+                    control.getHomepage().stampaContatti();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
                 control.getHomepage().getJScrollBarListaContatti().setBorder(BorderFactory.createTitledBorder("Lista dei Contatti"));//TESTING
             }
 
@@ -106,9 +111,12 @@ public class CreaContatto extends JPanel {
         contatti.setCognome(txtCognome.getText());
         contatti.setCellulare(txtCellulare.getText());
         contatti.setFisso(txtFisso.getText());
+        contatti.setEmail(txtEmail.getText());
+        contatti.setIndirizzo(txtIndirizzo.getText());
+
         contatti.setWhatsapp(Objects.requireNonNull(cbWhatsapp.getSelectedItem()).toString()); //Objects.requireNonNull necessario in caso di valore NULL all'interno della CB
 
-        creaContattoDAO.creaContatto(contatti.getNome(), contatti.getCellulare(), contatti.getCognome(), contatti.getFisso());
+        creaContattoDAO.creaContatto(contatti.getNome(), contatti.getCellulare(), contatti.getCognome(), contatti.getFisso(), contatti.getEmail(), contatti.getIndirizzo());
 
         /*
         insContatti.add(contatti);
@@ -147,6 +155,7 @@ public class CreaContatto extends JPanel {
     }
 
     //GETTER SETTER
+
 
 
 

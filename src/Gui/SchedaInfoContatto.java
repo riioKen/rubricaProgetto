@@ -4,8 +4,12 @@ import Classi.Contatti;
 import Controller.*;
 import javax.swing.*;
 import DAO.CercaInfoContattoDAO;
+import DAO.EliminaContattoDAO;
 import ImplementazioniDAO.CercaInfoContattoPostgreSQL;
+import ImplementazioniDAO.EliminaContattoPostgreSQL;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
@@ -32,27 +36,58 @@ public class SchedaInfoContatto {
     private JLabel lbTelegram;
     private JLabel lbRispostaTG;
     private JLabel lbTastoHome;
+    private JButton btnAggiornaContatto;
+    private JButton btnEliminaContatto;
 
     Controller control;
 
     CercaInfoContattoDAO cercaInfoContattoDAO = new CercaInfoContattoPostgreSQL();
+    EliminaContattoDAO eliminaContattoDAO = new EliminaContattoPostgreSQL();
     public  SchedaInfoContatto(Controller controller){
         control = controller;
 
         lbTastoHome();
         texturetasti();
 
+        btnEliminaContatto();
     }
 
 
     //METODI
+    public void btnEliminaContatto(){
+        btnEliminaContatto.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    eliminaContattoDAO.eliminaContatto(txtCellulare.getText());
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+                svuotaCampiInfoContatto();
+            }
+        });
+    }
+    public void svuotaCampiInfoContatto(){
 
+            txtNome.setText("");
+            txtCognome.setText("");
+            txtCellulare.setText("");
+            txtFisso.setText("");
+            txtEmail.setText("");
+            txtIndirizzo.setText("");
+
+    }
     public void lbTastoHome(){
         lbTastoHome.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 control.switchJPanelInView(control.getHomepage().getPaneBase());
+                try {
+                    control.getHomepage().stampaContatti();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
                 control.getHomepage().getJScrollBarListaContatti().setBorder(BorderFactory.createTitledBorder("Lista dei Contatti"));
             }
         });
