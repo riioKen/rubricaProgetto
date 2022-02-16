@@ -19,25 +19,13 @@ public class CercaInfoContattoPostgreSQL implements CercaInfoContattoDAO{
     //METODI
     @Override
     public Contatti cercaInfoContatti(String dati) throws SQLException {
+
         try{
             conn = Connessione.getInstance().getConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         Contatti contatto = new Contatti();
-        /*String nomeSQL;
-        String cognomeSQL;
-        String[] split = dati.split("\\s+");
-        nomeSQL = split[0];
-        cognomeSQL = split[1];
-        int dim = split.length;
-        if(dim == 3){
-            cognomeSQL = split[1] +" "+ split[2];
-        }
-        else if(dim == 4){
-            cognomeSQL = split[1] +" "+ split[2] +" "+split[3];
-        }
-         */
 
         String queryCercaInfoContatto = ("SELECT * FROM Contatto as c JOIN Email as e ON c.cellulare = e.cellulare " +
                                          "JOIN Indirizzo as i ON c.cellulare = i.cellulare WHERE c.cellulare = '"+dati+"'");
@@ -45,6 +33,7 @@ public class CercaInfoContattoPostgreSQL implements CercaInfoContattoDAO{
         ResultSet rs = st.executeQuery(queryCercaInfoContatto);
 
         while (rs.next()) {
+
             String nome = rs.getString("nome");
             contatto.setNome(nome);
             String cognome = rs.getString("cognome");
@@ -61,6 +50,7 @@ public class CercaInfoContattoPostgreSQL implements CercaInfoContattoDAO{
             String citta = rs.getString("citta");
             String nazione = rs.getString("nazione");
             contatto.setIndirizzo(indirizzo+", "+civico+", "+cap+", "+citta+", "+nazione);
+
         }
         conn.close();
         return contatto;

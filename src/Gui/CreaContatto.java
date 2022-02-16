@@ -156,9 +156,6 @@ public class CreaContatto extends JPanel {
 
     //GETTER SETTER
 
-
-
-
     public static ArrayList<Contatti> getInsContattiCopia() {
         return insContattiCopia;
     }

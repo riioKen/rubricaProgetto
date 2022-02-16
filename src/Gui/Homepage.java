@@ -43,9 +43,8 @@ public class Homepage extends JFrame {
 
     public Homepage(Controller controller) throws SQLException {
 
-        control = controller; //Serve a linkare il controller al JPanel
+        control = controller;
         impostazioniGeneraliHomepage();
-        //TIMER CHE FA DA SWITCH PER LA DARK MODE E LA LIGHT MODE
         btnSwitchTema();
         btnCreaNuovoContatto();
         stampaContatti();

@@ -60,10 +60,11 @@ public class SchedaInfoContatto {
             public void actionPerformed(ActionEvent e) {
                 try {
                     eliminaContattoDAO.eliminaContatto(txtCellulare.getText());
+                    control.getHomepage().stampaContatti();
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
-                svuotaCampiInfoContatto();
+                control.switchJPanelInView(control.getHomepage().getPaneBase());
             }
         });
     }
@@ -94,6 +95,7 @@ public class SchedaInfoContatto {
     }
 
     public void riempimentoInfoContatto(String numero) throws SQLException {
+
         Contatti contatto = new Contatti();
         contatto = cercaInfoContattoDAO.cercaInfoContatti(numero);
 
@@ -103,6 +105,7 @@ public class SchedaInfoContatto {
         getTxtFisso().setText(contatto.getFisso());
         getTxtEmail().setText(contatto.getEmail());
         getTxtIndirizzo().setText(contatto.getIndirizzo());
+
     }
 
     public void texturetasti(){
