@@ -65,16 +65,34 @@ public class CreaContatto extends JPanel {
         });
     }
     public void btnConferma(){
-        getBtnConferma().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    popolamentoArrayList();
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
+
+                getBtnConferma().addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if(txtNome.getText().length() > 20 || txtNome.getText().length() == 0){
+                            System.out.println("Hai inserito un nome troppo lungo o hai inserito 0");
+                        }else if(txtCognome.getText().length() > 20 || txtCognome.getText().length() == 0){
+                            System.out.println("Hai inserito un cognome troppo lungo o hai inserito 0");
+                        } else if(txtCellulare.getText().length() != 10){
+                            System.out.println("Hai inserito un numero cellulare non valido");
+                        } else if(txtFisso.getText().length() > 10 || txtFisso.getText().length() == 0){
+                            System.out.println("Hai inserito un fisso troppo lungo o hai inserito 0");
+                        } else if(txtEmail.getText().length() > 30 || txtEmail.getText().length() == 0){
+                            System.out.println("Hai inserito un indirizzo email troppo lungo o hai inserito 0");
+                        } else{
+                            System.out.println("Contatto Inserito nel db");
+                            try {
+                                System.out.println("Contatto Inserito nel db");
+                                inserimentoContattoDatabase();
+                            } catch (SQLException ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+                    }
+                });
+
+
+
     }
     public void lbTastoHome(){
         getLbTastoHome().addMouseListener(new MouseAdapter() {
@@ -104,7 +122,7 @@ public class CreaContatto extends JPanel {
 
     //METODI
 
-    public void popolamentoArrayList() throws SQLException {
+    public void inserimentoContattoDatabase() throws SQLException {
         CreaContattoDAO creaContattoDAO = new CreaContattoPostgreSQL();
         contatti = new Contatti();
         contatti.setNome(txtNome.getText());
@@ -117,10 +135,6 @@ public class CreaContatto extends JPanel {
         contatti.setWhatsapp(Objects.requireNonNull(cbWhatsapp.getSelectedItem()).toString()); //Objects.requireNonNull necessario in caso di valore NULL all'interno della CB
 
         creaContattoDAO.creaContatto(contatti.getNome(), contatti.getCellulare(), contatti.getCognome(), contatti.getFisso(), contatti.getEmail(), contatti.getIndirizzo());
-
-        /*
-        insContatti.add(contatti);
-        insContattiCopia.add(contatti);*/
 
         svuotaCampi();
         control.getHomepage().stampaContatti();
@@ -177,7 +191,7 @@ public class CreaContatto extends JPanel {
     }
 
     public void setBtnConferma(JButton btnConferma) throws SQLException {
-        popolamentoArrayList();
+        inserimentoContattoDatabase();
     }
 
 

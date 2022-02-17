@@ -17,7 +17,6 @@ public class EliminaContattoPostgreSQL implements EliminaContattoDAO{
         try{
             conn = Connessione.getInstance().getConnection();
             PreparedStatement queryEliminaContatto = conn.prepareStatement("DELETE FROM Contatto WHERE cellulare = '"+cellulare+"';");
-            System.out.println(cellulare);
             queryEliminaContatto.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

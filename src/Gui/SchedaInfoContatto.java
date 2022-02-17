@@ -39,6 +39,7 @@ public class SchedaInfoContatto {
     private JButton btnAggiornaContatto;
     private JButton btnEliminaContatto;
 
+
     Controller control;
 
     CercaInfoContattoDAO cercaInfoContattoDAO = new CercaInfoContattoPostgreSQL();
@@ -46,10 +47,12 @@ public class SchedaInfoContatto {
     public  SchedaInfoContatto(Controller controller){
         control = controller;
 
+
         lbTastoHome();
         texturetasti();
 
         btnEliminaContatto();
+
     }
 
 
@@ -65,6 +68,18 @@ public class SchedaInfoContatto {
                     ex.printStackTrace();
                 }
                 control.switchJPanelInView(control.getHomepage().getPaneBase());
+            }
+        });
+    }
+    public void btnAggiornaContatto(){
+        btnAggiornaContatto.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    eliminaContattoDAO.eliminaContatto(txtCellulare.getText());
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
     }
