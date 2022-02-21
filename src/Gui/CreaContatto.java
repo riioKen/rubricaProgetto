@@ -163,6 +163,7 @@ public class CreaContatto extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 control.switchJPanelInView(control.getHomepage().getPaneBase());
+                svuotaCampi();
                 try {
                     control.getHomepage().stampaContatti();
                 } catch (SQLException ex) {
