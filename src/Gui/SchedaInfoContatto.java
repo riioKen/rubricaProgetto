@@ -39,14 +39,12 @@ public class SchedaInfoContatto {
     private JButton btnAggiornaContatto;
     private JButton btnEliminaContatto;
 
-
     Controller control;
 
     CercaInfoContattoDAO cercaInfoContattoDAO = new CercaInfoContattoPostgreSQL();
     EliminaContattoDAO eliminaContattoDAO = new EliminaContattoPostgreSQL();
     public  SchedaInfoContatto(Controller controller){
         control = controller;
-
 
         lbTastoHome();
         texturetasti();
