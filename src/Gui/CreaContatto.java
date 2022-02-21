@@ -188,7 +188,6 @@ public class CreaContatto extends JPanel {
     //METODI
 
     public void messaggiErroreFALSE(){
-
         imgErroreFisso.setVisible(false);
         imgErroreCognome.setVisible(false);
         imgErroreNome.setVisible(false);
