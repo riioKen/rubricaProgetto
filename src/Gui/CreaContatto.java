@@ -175,6 +175,7 @@ public class CreaContatto extends JPanel {
         });
     }
     public void svuotaCampi() {
+
         txtNome.setText("");
         txtCognome.setText("");
         txtCellulare.setText("");
@@ -189,14 +190,17 @@ public class CreaContatto extends JPanel {
     //METODI
 
     public void messaggiErroreFALSE(){
+
         imgErroreFisso.setVisible(false);
         imgErroreCognome.setVisible(false);
         imgErroreNome.setVisible(false);
         imgErroreCellulare.setVisible(false);
         imgErroreIndirizzo.setVisible(false);
         imgErroreEmail.setVisible(false);
+        lbErroreInserimento.setVisible(false);
     }
     public void inserimentoContattoDatabase() throws SQLException {
+
         CreaContattoDAO creaContattoDAO = new CreaContattoPostgreSQL();
         contatti = new Contatti();
         contatti.setNome(txtNome.getText());
