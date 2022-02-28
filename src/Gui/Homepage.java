@@ -204,10 +204,15 @@ public class Homepage extends JFrame {
         } catch (Exception e) {
             System.out.println("Icona btnCreaNuovoContattoSCURO non caricata");
         }
+        try{
+            Image imgIcona = ImageIO.read(new File("Immagini/imgLogo.png"));
+            setIconImage(imgIcona);
+        }catch (Exception e) {
+            System.out.println("Logo con caricato correttamente");
+        }
 
         textureTasti();
     }
-
 
     //TEMA CHIARO
     public void TemaChiaro() {

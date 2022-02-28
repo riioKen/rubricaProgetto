@@ -53,7 +53,7 @@ public class CreaContatto extends JPanel {
     public CreaContatto(Controller controller) {
         control = controller;
 
-        TemaScuro();
+        temaScuro();
         messaggiErroreFALSE();
         lbTastoHome();
         btnConferma();
@@ -237,21 +237,21 @@ public class CreaContatto extends JPanel {
     }*/
 
 
-    public void TemaScuro() {
+    public void temaScuro() {
 
         ImageIcon imgErrore = new ImageIcon("Immagini/imgErroreCampo.png");
         Image image = imgErrore.getImage();
-        Image imgScalata = image.getScaledInstance(20, 20,  java.awt.Image.SCALE_SMOOTH);
+        Image imgScalata = image.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH);
         imgErrore = new ImageIcon(imgScalata);
 
-        try{
+        try {
             imgErroreNome.setIcon(imgErrore);
             imgErroreCognome.setIcon(imgErrore);
             imgErroreFisso.setIcon(imgErrore);
             imgErroreCellulare.setIcon(imgErrore);
             imgErroreEmail.setIcon(imgErrore);
             imgErroreIndirizzo.setIcon(imgErrore);
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println("Una delle immagini imgErrore in CreaContatto non funziona");
         }
 
@@ -262,6 +262,10 @@ public class CreaContatto extends JPanel {
         } catch (Exception e) {
             System.out.println("L'immagine tastoHomeScuro non e' stata caricata correttamente");
         }
+    }
+
+    public void teamChiaro(){
+
     }
 
     //GETTER SETTER
