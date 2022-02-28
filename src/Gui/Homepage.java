@@ -139,7 +139,7 @@ public class Homepage extends JFrame {
 
         setTitle("Homepage");
         setContentPane(cardHomepage);
-        setSize(500, 500);
+        setSize(550, 500);
         setDefaultCloseOperation(EXIT_ON_CLOSE); //Serve a terminare il programma quando si preme la X
         setLocation(300, 300);
         JScrollBarListaContatti.getVerticalScrollBar().setUnitIncrement(7);
