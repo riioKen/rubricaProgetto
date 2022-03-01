@@ -14,13 +14,14 @@ public class Contatti {
 
 
     //COSTRUTTORE
-    public Contatti(String nome, String cognome, String cellulare, String fisso, String indirizzo, String email) {
+    public Contatti(String nome, String cognome, String cellulare, String fisso, String indirizzo, String email, String foto) {
         this.nome = nome;
         this.cognome = cognome;
         this.cellulare = cellulare;
         this.fisso = fisso;
         this.email = email;
         this.indirizzo = indirizzo;
+        this.foto = foto;
     }
 
     public Contatti() {
@@ -29,6 +30,14 @@ public class Contatti {
 
 
     //GETTER SETTER
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
 
     public String getWhatsapp() {
         return whatsapp;

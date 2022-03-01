@@ -2,16 +2,21 @@ package Gui;
 
 import Classi.Contatti;
 import Controller.*;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import DAO.CercaInfoContattoDAO;
 import DAO.EliminaContattoDAO;
 import ImplementazioniDAO.CercaInfoContattoPostgreSQL;
 import ImplementazioniDAO.EliminaContattoPostgreSQL;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 
 public class SchedaInfoContatto {
@@ -38,6 +43,7 @@ public class SchedaInfoContatto {
     private JLabel lbTastoHome;
     private JButton btnAggiornaContatto;
     private JButton btnEliminaContatto;
+    private JLabel lbFoto;
 
     Controller control;
 
@@ -107,7 +113,7 @@ public class SchedaInfoContatto {
         });
     }
 
-    public void riempimentoInfoContatto(String numero) throws SQLException {
+    public void riempimentoInfoContatto(String numero) throws SQLException, IOException {
 
         Contatti contatto = new Contatti();
         contatto = cercaInfoContattoDAO.cercaInfoContatti(numero);
@@ -118,9 +124,17 @@ public class SchedaInfoContatto {
         getTxtFisso().setText(contatto.getFisso());
         getTxtEmail().setText(contatto.getEmail());
         getTxtIndirizzo().setText(contatto.getIndirizzo());
+        
+        if(contatto.getFoto() != null) {
+            Image imgContatto = ImageIO.read(new File(contatto.getFoto()));
+            lbFoto.setIcon(new ImageIcon(imgContatto));
+        }
 
     }
 
+    public void gestioneFoto() throws IOException {
+
+    }
     public void texturetasti(){
 
         txtNome.setEditable(false);

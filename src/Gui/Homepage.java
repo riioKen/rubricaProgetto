@@ -12,6 +12,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -29,6 +30,8 @@ public class Homepage extends JFrame {
     private JButton btnCreaNuovoContatto;
     private JButton btnEliminaContatto;
     private JButton btnSwitchTema;
+    private JButton btnRicerca;
+    private JTextField textField1;
     private JButton stampaListaContattiButton;
     private JButton lineeApertura;
     private JButton lineeChiusura;
@@ -47,6 +50,7 @@ public class Homepage extends JFrame {
         impostazioniGeneraliHomepage();
         btnSwitchTema();
         btnCreaNuovoContatto();
+        btnRicerca();
         stampaContatti();
 
     }
@@ -90,7 +94,7 @@ public class Homepage extends JFrame {
                         control.getInfoContatto().riempimentoInfoContatto(e.getActionCommand());
                         control.switchJPanelInView(control.getInfoContatto().getSchedaInfoContattoPane());
                         JScrollBarListaContatti.setBorder(BorderFactory.createTitledBorder(""));
-                    } catch (SQLException ex) {
+                    } catch (SQLException | IOException ex) {
                         ex.printStackTrace();
                     }
                 }
@@ -157,6 +161,15 @@ public class Homepage extends JFrame {
          */
     }
 
+    public void btnRicerca(){
+
+        btnRicerca.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                control.switchJPanelInView(control.getSchedaRicerche().getPaneRicercaMain());
+            }
+        });
+    }
     public void timerSwitchTema() {
         if (timer == null) {
             timer = new Timer(100, new ActionListener() {
@@ -181,9 +194,9 @@ public class Homepage extends JFrame {
 
         //GUI HOMEPAGE
         try {
-            Image imgSwitchTema = ImageIO.read(new File("Immagini/imgTemaScuro.png")); //Da settare la dimensione delle ICONE (PRESI DI MISURA GIUSTA COSI DA NON
+            Image imgSwitchTema = ImageIO.read(new File("Immagini/imgTemaScuro.png"));
             btnSwitchTema.setIcon(new ImageIcon(imgSwitchTema));
-        } catch (Exception e) {                                                                                //AVERE NECESSITA' PER IL MOMENTO)
+        } catch (Exception e) {
             System.out.println("Icona btnTemaScuro non caricata");
         }
         btnSwitchTema.setFocusable(false);
@@ -201,6 +214,8 @@ public class Homepage extends JFrame {
         try {
             Image imgEliminaContatto = ImageIO.read(new File("Immagini/imgEliminaContatto.png"));     //STESSO DISCORSO
             btnEliminaContatto.setIcon(new ImageIcon(imgEliminaContatto));
+            Image imgRicerca = ImageIO.read(new File ("Immagini/imgRicerca.png"));
+            btnRicerca.setIcon(new ImageIcon(imgRicerca));
         } catch (Exception e) {
             System.out.println("Icona btnCreaNuovoContattoSCURO non caricata");
         }
@@ -219,7 +234,6 @@ public class Homepage extends JFrame {
 
         FlatLightLaf.setup();
         SwingUtilities.updateComponentTreeUI(homepage);     //Serve a fare il refresh dei componenti a runtime (UTILE PER DARK MODE TO LIGHT)
-
 
         try {
             Image imgSwitchTema = ImageIO.read(new File("Immagini/imgTemaChiaro.png")); //Da settare la dimensione (PRESI DI MISURA GIUSTA COSI DA NON
@@ -250,7 +264,9 @@ public class Homepage extends JFrame {
     }
 
     public void textureTasti(){
+
         btnEliminaContatto.setFocusable(false);
+        btnRicerca.setFocusable(false);
 
     }
 

@@ -50,6 +50,8 @@ public class CercaInfoContattoPostgreSQL implements CercaInfoContattoDAO{
             String citta = rs.getString("citta");
             String nazione = rs.getString("nazione");
             contatto.setIndirizzo(indirizzo+", "+civico+", "+cap+", "+citta+", "+nazione);
+            String foto = rs.getString("foto");
+            contatto.setFoto(foto);
 
         }
         conn.close();
