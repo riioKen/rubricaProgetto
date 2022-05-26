@@ -1,0 +1,96 @@
+------------------------------Tabelle------------------------------
+CREATE TABLE Contatto(
+	Cellulare varchar(15) Primary key,
+	Nome varchar(20),
+	Cognome varchar(20),
+	Fisso varchar(10)
+	);
+
+
+CREATE TABLE Indirizzo(
+	CodIndirizzo Serial Primary Key,
+	Cellulare varchar(15),
+	Via varchar(30),
+	Civico varchar(3),
+	CAP char(5),
+	Citta varchar(20),
+	Nazione varchar(20),
+	
+CONSTRAINT FkCellulareInd FOREIGN KEY (Cellulare) REFERENCES Contatto(Cellulare)
+	);
+
+	
+CREATE TABLE Email(
+	Cellulare varchar(15),
+	Email varchar(30) Primary Key,
+	
+CONSTRAINT FkCellulareEmail FOREIGN KEY (Cellulare) REFERENCES Contatto(Cellulare)
+	);
+	
+
+CREATE TABLE Messaging(
+	NomeFornitore varchar(5) Primary Key
+	);
+
+
+CREATE TABLE Collegata(
+	Email varchar(30),
+	NomeFornitore varchar(5),
+	Nickname varchar (15),
+	FraseBenvenuto varchar(30),
+	
+CONSTRAINT FkEmailCollegata FOREIGN KEY (Email) References Email(Email),
+CONSTRAINT FkNomeFornitore FOREIGN KEY (NomeFornitore) References Messaging(NomeFornitore)
+	
+);
+
+
+CREATE TABLE GruppoContatti(
+	NomeGruppo varchar(20) Primary Key,
+	N_Partecipanti varchar(3)
+);
+
+
+CREATE TABLE Appartiene(
+	Cellulare varchar(15),
+	NomeGruppo varchar(20),
+	
+CONSTRAINT FkCellulareAppartiene FOREIGN KEY (Cellulare) References Contatto(Cellulare),
+CONSTRAINT FkNomeGruppoAppartiene FOREIGN KEY (NomeGruppo) References GruppoContatti(NomeGruppo)
+	
+);
+
+
+------------------------------Funzioni------------------------------
+Funzioni
+CREATE FUNCTION RimuoviPartecipanti() RETURNS trigger
+LANGUAGE plpgsql
+as $$
+BEGIN
+UPDATE gruppocontatti 
+SET n_partecipanti = n_partecipanti - 1
+WHERE nomegruppo = old.nomegruppo;
+RETURN NULL;
+END;
+$$
+
+CREATE FUNCTION AumentoPartecipanti() RETURNS trigger
+LANGUAGE plpgsql
+as $$
+BEGIN
+UPDATE gruppocontatti 
+SET n_partecipanti = n_partecipanti + 1
+WHERE nomegruppo = new.nomegruppo;
+RETURN NULL;
+END;
+$$
+
+
+------------------------------Trigger------------------------------
+CREATE TRIGGER triggerPartecipantiRimuovi AFTER DELETE ON appartiene
+FOR EACH ROW
+EXECUTE FUNCTION RimuoviPartecipanti();
+
+CREATE TRIGGER triggerPartecipanti AFTER INSERT ON appartiene
+FOR EACH ROW
+EXECUTE FUNCTION AumentoPartecipanti();

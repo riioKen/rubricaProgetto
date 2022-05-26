@@ -1,0 +1,54 @@
+create table Contatto(
+	Cellulare varchar(15) Primary key,
+	Nome varchar(20),
+	Cognome varchar(20),
+	Fisso varchar(10)
+	);
+	
+create table Indirizzo(
+	CodIndirizzo Serial Primary Key,
+	Cellulare varchar(15),
+	Via varchar(30),
+	Civico varchar(3),
+	CAP char(5),
+	Citta varchar(20),
+	Nazione varchar(20),
+	
+	Constraint FkCellulareInd Foreign Key (Cellulare) REFERENCES Contatto(Cellulare)
+	);
+	
+create table Email(
+	Cellulare varchar(15),
+	Email varchar(30) Primary Key,
+	
+	Constraint FkCellulareEmail Foreign Key (Cellulare) REFERENCES Contatto(Cellulare)
+	);
+	
+create table Messaging(
+	NomeFornitore varchar(5) Primary Key
+	);
+
+create table Collegata(
+	Email varchar(30),
+	NomeFornitore varchar(5),
+	Nickname varchar (15),
+	FraseBenvenuto varchar(30),
+	
+	Constraint FkEmailCollegata Foreign Key (Email) References Email(Email),
+	Constraint FkNomeFornitore Foreign Key (NomeFornitore) References Messaging(NomeFornitore)
+	
+);
+
+create table GruppoContatti(
+	NomeGruppo varchar(20) Primary Key,
+	N_Partecipanti varchar(3)
+);
+
+create table Appartiene(
+	Cellulare varchar(15),
+	NomeGruppo varchar(20),
+	
+	Constraint FkCellulareAppartiene Foreign Key (Cellulare) References Contatto(Cellulare),
+	Constraint FkNomeGruppoAppartiene Foreign Key (NomeGruppo) References GruppoContatti(NomeGruppo)
+	
+);
