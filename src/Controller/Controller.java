@@ -35,7 +35,7 @@ public class Controller{
         infoContatto = new SchedaInfoContatto(this);
 
         homepage.setVisible(true);
-        startingAudio();
+        //startingAudio();
 
 
     }

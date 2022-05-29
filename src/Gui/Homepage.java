@@ -109,7 +109,7 @@ public class Homepage extends JFrame {
 
         setTitle("Homepage");
         setContentPane(cardHomepage);
-        setSize(700, 700);
+        setSize(600, 600);
 
         setDefaultCloseOperation(EXIT_ON_CLOSE); //Serve a terminare il programma quando si preme la X
         setLocation(300, 300);

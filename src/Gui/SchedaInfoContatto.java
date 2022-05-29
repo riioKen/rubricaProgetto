@@ -63,9 +63,10 @@ public class SchedaInfoContatto {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    control.clickAudio();
                     eliminaContattoDAO.eliminaContatto(txtCellulare.getText());
                     control.getHomepage().stampaContatti();
-                } catch (SQLException ex) {
+                } catch (SQLException | UnsupportedAudioFileException | LineUnavailableException | IOException | InterruptedException ex) {
                     ex.printStackTrace();
                 }
                 control.switchJPanelInView(control.getHomepage().getPaneBase());
@@ -115,7 +116,12 @@ public class SchedaInfoContatto {
             }
             @Override
             public void mouseEntered(MouseEvent e){
-                lbTastoHome.setIcon(imgTastoHomeGrande);
+                try {
+                    control.rollOverAudio();
+                    lbTastoHome.setIcon(imgTastoHomeGrande);
+                } catch (LineUnavailableException | UnsupportedAudioFileException | IOException | InterruptedException ex) {
+                    ex.printStackTrace();
+                }
             }
             @Override
             public void mouseExited(MouseEvent e){
