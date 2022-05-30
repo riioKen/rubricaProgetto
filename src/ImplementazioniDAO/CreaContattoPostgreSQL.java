@@ -12,11 +12,7 @@ public class CreaContattoPostgreSQL implements CreaContattoDAO{
     private Connection conn;
 
     public CreaContattoPostgreSQL(){
-        try{
-            conn = Connessione.getInstance().getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
     }
 
 
@@ -24,6 +20,11 @@ public class CreaContattoPostgreSQL implements CreaContattoDAO{
     @Override
     public void creaContatto(String nome, String cellulare, String cognome, String fisso, String email, String indirizzo, ArrayList<JTextField> listaIndirizzi, ArrayList<JTextField> listaEmail) throws SQLException {
         int id = 0;
+        try{
+            conn = Connessione.getInstance().getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         //Inserimento nella tabella Contatto
        try {
            PreparedStatement inserisciContatto = conn.prepareStatement("Insert into Contatto(nome, cognome) VALUES ('"+nome+"', '"+cognome+"');");
@@ -98,13 +99,11 @@ public class CreaContattoPostgreSQL implements CreaContattoDAO{
         String email;
         for(int i = 0; i < listaEmail.size(); i++){
             email = listaEmail.get(i).getText();
-            System.out.println(email);
 
             if(!email.isBlank()) {
                 PreparedStatement inserisciContattoEmail = conn.prepareStatement("Insert into EmailSecondario (email, idcontatto) VALUES ('" + email + "','" + id + "');");
                 inserisciContattoEmail.executeUpdate();
-            }else
-                System.out.println("Il JTXT n°"+i+"e' vuoto");
+            }
         }
     }
     public void splittaIndirizzoSecondario(ArrayList<JTextField> listaIndirizzo, int id) throws SQLException {

@@ -7,8 +7,10 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import DAO.CercaInfoContattoDAO;
+import DAO.CreaContattoDAO;
 import DAO.EliminaContattoDAO;
 import ImplementazioniDAO.CercaInfoContattoPostgreSQL;
+import ImplementazioniDAO.CreaContattoPostgreSQL;
 import ImplementazioniDAO.EliminaContattoPostgreSQL;
 
 import java.awt.event.ActionEvent;
@@ -17,6 +19,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class SchedaInfoContatto {
 
@@ -47,11 +50,16 @@ public class SchedaInfoContatto {
 
     CercaInfoContattoDAO cercaInfoContattoDAO = new CercaInfoContattoPostgreSQL();
     EliminaContattoDAO eliminaContattoDAO = new EliminaContattoPostgreSQL();
+    CreaContattoDAO creaContattoDAO = new CreaContattoPostgreSQL();
+
+    ArrayList<String> indirizzoSecondario = new ArrayList<>();
+    ArrayList<String> emailSecondario = new ArrayList<>();
+    String nCellulare;
     public  SchedaInfoContatto(Controller controller){
         control = controller;
 
         lbTastoHome();
-
+        btnAggiornaContatto();
         btnEliminaContatto();
 
     }
@@ -78,7 +86,7 @@ public class SchedaInfoContatto {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    eliminaContattoDAO.eliminaContatto(txtCellulare.getText());
+                    aggiornamentoContatto();
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
@@ -133,8 +141,7 @@ public class SchedaInfoContatto {
     public void riempimentoInfoContatto(String numero) throws SQLException {
 
         Contatti contatto = new Contatti();
-        contatto = cercaInfoContattoDAO.cercaInfoContatti(numero);
-
+        contatto = cercaInfoContattoDAO.cercaInfoContatti(numero, indirizzoSecondario, emailSecondario);
         getTxtNome().setText(contatto.getNome());
         getTxtCognome().setText(contatto.getCognome());
         getTxtCellulare().setText(contatto.getCellulare());
@@ -142,10 +149,41 @@ public class SchedaInfoContatto {
         getTxtEmail().setText(contatto.getEmail());
         getTxtIndirizzo().setText(contatto.getIndirizzo());
 
+        nCellulare = getTxtCellulare().getText();
+    }
+
+    public void aggiornamentoContatto() throws SQLException {
+        eliminaContattoDAO.eliminaContatto(nCellulare);
+        creaContattoDAO.creaContatto(getTxtNome().getText(), getTxtCellulare().getText(), getTxtCognome().getText(), getTxtFisso().getText(), getTxtEmail().getText(), getTxtIndirizzo().getText(), null, null);
     }
 
 
     //GETTER SETTER
+
+
+    public JLabel getLbTastoHome() {
+        return lbTastoHome;
+    }
+
+    public void setLbTastoHome(JLabel lbTastoHome) {
+        this.lbTastoHome = lbTastoHome;
+    }
+
+    public JButton getBtnAggiornaContatto() {
+        return btnAggiornaContatto;
+    }
+
+    public void setBtnAggiornaContatto(JButton btnAggiornaContatto) {
+        this.btnAggiornaContatto = btnAggiornaContatto;
+    }
+
+    public JButton getBtnEliminaContatto() {
+        return btnEliminaContatto;
+    }
+
+    public void setBtnEliminaContatto(JButton btnEliminaContatto) {
+        this.btnEliminaContatto = btnEliminaContatto;
+    }
 
     public JPanel getSchedaInfoContattoPane() {
         return SchedaInfoContattoPane;

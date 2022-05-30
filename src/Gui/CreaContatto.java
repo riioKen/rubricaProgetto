@@ -134,7 +134,6 @@ public class CreaContatto extends JPanel {
         String via, civico, cap, citta, nazione;
         int lunghezza = txtIndirizzo.getText().split("\\s*,\\s*").length;
         String[] divisione;
-        System.out.println(lunghezza);
         if (lunghezza == 5) {
             divisione = txtIndirizzo.getText().split("\\s*,\\s*");
             via = divisione[0];

@@ -27,6 +27,7 @@ public class EliminaContattoPostgreSQL implements EliminaContattoDAO{
         while(rs.next()){
             id = rs.getInt("idcontatto");
         }
+
         conn.close();
         eliminazioneEffettivaContatto(id);
 
