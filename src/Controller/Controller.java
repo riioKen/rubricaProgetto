@@ -19,7 +19,7 @@ public class Controller{
 
     Homepage homepage;
     CreaContatto creaContatto;
-    SchedaInfoContatto infoContatto;
+    SchedaInfoContatto schedaInfoContatto;
 
 
     //MAIN
@@ -32,7 +32,7 @@ public class Controller{
 
         homepage = new Homepage(this); //Serve a creare l'oggetto della GUI
         creaContatto = new CreaContatto(this);
-        infoContatto = new SchedaInfoContatto(this);
+        schedaInfoContatto = new SchedaInfoContatto(this);
 
         homepage.setVisible(true);
         //startingAudio();
@@ -45,6 +45,11 @@ public class Controller{
     public void newCreaContatto(){
         creaContatto = null;
         creaContatto = new CreaContatto(this);
+    }
+
+    public void newSchedaInfoContatto(){
+        schedaInfoContatto = null;
+        schedaInfoContatto = new SchedaInfoContatto(this);
     }
     public void switchJPanelInView(JPanel accendi){
         homepage.getJScrollBarListaContatti().setViewportView(accendi);
@@ -84,12 +89,12 @@ public class Controller{
 
 
 
-    public SchedaInfoContatto getInfoContatto() {
-        return infoContatto;
+    public SchedaInfoContatto getSchedaInfoContatto() {
+        return schedaInfoContatto;
     }
 
-    public void setInfoContatto(SchedaInfoContatto infoContatto) {
-        this.infoContatto = infoContatto;
+    public void setSchedaInfoContatto(SchedaInfoContatto schedaInfoContatto) {
+        this.schedaInfoContatto = schedaInfoContatto;
     }
 
     public CreaContatto getCreaContatto() {

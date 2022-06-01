@@ -13,6 +13,7 @@ import ImplementazioniDAO.CercaInfoContattoPostgreSQL;
 import ImplementazioniDAO.CreaContattoPostgreSQL;
 import ImplementazioniDAO.EliminaContattoPostgreSQL;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -23,7 +24,9 @@ import java.util.ArrayList;
 
 public class SchedaInfoContatto {
 
-    private JPanel SchedaInfoContattoPane;
+    private JPanel schedaInfoContattoPane;
+    private JPanel jpPiuEmail;
+    private JPanel jpPiuIndirizzo;
     private JComboBox cbGruppo;
     private JTextField txtNome;
     private JTextField txtCognome;
@@ -46,6 +49,7 @@ public class SchedaInfoContatto {
     private JButton btnAggiornaContatto;
     private JButton btnEliminaContatto;
 
+
     Controller control;
 
     CercaInfoContattoDAO cercaInfoContattoDAO = new CercaInfoContattoPostgreSQL();
@@ -61,6 +65,7 @@ public class SchedaInfoContatto {
         lbTastoHome();
         btnAggiornaContatto();
         btnEliminaContatto();
+
 
     }
 
@@ -139,7 +144,7 @@ public class SchedaInfoContatto {
     }
 
     public void riempimentoInfoContatto(String numero) throws SQLException {
-
+        //ADESSO BISOGNA INSERIRE SIA GLI ALTRI INDIRIZZI EMAIL CHE INDIRIZZI FISICI ALL'INTERFACCIA SCHEDAINFOCONTATTO TIPS HO 2 ARRAYLIST STRING DA USARE PER CAPIRE QUANTITA DI INFORMAZIONI
         Contatti contatto = new Contatti();
         contatto = cercaInfoContattoDAO.cercaInfoContatti(numero, indirizzoSecondario, emailSecondario);
         getTxtNome().setText(contatto.getNome());
@@ -149,9 +154,43 @@ public class SchedaInfoContatto {
         getTxtEmail().setText(contatto.getEmail());
         getTxtIndirizzo().setText(contatto.getIndirizzo());
 
+        System.out.println("Controllo riga 156 classe SchedaInfoContatto\nindirizzi secondario"+" "+ indirizzoSecondario.size()+" email secondario"+" "+ emailSecondario.size());
+        aggiuntaEmailSecondarie();
+        aggiuntaIndirizziSecondari();
         nCellulare = getTxtCellulare().getText();
     }
 
+    public void aggiuntaEmailSecondarie(){
+        for(int i = 0;  i < emailSecondario.size(); i++){
+            JTextField piuEmail = new JTextField();
+            JPanel jpAppoggioPiuEmail = new JPanel();
+            jpAppoggioPiuEmail.setLayout(new GridLayout(0,1));
+            jpAppoggioPiuEmail.add(piuEmail);
+            jpPiuEmail.setLayout(new GridLayout(0,1));
+            jpPiuEmail.add(jpAppoggioPiuEmail);
+            piuEmail.setText(emailSecondario.get(i));
+            jpPiuEmail.validate();
+            jpPiuEmail.repaint();
+        }
+        emailSecondario.clear();
+
+    }
+
+    public void aggiuntaIndirizziSecondari(){
+        for(int i = 0;  i < indirizzoSecondario.size(); i++){
+            System.out.println(i);
+            JTextField piuIndirizzo = new JTextField();
+            JPanel jpAppoggioPiuIndirizzo = new JPanel();
+            jpAppoggioPiuIndirizzo.setLayout(new GridLayout(0,1));
+            jpAppoggioPiuIndirizzo.add(piuIndirizzo);
+            jpPiuIndirizzo.setLayout(new GridLayout(0,1));
+            jpPiuIndirizzo.add(jpAppoggioPiuIndirizzo);
+            piuIndirizzo.setText(indirizzoSecondario.get(i));
+            jpPiuIndirizzo.validate();
+            jpPiuIndirizzo.repaint();
+        }
+        indirizzoSecondario.clear();
+    }
     public void aggiornamentoContatto() throws SQLException {
         eliminaContattoDAO.eliminaContatto(nCellulare);
         creaContattoDAO.creaContatto(getTxtNome().getText(), getTxtCellulare().getText(), getTxtCognome().getText(), getTxtFisso().getText(), getTxtEmail().getText(), getTxtIndirizzo().getText(), null, null);
@@ -160,6 +199,22 @@ public class SchedaInfoContatto {
 
     //GETTER SETTER
 
+
+    public JPanel getJpPiuEmail() {
+        return jpPiuEmail;
+    }
+
+    public void setJpPiuEmail(JPanel jpPiuEmail) {
+        this.jpPiuEmail = jpPiuEmail;
+    }
+
+    public JPanel getJpPiuIndirizzo() {
+        return jpPiuIndirizzo;
+    }
+
+    public void setJpPiuIndirizzo(JPanel jpPiuIndirizzo) {
+        this.jpPiuIndirizzo = jpPiuIndirizzo;
+    }
 
     public JLabel getLbTastoHome() {
         return lbTastoHome;
@@ -186,11 +241,11 @@ public class SchedaInfoContatto {
     }
 
     public JPanel getSchedaInfoContattoPane() {
-        return SchedaInfoContattoPane;
+        return schedaInfoContattoPane;
     }
 
     public void setSchedaInfoContattoPane(JPanel schedaInfoContattoPane) {
-        SchedaInfoContattoPane = schedaInfoContattoPane;
+        this.schedaInfoContattoPane = schedaInfoContattoPane;
     }
 
     public JComboBox getCbGruppo() {

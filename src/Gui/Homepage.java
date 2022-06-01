@@ -10,8 +10,6 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
@@ -42,7 +40,7 @@ public class Homepage extends JFrame {
 
     static ArrayList<Contatti> contattiDB = new ArrayList<>();
 
-    public Homepage(Controller controller) throws SQLException, IOException {
+    public Homepage(Controller controller) throws SQLException, IOException {//Da spostare nel controller
 
         control = controller;
         impostazioniGeneraliHomepage();
@@ -82,8 +80,9 @@ public class Homepage extends JFrame {
                 public void actionPerformed(ActionEvent e) {
                     try {
                         control.clickAudio();
-                        control.getInfoContatto().riempimentoInfoContatto(e.getActionCommand());
-                        control.switchJPanelInView(control.getInfoContatto().getSchedaInfoContattoPane());
+                        control.newSchedaInfoContatto();    //Testing svuotamento dei campi nella scheda contatto
+                        control.getSchedaInfoContatto().riempimentoInfoContatto(e.getActionCommand());
+                        control.switchJPanelInView(control.getSchedaInfoContatto().getSchedaInfoContattoPane());
                         JScrollBarListaContatti.setBorder(BorderFactory.createTitledBorder(""));
                     } catch (SQLException | UnsupportedAudioFileException | LineUnavailableException | IOException | InterruptedException ex) {
                         ex.printStackTrace();

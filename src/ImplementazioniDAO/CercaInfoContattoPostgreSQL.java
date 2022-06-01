@@ -62,22 +62,27 @@ public class CercaInfoContattoPostgreSQL implements CercaInfoContattoDAO{
     public void estraiInformazioniSecondarie(String ncellulare, ArrayList<String> indirizzoSecondario, ArrayList<String> emailSecondario) throws SQLException {
 
         String queryCercaInfoContatto = ("SELECT * FROM NumeroCellulare as c JOIN IndirizzoSecondario as i ON i.idcontatto = c.idcontatto " +
-                                         "JOIN emailsecondario as es ON es.idcontatto = c.idcontatto WHERE c.cellulare = '"+ncellulare+"'");
-        Statement st = conn.createStatement();
-        ResultSet rs = st.executeQuery(queryCercaInfoContatto);
-        while(rs.next()) {
-
-            String indirizzo = rs.getString("via");
-            String civico = rs.getString("civico");
-            String cap = rs.getString("cap");
-            String citta = rs.getString("citta");
-            String nazione = rs.getString("nazione");
+                                         "WHERE c.cellulare = '"+ncellulare+"'");
+        Statement stIndirizziSecondari = conn.createStatement();
+        ResultSet rsIndirizziSecondari = stIndirizziSecondari.executeQuery(queryCercaInfoContatto);
+        while(rsIndirizziSecondari.next()) {
+            String indirizzo = rsIndirizziSecondari.getString("via");
+            String civico = rsIndirizziSecondari.getString("civico");
+            String cap = rsIndirizziSecondari.getString("cap");
+            String citta = rsIndirizziSecondari.getString("citta");
+            String nazione = rsIndirizziSecondari.getString("nazione");
             indirizzoSecondario.add(indirizzo + ", " + civico + ", " + cap + ", " + citta + ", " + nazione);
-            emailSecondario.add(rs.getString("email"));
+        }
 
-            System.out.println("Controllo riga 78 classe CercaInfoDAO\nindirizzi secondario"+" "+ indirizzoSecondario.size()+" email secondario"+" "+ emailSecondario.size());
+
+        String queryCercaEmailSecondarie = "SELECT * FROM NumeroCellulare as c JOIN emailsecondario as es ON es.idcontatto = c.idcontatto WHERE c.cellulare = '"+ncellulare+"'";
+        Statement stEmailSecondari = conn.createStatement();
+        ResultSet rsEmailSecondari = stEmailSecondari.executeQuery(queryCercaEmailSecondarie);
+        while(rsEmailSecondari.next()) {
+            emailSecondario.add(rsEmailSecondari.getString("email"));
         }
     }
+
 
 
 }
