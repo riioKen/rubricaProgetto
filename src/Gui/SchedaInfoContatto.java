@@ -27,13 +27,14 @@ public class SchedaInfoContatto {
     private JPanel schedaInfoContattoPane;
     private JPanel jpPiuEmail;
     private JPanel jpPiuIndirizzo;
-    private JComboBox cbGruppo;
+
     private JTextField txtNome;
     private JTextField txtCognome;
     private JTextField txtCellulare;
     private JTextField txtFisso;
     private JTextField txtEmail;
     private JTextField txtIndirizzo;
+
     private JLabel lbNome;
     private JLabel lbCognome;
     private JLabel lbCellulare;
@@ -46,8 +47,10 @@ public class SchedaInfoContatto {
     private JLabel lbTelegram;
     private JLabel lbRispostaTG;
     private JLabel lbTastoHome;
+
     private JButton btnAggiornaContatto;
     private JButton btnEliminaContatto;
+    private JComboBox cbGruppo;
 
 
     Controller control;

@@ -28,11 +28,10 @@ public class Homepage extends JFrame {
     private JPanel paneBase;
     private JPanel paneTendina;
     private JScrollPane JScrollBarListaContatti;
+
     private JButton btnCreaNuovoContatto;
     private JButton btnSwitchTema;
-    private JButton stampaListaContattiButton;
-    private JButton lineeApertura;
-
+    private JButton btnRicercaContatto;
 
     //OGGETTI
     private Timer timer;
@@ -46,6 +45,7 @@ public class Homepage extends JFrame {
         impostazioniGeneraliHomepage();
         btnSwitchTema();
         stampaContatti();
+
 
     }
 
@@ -63,7 +63,7 @@ public class Homepage extends JFrame {
         });
     }
 
-    public void stampaContatti() throws SQLException {
+    public void stampaContatti() throws SQLException {//Da spostare nel controller
         contattiDB.clear();
         StampaContattoDAO stampaContatto = new StampaContattoPostgreSQL();
         contattiDB = stampaContatto.stampaContatti();
@@ -229,7 +229,35 @@ public class Homepage extends JFrame {
             }
         });
 
+        ricercaContatto();
+    }
 
+    public void ricercaContatto(){
+        ImageIcon imgRicercaContatto = new ImageIcon("Immagini/imgRicercaContatto24px.png");
+        ImageIcon imgRicercaContattoGrande = new ImageIcon("Immagini/imgRicercaContatto32px.png");
+
+        btnRicercaContatto.setIcon(imgRicercaContatto);
+        btnRicercaContatto.setMargin(new Insets(0,0,0,0));
+        btnRicercaContatto.setContentAreaFilled(false);
+        btnRicercaContatto.setBorderPainted(false);
+        btnRicercaContatto.setBorder(null);
+        btnRicercaContatto.setFocusPainted(false);
+        btnRicercaContatto.setOpaque(true);
+        btnRicercaContatto.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                btnRicercaContatto.setIcon(imgRicercaContattoGrande);
+                try {
+                    control.rollOverAudio();
+                } catch (LineUnavailableException | UnsupportedAudioFileException | IOException | InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                btnRicercaContatto.setIcon(imgRicercaContatto);
+            }
+        });
     }
 
     //GETTER SETTER
@@ -242,21 +270,6 @@ public class Homepage extends JFrame {
         Homepage.contattiDB = contattiDB;
     }
 
-    public JButton getLineeApertura() {
-        return lineeApertura;
-    }
-
-    public void setLineeApertura(JButton lineeApertura) {
-        this.lineeApertura = lineeApertura;
-    }
-
-    public JButton getLineeChiusura() {
-        return lineeApertura;
-    }
-
-    public void setLineeChiusura(JButton lineeChiusura) {
-        this.lineeApertura = lineeChiusura;
-    }
 
     public JPanel getPaneTendina() {
         return paneTendina;
@@ -264,14 +277,6 @@ public class Homepage extends JFrame {
 
     public void setPaneTendina(JPanel paneTendina) {
         this.paneTendina = paneTendina;
-    }
-
-    public JButton getStampaListaContattiButton() {
-        return stampaListaContattiButton;
-    }
-
-    public void setStampaListaContattiButton(JButton stampaListaContattiButton) {
-        this.stampaListaContattiButton = stampaListaContattiButton;
     }
 
     public JScrollPane getJScrollBarListaContatti() {

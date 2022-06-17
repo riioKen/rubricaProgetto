@@ -22,23 +22,20 @@ public class CreaContatto extends JPanel {
     private JPanel creaContatto;
     private JPanel jpTxtEmail;
     private JPanel jpTxtIndirizzo;
-    private JButton btnSvuotaCampi;
-    private JButton btnConferma;
-    private JButton btnTastoHome;
+
     private JTextField txtNome;
     private JTextField txtCognome;
     private JTextField txtEmail;
     private JTextField txtIndirizzo;
     private JTextField txtCellulare;
     private JTextField txtFisso;
+
     private JLabel lbNome;
     private JLabel lbIndirizzo;
     private JLabel lbCognome;
     private JLabel lbEmail;
     private JLabel lbCellulare;
     private JLabel lbFisso;
-    private JComboBox cbWhatsapp;
-    private JComboBox cbTelegram;
     private JLabel lbErroreInserimento;
     private JLabel imgErroreNome;
     private JLabel imgErroreCognome;
@@ -46,8 +43,17 @@ public class CreaContatto extends JPanel {
     private JLabel imgErroreCellulare;
     private JLabel imgErroreEmail;
     private JLabel imgErroreIndirizzo;
+
+    private JButton btnSvuotaCampi;
+    private JButton btnConferma;
+    private JButton btnTastoHome;
     private JButton btnPiuEmail;
     private JButton btnPiuIndirizzi;
+
+    private JComboBox cbWhatsapp;
+    private JComboBox cbTelegram;
+
+
 
     //OGGETTI
     Controller control;
