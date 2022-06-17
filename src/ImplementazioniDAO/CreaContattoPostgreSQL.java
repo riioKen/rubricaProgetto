@@ -97,29 +97,33 @@ public class CreaContattoPostgreSQL implements CreaContattoDAO{
 
     public void inserimentoEmailSecondarie(ArrayList<JTextField> listaEmail, int id) throws  SQLException{
         String email;
-        for(int i = 0; i < listaEmail.size(); i++){
-            email = listaEmail.get(i).getText();
-
-            if(!email.isBlank()) {
-                PreparedStatement inserisciContattoEmail = conn.prepareStatement("Insert into EmailSecondario (email, idcontatto) VALUES ('" + email + "','" + id + "');");
-                inserisciContattoEmail.executeUpdate();
+        if(listaEmail != null) {
+            for (int i = 0; i < listaEmail.size(); i++) {
+                email = listaEmail.get(i).getText();
+                if (!email.isBlank()) {
+                    PreparedStatement inserisciContattoEmail = conn.prepareStatement("Insert into EmailSecondario (email, idcontatto) VALUES ('" + email + "','" + id + "');");
+                    inserisciContattoEmail.executeUpdate();
+                }
             }
         }
     }
     public void splittaIndirizzoSecondario(ArrayList<JTextField> listaIndirizzo, int id) throws SQLException {
         String via, civico, cap, citta, nazione;
         String[] divisione;
-        for(int i = 0; i < listaIndirizzo.size(); i++){
-            divisione = listaIndirizzo.get(i).getText().split("\\s*,\\s*");
-            via = divisione[0];
-            civico = divisione[1];
-            cap = divisione[2];
-            citta = divisione[3];
-            nazione = divisione[4];
 
-            if(!via.isBlank() && !civico.isBlank() && !cap.isBlank() && !citta.isBlank() && !nazione.isBlank()) {
-                PreparedStatement inserisciContattoIndirizzo = conn.prepareStatement("Insert into IndirizzoSecondario(idcontatto, via, civico, cap, citta, nazione) VALUES ('" + id + "','" + via + "', '" + civico + "', '" + cap + "', '" + citta + "','" + nazione + "');");
-                inserisciContattoIndirizzo.executeUpdate();
+        if(listaIndirizzo != null) {
+            for (int i = 0; i < listaIndirizzo.size(); i++) {
+                divisione = listaIndirizzo.get(i).getText().split("\\s*,\\s*");
+                via = divisione[0];
+                civico = divisione[1];
+                cap = divisione[2];
+                citta = divisione[3];
+                nazione = divisione[4];
+
+                if (!via.isBlank() && !civico.isBlank() && !cap.isBlank() && !citta.isBlank() && !nazione.isBlank()) {
+                    PreparedStatement inserisciContattoIndirizzo = conn.prepareStatement("Insert into IndirizzoSecondario(idcontatto, via, civico, cap, citta, nazione) VALUES ('" + id + "','" + via + "', '" + civico + "', '" + cap + "', '" + citta + "','" + nazione + "');");
+                    inserisciContattoIndirizzo.executeUpdate();
+                }
             }
         }
     }

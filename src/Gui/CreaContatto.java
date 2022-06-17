@@ -9,7 +9,6 @@ import com.formdev.flatlaf.FlatLightLaf;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
-import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
@@ -213,7 +212,7 @@ public class CreaContatto extends JPanel {
         contatti.setEmail(txtEmail.getText());
         contatti.setIndirizzo(txtIndirizzo.getText());
 
-        contatti.setWhatsapp(Objects.requireNonNull(cbWhatsapp.getSelectedItem()).toString()); //Objects.requireNonNull necessario in caso di valore NULL all'interno della CB
+        contatti.setNickname(Objects.requireNonNull(cbWhatsapp.getSelectedItem()).toString()); //Objects.requireNonNull necessario in caso di valore NULL all'interno della CB
 
         creaContattoDAO.creaContatto(contatti.getNome(), contatti.getCellulare(), contatti.getCognome(), contatti.getFisso(), contatti.getEmail(), contatti.getIndirizzo(), listaTxtIndirizzo, listaTxtEmail);
 

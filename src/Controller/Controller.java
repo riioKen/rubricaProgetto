@@ -20,11 +20,19 @@ public class Controller{
     Homepage homepage;
     CreaContatto creaContatto;
     SchedaInfoContatto schedaInfoContatto;
-
+    RicercaContatti ricercaContatti;
 
     //MAIN
     public static void main(String[] args) throws SQLException, IOException, UnsupportedAudioFileException, LineUnavailableException, InterruptedException {
         Controller controller = new Controller();
+    }
+
+    public RicercaContatti getRicercaContatti() {
+        return ricercaContatti;
+    }
+
+    public void setRicercaContatti(RicercaContatti ricercaContatti) {
+        this.ricercaContatti = ricercaContatti;
     }
 
     //COSTRUTTORE
@@ -33,7 +41,7 @@ public class Controller{
         homepage = new Homepage(this); //Serve a creare l'oggetto della GUI
         creaContatto = new CreaContatto(this);
         schedaInfoContatto = new SchedaInfoContatto(this);
-
+        ricercaContatti = new RicercaContatti(this);
         homepage.setVisible(true);
         //startingAudio();
 
@@ -50,6 +58,11 @@ public class Controller{
     public void newSchedaInfoContatto(){
         schedaInfoContatto = null;
         schedaInfoContatto = new SchedaInfoContatto(this);
+    }
+
+    public void newRicercaContatti() throws SQLException {
+        ricercaContatti = null;
+        ricercaContatti = new RicercaContatti(this);
     }
     public void switchJPanelInView(JPanel accendi){
         homepage.getJScrollBarListaContatti().setViewportView(accendi);

@@ -46,7 +46,6 @@ public class Homepage extends JFrame {
         btnSwitchTema();
         stampaContatti();
 
-
     }
 
     //METODI
@@ -206,7 +205,7 @@ public class Homepage extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 try {
-                    control.rollOverAudio();
+                    control.clickAudio();
                     control.switchJPanelInView(control.getCreaContatto().getCreaContatto());
                     JScrollBarListaContatti.setBorder(BorderFactory.createTitledBorder(""));
                     control.newCreaContatto();
@@ -252,6 +251,16 @@ public class Homepage extends JFrame {
                 } catch (LineUnavailableException | UnsupportedAudioFileException | IOException | InterruptedException ex) {
                     ex.printStackTrace();
                 }
+            }
+            @Override
+            public void mouseClicked(MouseEvent e){
+                try {
+                    control.clickAudio();
+                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+                control.switchJPanelInView(control.getRicercaContatti().getRicercaContattiPane());
+                JScrollBarListaContatti.setBorder(BorderFactory.createTitledBorder(""));
             }
             @Override
             public void mouseExited(MouseEvent e) {

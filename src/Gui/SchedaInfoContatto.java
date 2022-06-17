@@ -94,8 +94,9 @@ public class SchedaInfoContatto {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    control.clickAudio();
                     aggiornamentoContatto();
-                } catch (SQLException ex) {
+                } catch (SQLException | UnsupportedAudioFileException | LineUnavailableException | IOException | InterruptedException ex) {
                     ex.printStackTrace();
                 }
             }
@@ -394,4 +395,6 @@ public class SchedaInfoContatto {
     public void setLbRispostaTG(JLabel lbRispostaTG) {
         this.lbRispostaTG = lbRispostaTG;
     }
+
+
 }
