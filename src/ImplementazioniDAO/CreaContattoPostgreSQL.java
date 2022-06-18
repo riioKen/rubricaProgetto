@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
 
+
 public class CreaContattoPostgreSQL implements CreaContattoDAO{
 
     private Connection conn;
@@ -89,7 +90,7 @@ public class CreaContattoPostgreSQL implements CreaContattoDAO{
             splittaIndirizzoSecondario(listaIndirizzi, id);
 
         }catch(SQLException e){
-            e.printStackTrace();
+            //control.switchJPanelInView(control.getHomepage().getPaneBase());
         }
 
         conn.close();;

@@ -42,6 +42,7 @@ public class Controller{
         creaContatto = new CreaContatto(this);
         schedaInfoContatto = new SchedaInfoContatto(this);
         ricercaContatti = new RicercaContatti(this);
+        
         homepage.setVisible(true);
         //startingAudio();
 
@@ -98,9 +99,6 @@ public class Controller{
 
     }
     //GETTER SETTER
-
-
-
 
     public SchedaInfoContatto getSchedaInfoContatto() {
         return schedaInfoContatto;

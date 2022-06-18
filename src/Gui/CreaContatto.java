@@ -11,6 +11,9 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -49,9 +52,10 @@ public class CreaContatto extends JPanel {
     private JButton btnPiuEmail;
     private JButton btnPiuIndirizzi;
 
+    private JFileChooser fileChooser;
     private JComboBox cbWhatsapp;
     private JComboBox cbTelegram;
-
+    //private JButton inserisciImmagineButton;
 
 
     //OGGETTI
@@ -72,6 +76,7 @@ public class CreaContatto extends JPanel {
         temaScuro();
         messaggiErroreFALSE();
         funzionalitaTasti();
+        //aggiuntaImmagine();
 
     }
 
@@ -381,6 +386,36 @@ public class CreaContatto extends JPanel {
         creaContatto.repaint();
         creaContatto.validate();
     }
+
+    /*public void aggiuntaImmagine(){
+
+        inserisciImmagineButton.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent ae)
+            {
+                JFileChooser fileChooser = new JFileChooser();
+                int returnValue = fileChooser.showOpenDialog(null);
+                if (returnValue == JFileChooser.APPROVE_OPTION)
+                {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    String filename = selectedFile.getAbsolutePath();
+
+                    try
+                    {
+                        System.out.println(filename);
+                    } catch (Exception e)
+                    {
+                        System.out.println("Error");
+                    }
+
+                }
+
+            }
+
+        });
+
+
+    }*/
 
     //GETTER SETTER
 
