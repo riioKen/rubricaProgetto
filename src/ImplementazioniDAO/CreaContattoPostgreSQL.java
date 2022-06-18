@@ -113,6 +113,7 @@ public class CreaContattoPostgreSQL implements CreaContattoDAO{
 
         if(listaIndirizzo != null) {
             for (int i = 0; i < listaIndirizzo.size(); i++) {
+                System.out.println(listaIndirizzo.size());
                 divisione = listaIndirizzo.get(i).getText().split("\\s*,\\s*");
                 via = divisione[0];
                 civico = divisione[1];

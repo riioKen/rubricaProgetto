@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 public class RicercaContatti {
 
+    
     Controller control;
     private JPanel ricercaContattiPane;
     private JTextField txtRicerca;
@@ -35,8 +36,9 @@ public class RicercaContatti {
     public RicercaContatti(Controller controller) throws SQLException {
         control = controller;
 
-
-
+/*TO - DO
+    GESTIONE GRUPPI, GESTIONE FOTO, SISTEMI MESSAGING, BUG IN INSERIMENTO PIU' INDIRIZZI DI FISICI
+*/
         selezione();
         /*txtRicerca.addKeyListener(new KeyAdapter() {
             @Override
