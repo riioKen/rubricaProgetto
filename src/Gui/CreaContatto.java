@@ -138,38 +138,29 @@ public class CreaContatto extends JPanel {
         });
 
         //FUNZIONI TASTO "CARICA IMMAGINI"
-        ImageIcon imgCaricaImmagini = new ImageIcon("Immagini/imgAggiungiFoto32pxScuro.png");
         ImageIcon imgCaricaImmaginiGrande = new ImageIcon("Immagini/imgAggiungiFoto64pxScuro.png");
-        btnCaricaImmagine.setIcon(imgCaricaImmagini);
-        btnCaricaImmagine.addMouseListener(new MouseAdapter() {
+        btnCaricaImmagine.setIcon(imgCaricaImmaginiGrande);
 
+        btnCaricaImmagine.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                JFileChooser fileChooser = new JFileChooser();
+                JFileChooser fileChooser = new JFileChooser("D:\\GitHub\\Java\\Rubrica - ProgettoOO_BD\\Immagini\\ImmaginiContatto");
                 int valoreRitorno = fileChooser.showOpenDialog(null);
                 if (valoreRitorno == JFileChooser.APPROVE_OPTION) {
                     File selectedFile = fileChooser.getSelectedFile();
                     String percorsoAssoluto = selectedFile.getAbsolutePath();
-
+                    ImageIcon immagineProfilo = new ImageIcon(percorsoAssoluto);
                     try {
-                        System.out.println(percorsoAssoluto);
+                        btnCaricaImmagine.setIcon(immagineProfilo);
                     } catch (Exception b) {
                         System.out.println("impossibile caricare l'immagine dal disco");
                     }
                 }
             }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                btnCaricaImmagine.setIcon(imgCaricaImmaginiGrande);
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                btnCaricaImmagine.setIcon(imgCaricaImmagini);
-            }
-
         });
+
+        //test
+
     }
 
     public void lbErroreInserimento(String codiceErrore){
