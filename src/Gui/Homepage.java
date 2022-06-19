@@ -78,7 +78,7 @@ public class Homepage extends JFrame {
                     control.switchJPanelInView(control.getCreaContatto().getCreaContatto());
                     JScrollBarListaContatti.setBorder(BorderFactory.createTitledBorder(""));
                     control.newCreaContatto();
-                } catch (LineUnavailableException | UnsupportedAudioFileException | IOException | InterruptedException ex) {
+                } catch (LineUnavailableException | UnsupportedAudioFileException | IOException | InterruptedException | SQLException ex) {
                     ex.printStackTrace();
                 }
             }

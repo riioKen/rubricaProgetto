@@ -2,7 +2,9 @@ package Gui;
 
 import Classi.Contatti;
 import Controller.Controller;
+import DAO.CercaGruppiDAO;
 import DAO.CreaContattoDAO;
+import ImplementazioniDAO.CercaGruppiPostgreSQL;
 import ImplementazioniDAO.CreaContattoPostgreSQL;
 import com.formdev.flatlaf.FlatLightLaf;
 
@@ -54,6 +56,7 @@ public class CreaContatto extends JPanel {
     private JFileChooser fileChooser;
     private JComboBox cbWhatsapp;
     private JComboBox cbTelegram;
+    private JComboBox cbGruppi;
 
     /////////////////////////////////////////////////////       OGGETTI     /////////////////////////////////////////////////////
     Controller control;
@@ -67,20 +70,17 @@ public class CreaContatto extends JPanel {
     ArrayList<JTextField> listaTxtIndirizzo = new ArrayList<>();
 
     /////////////////////////////////////////////////////       COSTRUTTORE     /////////////////////////////////////////////////////
-    public CreaContatto(Controller controller) {
+    public CreaContatto(Controller controller) throws SQLException {
         control = controller;
 
         temaScuro();
         messaggiErroreFALSE();
         funzionalitaTasti();
-        //aggiuntaImmagine();
-
-
 
     }
 
     /////////////////////////////////////////////////////       FUNZIONALITA' PULSANTI GUI      /////////////////////////////////////////////////////
-    public void funzionalitaTasti() {
+    public void funzionalitaTasti() throws SQLException {
 
         //FUNZIONI TASTO "CONFERMA"
         String errNomeLungo = "Hai inserito un nome non valido";
@@ -160,7 +160,20 @@ public class CreaContatto extends JPanel {
             }
         });
 
-        //test
+        //FUNZIONALITA' cbGruppi    //INSERIRE FUNZIONE PER LA CREAZIONE DI UN NUOVO GRUPPO DA GUI E FARE LA RELATIVA FUNZIONE SQL PER INSERIRLA NEL DB. //AGGIUSTARE
+        //DUPLICAZIONE NELLA TABELLA PARTECIPAZIONE
+        ArrayList<String> infoGruppi = new ArrayList<>();
+        CercaGruppiDAO cercaGruppiDAO = new CercaGruppiPostgreSQL();
+        infoGruppi = cercaGruppiDAO.cercaGruppi();
+        cbGruppi.addItem("");
+        for(int i = 0; i < infoGruppi.size(); i++)
+            cbGruppi.addItem(infoGruppi.get(i));
+        cbGruppi.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+            }
+        });
 
     }
 

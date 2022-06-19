@@ -51,7 +51,7 @@ public class Controller{
 
     //METODI
 
-    public void newCreaContatto(){
+    public void newCreaContatto() throws SQLException {
         creaContatto = null;
         creaContatto = new CreaContatto(this);
     }

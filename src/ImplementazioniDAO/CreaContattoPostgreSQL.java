@@ -13,7 +13,11 @@ public class CreaContattoPostgreSQL implements CreaContattoDAO{
     private Connection conn;
 
     public CreaContattoPostgreSQL(){
-
+        try{
+            conn = Connessione.getInstance().getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -22,11 +26,7 @@ public class CreaContattoPostgreSQL implements CreaContattoDAO{
     public void creaContatto(String nome, String cellulare, String cognome, String fisso, String email, String indirizzo, String foto, ArrayList<JTextField> listaIndirizzi, ArrayList<JTextField> listaEmail) throws SQLException {
         System.out.println(nome+" "+cognome+" "+cellulare+" "+fisso+" "+email+" "+indirizzo+" "+foto);
         int id = 0;
-        try{
-            conn = Connessione.getInstance().getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        conn = Connessione.getInstance().getConnection();
         //Inserimento nella tabella Contatto
        try {
            PreparedStatement inserisciContatto = conn.prepareStatement("Insert into Contatto(nome, cognome, foto) VALUES ('"+nome+"', '"+cognome+"', '"+foto+"');");

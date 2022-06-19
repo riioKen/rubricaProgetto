@@ -1,0 +1,99 @@
+CREATE FUNCTION RimuoviPartecipanti() RETURNS trigger
+LANGUAGE plpgsql
+as $$
+BEGIN
+UPDATE gruppo
+SET n_partecipanti = n_partecipanti - 1
+WHERE nome = old.nome;
+RETURN NULL;
+END;
+$$;
+
+CREATE FUNCTION AumentoPartecipanti() RETURNS trigger
+LANGUAGE plpgsql
+as $$
+BEGIN
+UPDATE gruppo 
+SET n_partecipanti = n_partecipanti + 1
+WHERE nome = new.nome;
+RETURN NULL;
+END;
+$$;
+
+CREATE FUNCTION ControlloAppartenenzaGruppo() RETURNS TRIGGER
+LANGUAGE plpgsql
+AS 
+$$
+DECLARE persona varchar(30);
+BEGIN
+
+IF NOT EXISTS (SELECT idcontatto, nome
+	       FROM Partecipazione as p
+	       WHERE p.idcontatto = new.idcontatto AND p.nome = new.nome) THEN 
+
+RETURN new;
+ELSE RAISE EXCEPTION 'La persona è gia nel gruppo';
+END IF;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION eliminacontatto()
+RETURNS trigger
+LANGUAGE 'plpgsql'
+AS 
+$$
+BEGIN
+
+DELETE
+FROM email
+WHERE idcontatto = old.id;
+
+DELETE
+FROM emailsecondario
+WHERE idcontatto = old.id;
+
+DELETE
+FROM numerocellulare
+WHERE idcontatto = old.id;
+
+DELETE
+FROM indirizzoprincipale
+WHERE idcontatto = old.id;
+
+DELETE
+FROM indirizzosecondario
+WHERE idcontatto = old.id;
+
+DELETE
+FROM messaging
+WHERE idcontatto = old.id;
+
+DELETE
+FROM numerofisso
+WHERE idcontatto = old.id;
+
+DELETE
+FROM partecipazione
+WHERE idcontatto = old.id;
+
+RETURN old;
+END;
+$$;
+------------------------------------------------------------------
+CREATE TRIGGER controlloAppartenenzaGruppi BEFORE INSERT ON Partecipazione
+FOR EACH ROW
+EXECUTE FUNCTION ControlloAppartenenzaGruppo();
+
+CREATE TRIGGER PartecipantiRimuovi AFTER DELETE ON partecipazione
+FOR EACH ROW
+EXECUTE FUNCTION RimuoviPartecipanti();
+
+CREATE TRIGGER PartecipantiAggiungi AFTER INSERT ON partecipazione
+FOR EACH ROW
+EXECUTE FUNCTION AumentoPartecipanti();
+
+CREATE TRIGGER rimuovinumerocellulare
+BEFORE DELETE
+ON Contatto
+FOR EACH ROW
+EXECUTE FUNCTION eliminacontatto();
