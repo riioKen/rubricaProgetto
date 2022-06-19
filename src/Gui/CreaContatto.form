@@ -212,7 +212,7 @@
       </component>
       <component id="c3dbf" class="javax.swing.JButton" binding="btnTastoHome">
         <constraints>
-          <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
+          <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="1" fill="0" indent="0" use-parent-layout="false">
             <minimum-size width="32" height="32"/>
             <preferred-size width="32" height="32"/>
             <maximum-size width="32" height="32"/>

@@ -12,7 +12,6 @@ public class Contatti {
     private String nickname;
 
 
-
     //COSTRUTTORE
     public Contatti(String nome, String cognome, String cellulare, String fisso, String indirizzo, String email) {
         this.nome = nome;
@@ -29,6 +28,15 @@ public class Contatti {
 
 
     //GETTER SETTER
+
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
 
     public String getNickname() {
         return nickname;

@@ -18,6 +18,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -52,6 +53,7 @@ public class SchedaInfoContatto {
     private JButton btnAggiornaContatto;
     private JButton btnEliminaContatto;
     private JComboBox cbGruppo;
+    private JButton btnImmagineCaricata;
 
     /////////////////////////////////////////////////////       OGGETTI     /////////////////////////////////////////////////////
     Controller control;
@@ -69,11 +71,11 @@ public class SchedaInfoContatto {
         control = controller;
 
         funzionalitaTasti();
+
     }
 
     /////////////////////////////////////////////////////       FUNZIONALITA' PULSANTI GUI      /////////////////////////////////////////////////////
     public void funzionalitaTasti(){
-
         //FUNZIONALITA' TASTO btnEliminaContatto
         btnEliminaContatto.addActionListener(new ActionListener() {
             @Override
@@ -134,12 +136,39 @@ public class SchedaInfoContatto {
                 lbTastoHome.setIcon(imgTastoHome);
             }
         });
+
+        //FUNZIONALITA' TASTO btnImmagineCaricata
+        btnImmagineCaricata.setMargin(new Insets(0,0,0,0));
+        btnImmagineCaricata.setContentAreaFilled(false);
+        btnImmagineCaricata.setBorderPainted(false);
+        btnImmagineCaricata.setBorder(null);
+        btnImmagineCaricata.setFocusPainted(false);
+        btnImmagineCaricata.setOpaque(true);
+
+        btnImmagineCaricata.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                JFileChooser fileChooser = new JFileChooser("D:\\GitHub\\Java\\Rubrica - ProgettoOO_BD\\Immagini\\ImmaginiContatto");
+                int valoreRitorno = fileChooser.showOpenDialog(null);
+                if (valoreRitorno == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    String percorsoAssoluto = selectedFile.getAbsolutePath();
+                    ImageIcon immagineProfilo = new ImageIcon(percorsoAssoluto);
+                    try {
+                        btnImmagineCaricata.setIcon(immagineProfilo);
+                        btnImmagineCaricata.setActionCommand(percorsoAssoluto);
+                    } catch (Exception b) {
+                        System.out.println("impossibile caricare l'immagine dal disco");
+                    }
+                }
+            }
+        });
     }
 
     /////////////////////////////////////////////////////       METODI LOGICI     /////////////////////////////////////////////////////
     public void riempimentoInfoContatto(String numero) throws SQLException {
         //ADESSO BISOGNA INSERIRE SIA GLI ALTRI INDIRIZZI EMAIL CHE INDIRIZZI FISICI ALL'INTERFACCIA SCHEDAINFOCONTATTO TIPS HO 2 ARRAYLIST STRING DA USARE PER CAPIRE QUANTITA DI INFORMAZIONI
-        Contatti contatto = new Contatti();
+        Contatti contatto;
         contatto = cercaInfoContattoDAO.cercaInfoContatti(numero, indirizzoSecondario, emailSecondario);
         getTxtNome().setText(contatto.getNome());
         getTxtCognome().setText(contatto.getCognome());
@@ -148,7 +177,15 @@ public class SchedaInfoContatto {
         getTxtEmail().setText(contatto.getEmail());
         getTxtIndirizzo().setText(contatto.getIndirizzo());
 
-        System.out.println("Controllo riga 156 classe SchedaInfoContatto\nindirizzi secondario"+" "+ indirizzoSecondario.size()+" email secondario"+" "+ emailSecondario.size());
+        if(contatto.getFoto() != null) {
+            ImageIcon immagine = new ImageIcon(contatto.getFoto());
+            btnImmagineCaricata.setIcon(immagine);
+        }
+        else{
+            ImageIcon immagine = new ImageIcon("Immagini/imgAggiungiFoto64pxScuro.png");
+            btnImmagineCaricata.setIcon(immagine);
+        }
+
         aggiuntaEmailSecondarie();
         aggiuntaIndirizziSecondari();
         nCellulare = getTxtCellulare().getText();
@@ -172,7 +209,7 @@ public class SchedaInfoContatto {
 
     public void aggiuntaIndirizziSecondari(){
         for(int i = 0;  i < indirizzoSecondario.size(); i++){
-            System.out.println(i);
+            System.out.println("Debug riga 212 metodo aggiuntaIndirizziSecondari classe SchedaInfoContatto"+i);
             JTextField piuIndirizzo = new JTextField();
             JPanel jpAppoggioPiuIndirizzo = new JPanel();
             jpAppoggioPiuIndirizzo.setLayout(new GridLayout(0,1));
@@ -185,9 +222,20 @@ public class SchedaInfoContatto {
         }
         indirizzoSecondario.clear();
     }
+    //////////////////////////////////////////////////////// COMPLETARE IL METODO DI SOTTO ///////////////////////////////////////////////////////////////////////////////////
     public void aggiornamentoContatto() throws SQLException {
         eliminaContattoDAO.eliminaContatto(nCellulare);
-        creaContattoDAO.creaContatto(getTxtNome().getText(), getTxtCellulare().getText(), getTxtCognome().getText(), getTxtFisso().getText(), getTxtEmail().getText(), getTxtIndirizzo().getText(), null, null);
+
+        Contatti contatto = new Contatti();
+
+        contatto.setNome(getTxtNome().getText());
+        contatto.setCognome(getTxtCognome().getText());
+        contatto.setCellulare(getTxtCellulare().getText());
+        contatto.setFisso(getTxtFisso().getText());
+        contatto.setEmail(getTxtEmail().getText());
+        contatto.setIndirizzo(getTxtIndirizzo().getText());
+        contatto.setFoto(btnImmagineCaricata.getActionCommand());
+        creaContattoDAO.creaContatto(contatto.getNome(), contatto.getCellulare(), contatto.getCognome(), contatto.getFisso(), contatto.getEmail(), contatto.getIndirizzo(), contatto.getFoto(), null, null);
     }
 
     /////////////////////////////////////////////////////       GETTER SETTER       /////////////////////////////////////////////////////

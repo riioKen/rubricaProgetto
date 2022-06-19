@@ -45,6 +45,8 @@ public class CercaInfoContattoPostgreSQL implements CercaInfoContattoDAO{
             contatto.setFisso(fisso);
             String email = rs.getString("email");
             contatto.setEmail(email);
+            String foto = rs.getString("foto");
+            contatto.setFoto(foto);
             String indirizzo = rs.getString("via" );
             String civico = rs.getString("civico");
             String cap = rs.getString("cap");

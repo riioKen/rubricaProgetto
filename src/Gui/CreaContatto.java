@@ -152,6 +152,7 @@ public class CreaContatto extends JPanel {
                     ImageIcon immagineProfilo = new ImageIcon(percorsoAssoluto);
                     try {
                         btnCaricaImmagine.setIcon(immagineProfilo);
+                        btnCaricaImmagine.setActionCommand(percorsoAssoluto);
                     } catch (Exception b) {
                         System.out.println("impossibile caricare l'immagine dal disco");
                     }
@@ -332,7 +333,6 @@ public class CreaContatto extends JPanel {
         });
 
         //btnCaricaImmagini
-        btnCaricaImmagine.setIcon(piuIndirizzi);
         btnCaricaImmagine.setMargin(new Insets(0,0,0,0));
         btnCaricaImmagine.setContentAreaFilled(false);
         btnCaricaImmagine.setBorderPainted(false);
@@ -423,11 +423,11 @@ public class CreaContatto extends JPanel {
         contatti.setFisso(txtFisso.getText());
         contatti.setEmail(txtEmail.getText());
         contatti.setIndirizzo(txtIndirizzo.getText());
-
+        contatti.setFoto(btnCaricaImmagine.getActionCommand());
         contatti.setNickname(Objects.requireNonNull(cbWhatsapp.getSelectedItem()).toString()); //Objects.requireNonNull necessario in caso di valore NULL all'interno della CB
 
         controlloField();
-        creaContattoDAO.creaContatto(contatti.getNome(), contatti.getCellulare(), contatti.getCognome(), contatti.getFisso(), contatti.getEmail(), contatti.getIndirizzo(), listaTxtIndirizzo, listaTxtEmail);
+        creaContattoDAO.creaContatto(contatti.getNome(), contatti.getCellulare(), contatti.getCognome(), contatti.getFisso(), contatti.getEmail(), contatti.getIndirizzo(), contatti.getFoto(), listaTxtIndirizzo, listaTxtEmail);
 
         svuotaCampi();
         control.getHomepage().stampaContatti();
