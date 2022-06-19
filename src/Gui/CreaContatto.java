@@ -11,16 +11,14 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class CreaContatto extends JPanel {
-    //ATTRIBUTI
+    /////////////////////////////////////////////////////       ATTRIBUTI       /////////////////////////////////////////////////////
     private JPanel creaContatto;
     private JPanel jpTxtEmail;
     private JPanel jpTxtIndirizzo;
@@ -51,14 +49,13 @@ public class CreaContatto extends JPanel {
     private JButton btnTastoHome;
     private JButton btnPiuEmail;
     private JButton btnPiuIndirizzi;
+    private JButton btnCaricaImmagine;
 
     private JFileChooser fileChooser;
     private JComboBox cbWhatsapp;
     private JComboBox cbTelegram;
-    //private JButton inserisciImmagineButton;
 
-
-    //OGGETTI
+    /////////////////////////////////////////////////////       OGGETTI     /////////////////////////////////////////////////////
     Controller control;
     Contatti contatti;
 
@@ -69,7 +66,7 @@ public class CreaContatto extends JPanel {
     ArrayList<JTextField> listaTxtEmail = new ArrayList<>();
     ArrayList<JTextField> listaTxtIndirizzo = new ArrayList<>();
 
-    //COSTRUTTORE
+    /////////////////////////////////////////////////////       COSTRUTTORE     /////////////////////////////////////////////////////
     public CreaContatto(Controller controller) {
         control = controller;
 
@@ -78,22 +75,14 @@ public class CreaContatto extends JPanel {
         funzionalitaTasti();
         //aggiuntaImmagine();
 
+
+
     }
 
-    //FUNZIONALITA' PULSANTI GUI
-    public void funzionalitaTasti(){
-        btnConferma();
-        btnSvuotaCampi();
-    }
-    public void btnSvuotaCampi(){
-        getBtnSvuotaCampi().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                svuotaCampi();
-            }
-        });
-    }
-    public void btnConferma(){
+    /////////////////////////////////////////////////////       FUNZIONALITA' PULSANTI GUI      /////////////////////////////////////////////////////
+    public void funzionalitaTasti() {
+
+        //FUNZIONI TASTO "CONFERMA"
         String errNomeLungo = "Hai inserito un nome non valido";
         String errCognomeLungo = "Hai inserito un cognome non valido";
         String errCellulareNonValido = "Hai inserito un numero cellulare non valido";
@@ -101,65 +90,86 @@ public class CreaContatto extends JPanel {
         String errEmailNonValido = "Hai inserito un indirizzo email non valido";
         String errIndirizzoNonValido = "Hai inserito un indirizzo non valido";
         String errSvuota = "";
-                getBtnConferma().addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        messaggiErroreFALSE();
-                        creaContatto.repaint();
-                        if(txtNome.getText().length() > 20 || txtNome.getText().length() == 0){
-                            lbErroreInserimento(errNomeLungo);
-                            imgErroreNome.setVisible(true);
-                        } else if(txtCognome.getText().length() > 20 || txtCognome.getText().length() == 0){
-                            lbErroreInserimento(errCognomeLungo);
-                            imgErroreCognome.setVisible(true);
-                        }else if(txtCellulare.getText().length() != 10){
-                            lbErroreInserimento(errCellulareNonValido);
-                            imgErroreCellulare.setVisible(true);
-                        } else if((txtFisso.getText().length() < 8 || txtFisso.getText().length() > 11) || txtFisso.getText().length() == 0){
-                            lbErroreInserimento(errFissoNonValido);
-                            imgErroreFisso.setVisible(true);
-                        }else if(txtEmail.getText().length() > 30 || txtEmail.getText().length() == 0){
-                            lbErroreInserimento(errEmailNonValido);
-                            imgErroreEmail.setVisible(true);
-                        } else if(!controlliIndirizzo()){
-                            lbErroreInserimento(errIndirizzoNonValido);
-                            imgErroreIndirizzo.setVisible(true);
-                        } else{
-                            try {
-                                    control.clickAudio();
-                                    inserimentoContattoDatabase();
-                                    control.getHomepage().stampaContatti();
-                                    control.switchJPanelInView(control.getHomepage().getPaneBase());
-                                    lbErroreInserimento(errSvuota);
+        getBtnConferma().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                messaggiErroreFALSE();
+                creaContatto.repaint();
+                if (txtNome.getText().length() > 20 || txtNome.getText().length() == 0) {
+                    lbErroreInserimento(errNomeLungo);
+                    imgErroreNome.setVisible(true);
+                } else if (txtCognome.getText().length() > 20 || txtCognome.getText().length() == 0) {
+                    lbErroreInserimento(errCognomeLungo);
+                    imgErroreCognome.setVisible(true);
+                } else if (txtCellulare.getText().length() != 10) {
+                    lbErroreInserimento(errCellulareNonValido);
+                    imgErroreCellulare.setVisible(true);
+                } else if ((txtFisso.getText().length() < 8 || txtFisso.getText().length() > 11) || txtFisso.getText().length() == 0) {
+                    lbErroreInserimento(errFissoNonValido);
+                    imgErroreFisso.setVisible(true);
+                } else if (txtEmail.getText().length() > 30 || txtEmail.getText().length() == 0) {
+                    lbErroreInserimento(errEmailNonValido);
+                    imgErroreEmail.setVisible(true);
+                } else if (!controlliIndirizzo()) {
+                    lbErroreInserimento(errIndirizzoNonValido);
+                    imgErroreIndirizzo.setVisible(true);
+                } else {
+                    try {
+                        control.clickAudio();
 
-                            } catch (SQLException | UnsupportedAudioFileException | LineUnavailableException | IOException | InterruptedException ex) {
-                                ex.printStackTrace();
-                            }
-                        }
+                        inserimentoContattoDatabase();
+                        control.getHomepage().stampaContatti();
+                        control.switchJPanelInView(control.getHomepage().getPaneBase());
+                        lbErroreInserimento(errSvuota);
+
+                    } catch (SQLException | UnsupportedAudioFileException | LineUnavailableException | IOException | InterruptedException ex) {
+                        ex.printStackTrace();
                     }
-                });
-    }
-
-    public boolean controlliIndirizzo() {
-        String via, civico, cap, citta, nazione;
-        int lunghezza = txtIndirizzo.getText().split("\\s*,\\s*").length;
-        String[] divisione;
-        if (lunghezza == 5) {
-            divisione = txtIndirizzo.getText().split("\\s*,\\s*");
-            via = divisione[0];
-            civico = divisione[1];
-            cap = divisione[2];
-            citta = divisione[3];
-            nazione = divisione[4];
-            if ((via.length() < 30 && via.length() > 0) && (civico.length() <= 3 && civico.length() > 0) && (cap.length() == 5) && (citta.length() < 20 && citta.length() > 0) && (nazione.length() < 20 && nazione.length() > 0)) {
-                return true;
+                }
             }
-            else {
-                return false;
-            }
-        }
+        });
 
-        return false;
+        //FUNZIONI TASTO "SVUOTA CAMPI"
+        getBtnSvuotaCampi().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                svuotaCampi();
+            }
+        });
+
+        //FUNZIONI TASTO "CARICA IMMAGINI"
+        ImageIcon imgCaricaImmagini = new ImageIcon("Immagini/imgAggiungiFoto32pxScuro.png");
+        ImageIcon imgCaricaImmaginiGrande = new ImageIcon("Immagini/imgAggiungiFoto64pxScuro.png");
+        btnCaricaImmagine.setIcon(imgCaricaImmagini);
+        btnCaricaImmagine.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+                int valoreRitorno = fileChooser.showOpenDialog(null);
+                if (valoreRitorno == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    String percorsoAssoluto = selectedFile.getAbsolutePath();
+
+                    try {
+                        System.out.println(percorsoAssoluto);
+                    } catch (Exception b) {
+                        System.out.println("impossibile caricare l'immagine dal disco");
+                    }
+                }
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                btnCaricaImmagine.setIcon(imgCaricaImmaginiGrande);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                btnCaricaImmagine.setIcon(imgCaricaImmagini);
+            }
+
+        });
     }
 
     public void lbErroreInserimento(String codiceErrore){
@@ -179,77 +189,6 @@ public class CreaContatto extends JPanel {
         messaggiErroreFALSE();
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    //METODI
-
-    public void aggiuntaTxtFieldIndirizzo(){      //RISOLVERE PIUINDIRIZZI JTXT SPORCO DOPO CONFERMA
-        JTextField txtPiuIndirizzi = new JTextField();
-        JPanel appoggioIndirizzo = new JPanel();
-        appoggioIndirizzo.setLayout(new GridLayout(0,1));
-        appoggioIndirizzo.add(txtPiuIndirizzi);
-        jpTxtIndirizzo.setLayout(new GridLayout(0,1));
-        jpTxtIndirizzo.add(appoggioIndirizzo);
-
-        listaTxtIndirizzo.add(txtPiuIndirizzi);
-        System.out.println(txtPiuIndirizzi.getText());
-
-        creaContatto.repaint();
-        creaContatto.validate();
-    }
-
-    public void messaggiErroreFALSE(){
-
-        imgErroreFisso.setVisible(false);
-        imgErroreCognome.setVisible(false);
-        imgErroreNome.setVisible(false);
-        imgErroreCellulare.setVisible(false);
-        imgErroreIndirizzo.setVisible(false);
-        imgErroreEmail.setVisible(false);
-    }
-    public void inserimentoContattoDatabase() throws SQLException {
-        CreaContattoDAO creaContattoDAO = new CreaContattoPostgreSQL();
-        contatti = new Contatti();
-        contatti.setNome(txtNome.getText());
-        contatti.setCognome(txtCognome.getText());
-        contatti.setCellulare(txtCellulare.getText());
-        contatti.setFisso(txtFisso.getText());
-        contatti.setEmail(txtEmail.getText());
-        contatti.setIndirizzo(txtIndirizzo.getText());
-
-        contatti.setNickname(Objects.requireNonNull(cbWhatsapp.getSelectedItem()).toString()); //Objects.requireNonNull necessario in caso di valore NULL all'interno della CB
-
-        creaContattoDAO.creaContatto(contatti.getNome(), contatti.getCellulare(), contatti.getCognome(), contatti.getFisso(), contatti.getEmail(), contatti.getIndirizzo(), listaTxtIndirizzo, listaTxtEmail);
-
-        svuotaCampi();
-        control.getHomepage().stampaContatti();
-    }
-
-    public void temaScuro() {
-
-        ImageIcon imgErrore = new ImageIcon("Immagini/imgErroreCampo.png");
-        Image image = imgErrore.getImage();
-        Image imgScalata = image.getScaledInstance(20, 20,  java.awt.Image.SCALE_SMOOTH);
-        imgErrore = new ImageIcon(imgScalata);
-
-        try{
-            imgErroreNome.setIcon(imgErrore);
-            imgErroreCognome.setIcon(imgErrore);
-            imgErroreFisso.setIcon(imgErrore);
-            imgErroreCellulare.setIcon(imgErrore);
-            imgErroreEmail.setIcon(imgErrore);
-            imgErroreIndirizzo.setIcon(imgErrore);
-        }catch(Exception e){
-            System.out.println("Una delle immagini imgErrore in CreaContatto non funziona");
-        }
-
-        textureTasti();
-    }
-
-    public void temaChiaro(){   //TESTING
-        FlatLightLaf.setup();
-        SwingUtilities.updateComponentTreeUI(creaContatto);
-    }
     public void textureTasti(){
 
         //btnTastoHome
@@ -305,16 +244,40 @@ public class CreaContatto extends JPanel {
         btnPiuIndirizzi.setFocusPainted(false);
         btnPiuIndirizzi.setOpaque(true);
 
+
         btnPiuIndirizzi.addMouseListener(new MouseAdapter() {
+            int count = 0;
             @Override
             public void mouseClicked(MouseEvent e) {
+
                 try {
                     control.rollOverAudio();
 
                 } catch (LineUnavailableException | UnsupportedAudioFileException | IOException | InterruptedException ex) {
                     ex.printStackTrace();
                 }
-                aggiuntaTxtFieldIndirizzo();
+                count = e.getClickCount();
+                int i = 0;
+
+                /* ******************* Fare controllo combinando listaTxtIndirizzo e txtIndirizzo (primario) con il secondario all'interno dell'if *******************
+                while(i < listaTxtIndirizzo.size()){
+                    if(!listaTxtIndirizzo.get(i).getText().isBlank())
+                        aggiuntaTxtFieldIndirizzo();
+                    i++;
+                }*/
+                if(!txtIndirizzo.getText().isBlank()) {
+                    lbErroreInserimento.setVisible(false);
+                    aggiuntaTxtFieldIndirizzo();
+                }
+                else
+                    lbErroreInserimento("Inserire l'indirizzo principale");
+
+
+
+                /*if(){
+                    aggiuntaTxtFieldIndirizzo();
+                }else
+                    lbErroreInserimento("Inserire l'indirizzo secondario precedente");*/
             }
 
             @Override
@@ -352,7 +315,14 @@ public class CreaContatto extends JPanel {
                 } catch (LineUnavailableException | UnsupportedAudioFileException | IOException | InterruptedException ex) {
                     ex.printStackTrace();
                 }
-                aggiuntaTxtFieldEmail();
+
+                if(!txtEmail.getText().isBlank()) {
+                    lbErroreInserimento.setVisible(false);
+                    aggiuntaTxtFieldEmail();
+                }
+                else
+                    lbErroreInserimento("Inserire l'email principale");
+
             }
 
             @Override
@@ -369,6 +339,15 @@ public class CreaContatto extends JPanel {
                 btnPiuEmail.setIcon(piuEmail);
             }
         });
+
+        //btnCaricaImmagini
+        btnCaricaImmagine.setIcon(piuIndirizzi);
+        btnCaricaImmagine.setMargin(new Insets(0,0,0,0));
+        btnCaricaImmagine.setContentAreaFilled(false);
+        btnCaricaImmagine.setBorderPainted(false);
+        btnCaricaImmagine.setBorder(null);
+        btnCaricaImmagine.setFocusPainted(false);
+        btnCaricaImmagine.setOpaque(true);
 
     }
     public void aggiuntaTxtFieldEmail(){
@@ -387,35 +366,107 @@ public class CreaContatto extends JPanel {
         creaContatto.validate();
     }
 
-    /*public void aggiuntaImmagine(){
+    public void aggiuntaTxtFieldIndirizzo(){ //RISOLVERE PIUINDIRIZZI JTXT SPORCO DOPO CONFERMA
 
-        inserisciImmagineButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ae)
-            {
-                JFileChooser fileChooser = new JFileChooser();
-                int returnValue = fileChooser.showOpenDialog(null);
-                if (returnValue == JFileChooser.APPROVE_OPTION)
-                {
-                    File selectedFile = fileChooser.getSelectedFile();
-                    String filename = selectedFile.getAbsolutePath();
+        JTextField txtPiuIndirizzi = new JTextField();
+        JPanel appoggioIndirizzo = new JPanel();
+        appoggioIndirizzo.setLayout(new GridLayout(0,1));
+        appoggioIndirizzo.add(txtPiuIndirizzi);
+        jpTxtIndirizzo.setLayout(new GridLayout(0,1));
+        jpTxtIndirizzo.add(appoggioIndirizzo);
 
-                    try
-                    {
-                        System.out.println(filename);
-                    } catch (Exception e)
-                    {
-                        System.out.println("Error");
-                    }
+        listaTxtIndirizzo.add(txtPiuIndirizzi);
+        System.out.println(txtPiuIndirizzi.getText());
 
-                }
+        creaContatto.repaint();
+        creaContatto.validate();
+    }
 
+
+    /////////////////////////////////////////////////////       METODI LOGICI       /////////////////////////////////////////////////////
+    public void controlloField(){
+        for(int i = 0; i < listaTxtIndirizzo.size(); i++){
+            if(listaTxtIndirizzo.get(i).getText().isBlank())
+                listaTxtIndirizzo.remove(i);
+        }
+    }
+    public boolean controlliIndirizzo() {
+        String via, civico, cap, citta, nazione;
+        int lunghezza = txtIndirizzo.getText().split("\\s*,\\s*").length;
+        String[] divisione;
+        if (lunghezza == 5) {
+            divisione = txtIndirizzo.getText().split("\\s*,\\s*");
+            via = divisione[0];
+            civico = divisione[1];
+            cap = divisione[2];
+            citta = divisione[3];
+            nazione = divisione[4];
+            if ((via.length() < 30 && via.length() > 0) && (civico.length() <= 3 && civico.length() > 0) && (cap.length() == 5) && (citta.length() < 20 && citta.length() > 0) && (nazione.length() < 20 && nazione.length() > 0)) {
+                return true;
             }
+            else {
+                return false;
+            }
+        }
 
-        });
+        return false;
+    }
 
 
-    }*/
+    public void messaggiErroreFALSE(){
+
+        imgErroreFisso.setVisible(false);
+        imgErroreCognome.setVisible(false);
+        imgErroreNome.setVisible(false);
+        imgErroreCellulare.setVisible(false);
+        imgErroreIndirizzo.setVisible(false);
+        imgErroreEmail.setVisible(false);
+        lbErroreInserimento.setVisible(false);
+    }
+    public void inserimentoContattoDatabase() throws SQLException {
+        CreaContattoDAO creaContattoDAO = new CreaContattoPostgreSQL();
+        contatti = new Contatti();
+        contatti.setNome(txtNome.getText());
+        contatti.setCognome(txtCognome.getText());
+        contatti.setCellulare(txtCellulare.getText());
+        contatti.setFisso(txtFisso.getText());
+        contatti.setEmail(txtEmail.getText());
+        contatti.setIndirizzo(txtIndirizzo.getText());
+
+        contatti.setNickname(Objects.requireNonNull(cbWhatsapp.getSelectedItem()).toString()); //Objects.requireNonNull necessario in caso di valore NULL all'interno della CB
+
+        controlloField();
+        creaContattoDAO.creaContatto(contatti.getNome(), contatti.getCellulare(), contatti.getCognome(), contatti.getFisso(), contatti.getEmail(), contatti.getIndirizzo(), listaTxtIndirizzo, listaTxtEmail);
+
+        svuotaCampi();
+        control.getHomepage().stampaContatti();
+    }
+
+    public void temaScuro() {
+
+        ImageIcon imgErrore = new ImageIcon("Immagini/imgErroreCampo.png");
+        Image image = imgErrore.getImage();
+        Image imgScalata = image.getScaledInstance(20, 20,  java.awt.Image.SCALE_SMOOTH);
+        imgErrore = new ImageIcon(imgScalata);
+
+        try{
+            imgErroreNome.setIcon(imgErrore);
+            imgErroreCognome.setIcon(imgErrore);
+            imgErroreFisso.setIcon(imgErrore);
+            imgErroreCellulare.setIcon(imgErrore);
+            imgErroreEmail.setIcon(imgErrore);
+            imgErroreIndirizzo.setIcon(imgErrore);
+        }catch(Exception e){
+            System.out.println("Una delle immagini imgErrore in CreaContatto non funziona");
+        }
+
+        textureTasti();
+    }
+
+    public void temaChiaro(){   //TESTING
+        FlatLightLaf.setup();
+        SwingUtilities.updateComponentTreeUI(creaContatto);
+    }
 
     //GETTER SETTER
 

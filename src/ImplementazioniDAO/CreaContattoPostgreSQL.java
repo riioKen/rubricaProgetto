@@ -110,21 +110,23 @@ public class CreaContattoPostgreSQL implements CreaContattoDAO{
     }
     public void splittaIndirizzoSecondario(ArrayList<JTextField> listaIndirizzo, int id) throws SQLException {
         String via, civico, cap, citta, nazione;
-        String[] divisione;
+
 
         if(listaIndirizzo != null) {
             for (int i = 0; i < listaIndirizzo.size(); i++) {
-                System.out.println(listaIndirizzo.size());
-                divisione = listaIndirizzo.get(i).getText().split("\\s*,\\s*");
-                via = divisione[0];
-                civico = divisione[1];
-                cap = divisione[2];
-                citta = divisione[3];
-                nazione = divisione[4];
+                if (listaIndirizzo.get(i).getText() != null || !listaIndirizzo.get(i).getText().isBlank() ) {
+                    System.out.println("stampa di quante volte entra nella i "+i);
 
-                if (!via.isBlank() && !civico.isBlank() && !cap.isBlank() && !citta.isBlank() && !nazione.isBlank()) {
-                    PreparedStatement inserisciContattoIndirizzo = conn.prepareStatement("Insert into IndirizzoSecondario(idcontatto, via, civico, cap, citta, nazione) VALUES ('" + id + "','" + via + "', '" + civico + "', '" + cap + "', '" + citta + "','" + nazione + "');");
-                    inserisciContattoIndirizzo.executeUpdate();
+                    via = listaIndirizzo.get(i).getText().split("\\s*,\\s*")[0];
+                    civico = listaIndirizzo.get(i).getText().split("\\s*,\\s*")[1];
+                    cap = listaIndirizzo.get(i).getText().split("\\s*,\\s*")[2];
+                    citta = listaIndirizzo.get(i).getText().split("\\s*,\\s*")[3];
+                    nazione = listaIndirizzo.get(i).getText().split("\\s*,\\s*")[4];
+                    System.out.println(via+" "+citta);
+                    if (!via.isBlank() && !civico.isBlank() && !cap.isBlank() && !citta.isBlank() && !nazione.isBlank()) {
+                        PreparedStatement inserisciContattoIndirizzo = conn.prepareStatement("Insert into IndirizzoSecondario(idcontatto, via, civico, cap, citta, nazione) VALUES ('" + id + "','" + via + "', '" + civico + "', '" + cap + "', '" + citta + "','" + nazione + "');");
+                        inserisciContattoIndirizzo.executeUpdate();
+                    }
                 }
             }
         }

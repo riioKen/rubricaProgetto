@@ -24,6 +24,7 @@ import java.util.ArrayList;
 
 public class SchedaInfoContatto {
 
+    /////////////////////////////////////////////////////       ATTRIBUTI       /////////////////////////////////////////////////////
     private JPanel schedaInfoContattoPane;
     private JPanel jpPiuEmail;
     private JPanel jpPiuIndirizzo;
@@ -52,7 +53,7 @@ public class SchedaInfoContatto {
     private JButton btnEliminaContatto;
     private JComboBox cbGruppo;
 
-
+    /////////////////////////////////////////////////////       OGGETTI     /////////////////////////////////////////////////////
     Controller control;
 
     CercaInfoContattoDAO cercaInfoContattoDAO = new CercaInfoContattoPostgreSQL();
@@ -62,19 +63,18 @@ public class SchedaInfoContatto {
     ArrayList<String> indirizzoSecondario = new ArrayList<>();
     ArrayList<String> emailSecondario = new ArrayList<>();
     String nCellulare;
+
+    /////////////////////////////////////////////////////       COSTRUTTORE     /////////////////////////////////////////////////////
     public  SchedaInfoContatto(Controller controller){
         control = controller;
 
-        lbTastoHome();
-        btnAggiornaContatto();
-        btnEliminaContatto();
-
-
+        funzionalitaTasti();
     }
 
+    /////////////////////////////////////////////////////       FUNZIONALITA' PULSANTI GUI      /////////////////////////////////////////////////////
+    public void funzionalitaTasti(){
 
-    //METODI
-    public void btnEliminaContatto(){
+        //FUNZIONALITA' TASTO btnEliminaContatto
         btnEliminaContatto.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -88,8 +88,8 @@ public class SchedaInfoContatto {
                 control.switchJPanelInView(control.getHomepage().getPaneBase());
             }
         });
-    }
-    public void btnAggiornaContatto(){
+
+        //FUNZIONALITA' TASTO btnAggiornaContatto
         btnAggiornaContatto.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -101,19 +101,8 @@ public class SchedaInfoContatto {
                 }
             }
         });
-    }
-    public void svuotaCampiInfoContatto(){
 
-            txtNome.setText("");
-            txtCognome.setText("");
-            txtCellulare.setText("");
-            txtFisso.setText("");
-            txtEmail.setText("");
-            txtIndirizzo.setText("");
-
-    }
-    //IMPLEMENTARE MODIFICA DEL CONTATTO && CREAZIONE GRUPPO && AGGIUNTA AL GRUPPO DI UN CONTATTO && RIMOZIONE DAL GRUPPO DI UN CONTATTO
-    public void lbTastoHome(){
+        //FUNZIONALITA' TASTO lbTastoHome
         ImageIcon imgTastoHome = new ImageIcon("Immagini/imgRitornoHomeFreccia24px.png");
         ImageIcon imgTastoHomeGrande = new ImageIcon("Immagini/imgRitornoHomeFreccia32px.png");
         lbTastoHome.setIcon(imgTastoHome);
@@ -147,6 +136,7 @@ public class SchedaInfoContatto {
         });
     }
 
+    /////////////////////////////////////////////////////       METODI LOGICI     /////////////////////////////////////////////////////
     public void riempimentoInfoContatto(String numero) throws SQLException {
         //ADESSO BISOGNA INSERIRE SIA GLI ALTRI INDIRIZZI EMAIL CHE INDIRIZZI FISICI ALL'INTERFACCIA SCHEDAINFOCONTATTO TIPS HO 2 ARRAYLIST STRING DA USARE PER CAPIRE QUANTITA DI INFORMAZIONI
         Contatti contatto = new Contatti();
@@ -200,10 +190,7 @@ public class SchedaInfoContatto {
         creaContattoDAO.creaContatto(getTxtNome().getText(), getTxtCellulare().getText(), getTxtCognome().getText(), getTxtFisso().getText(), getTxtEmail().getText(), getTxtIndirizzo().getText(), null, null);
     }
 
-
-    //GETTER SETTER
-
-
+    /////////////////////////////////////////////////////       GETTER SETTER       /////////////////////////////////////////////////////
     public JPanel getJpPiuEmail() {
         return jpPiuEmail;
     }

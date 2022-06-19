@@ -22,7 +22,7 @@ import ImplementazioniDAO.*;
 
 public class Homepage extends JFrame {
 
-    //ATTRIBUTI
+    /////////////////////////////////////////////////////       ATTRIBUTI       /////////////////////////////////////////////////////
     private JPanel cardHomepage;
     private JPanel homepage;
     private JPanel paneBase;
@@ -33,23 +33,108 @@ public class Homepage extends JFrame {
     private JButton btnSwitchTema;
     private JButton btnRicercaContatto;
 
-    //OGGETTI
     private Timer timer;
+
+    /////////////////////////////////////////////////////       OGGETTI     /////////////////////////////////////////////////////
     Controller control;
 
     static ArrayList<Contatti> contattiDB = new ArrayList<>();
 
-    public Homepage(Controller controller) throws SQLException, IOException {//Da spostare nel controller
+    /////////////////////////////////////////////////////       COSTRUTTORE     /////////////////////////////////////////////////////
+    public Homepage(Controller controller) throws SQLException, IOException {
 
         control = controller;
         impostazioniGeneraliHomepage();
-        btnSwitchTema();
         stampaContatti();
+        funzionalitaTasti();
 
     }
 
-    //METODI
-    public void btnSwitchTema(){
+
+    /////////////////////////////////////////////////////       FUNZIONALITA' TASTI     /////////////////////////////////////////////////////
+
+    public void funzionalitaTasti(){
+        //FUNZIONALITA TASTO btnCreaNuovoContatto
+        ImageIcon imgCreaNuovoContatto = new ImageIcon("Immagini/imgCreaNuovoContatto24px.png");
+        ImageIcon imgCreaNuovoContattoGrande = new ImageIcon("Immagini/imgCreaNuovoContatto32px.png");
+        try {
+            //Da settare la dimensione (PRESI DI MISURA GIUSTA COSI DA NON
+            btnCreaNuovoContatto.setIcon(imgCreaNuovoContatto);
+            btnCreaNuovoContatto.setMargin(new Insets(0,0,0,0));
+            btnCreaNuovoContatto.setContentAreaFilled(false);
+            btnCreaNuovoContatto.setBorderPainted(false);
+            btnCreaNuovoContatto.setBorder(null);
+            btnCreaNuovoContatto.setFocusPainted(false);
+            btnCreaNuovoContatto.setOpaque(true);
+        } catch (Exception e) {                                                                                //AVERE NECESSITA' PER IL MOMENTO)
+            System.out.println("Icona btnCreaNuovoContattoSCURO non caricata");
+        }
+        btnCreaNuovoContatto.setFocusable(false);
+        btnCreaNuovoContatto.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    control.clickAudio();
+                    control.switchJPanelInView(control.getCreaContatto().getCreaContatto());
+                    JScrollBarListaContatti.setBorder(BorderFactory.createTitledBorder(""));
+                    control.newCreaContatto();
+                } catch (LineUnavailableException | UnsupportedAudioFileException | IOException | InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                btnCreaNuovoContatto.setIcon(imgCreaNuovoContattoGrande);
+                try {
+                    control.rollOverAudio();
+                } catch (LineUnavailableException | UnsupportedAudioFileException | IOException | InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                btnCreaNuovoContatto.setIcon(imgCreaNuovoContatto);
+            }
+        });
+
+        //FUNZIONALITA TASTO btnRicercaContatto
+        ImageIcon imgRicercaContatto = new ImageIcon("Immagini/imgRicercaContatto24px.png");
+        ImageIcon imgRicercaContattoGrande = new ImageIcon("Immagini/imgRicercaContatto32px.png");
+
+        btnRicercaContatto.setIcon(imgRicercaContatto);
+        btnRicercaContatto.setMargin(new Insets(0,0,0,0));
+        btnRicercaContatto.setContentAreaFilled(false);
+        btnRicercaContatto.setBorderPainted(false);
+        btnRicercaContatto.setBorder(null);
+        btnRicercaContatto.setFocusPainted(false);
+        btnRicercaContatto.setOpaque(true);
+        btnRicercaContatto.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                btnRicercaContatto.setIcon(imgRicercaContattoGrande);
+                try {
+                    control.rollOverAudio();
+                } catch (LineUnavailableException | UnsupportedAudioFileException | IOException | InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            @Override
+            public void mouseClicked(MouseEvent e){
+                try {
+                    control.clickAudio();
+                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+                control.switchJPanelInView(control.getRicercaContatti().getRicercaContattiPane());
+                JScrollBarListaContatti.setBorder(BorderFactory.createTitledBorder(""));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                btnRicercaContatto.setIcon(imgRicercaContatto);
+            }
+        });
+
+        //FUNZIONALITA TASTO btnSwitchTema
         btnSwitchTema.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -61,6 +146,8 @@ public class Homepage extends JFrame {
             }
         });
     }
+
+    /////////////////////////////////////////////////////       METODI LOGICI     /////////////////////////////////////////////////////
 
     public void stampaContatti() throws SQLException {//Da spostare nel controller
         contattiDB.clear();
@@ -149,10 +236,16 @@ public class Homepage extends JFrame {
         } catch (Exception e) {                                                                                //AVERE NECESSITA' PER IL MOMENTO)
             System.out.println("Icona btnTemaScuro non caricata");
         }
+
+        try {
+            Image imgCreaNuovoContatto = ImageIO.read(new File("Immagini/imgCreaNuovoContatto24px.png")); //Da settare la dimensione (PRESI DI MISURA GIUSTA COSI DA NON
+            btnCreaNuovoContatto.setIcon(new ImageIcon(imgCreaNuovoContatto));
+        } catch (Exception e) {                                                                                //AVERE NECESSITA' PER IL MOMENTO)
+            System.out.println("Icona btnCreaNuovoContatto non caricata");
+        }
         btnSwitchTema.setFocusable(false);
 
-        //Modifica del JButton ********* TESTING **********
-        textureTasti();
+
     }
 
 
@@ -173,100 +266,14 @@ public class Homepage extends JFrame {
 
         //Modifica del JButton ********* TESTING **********
         try {
-            Image imgCreaNuovoContatto = ImageIO.read(new File("Immagini/imgCreaNuovoContattoCHIARO.png")); //Da settare la dimensione (PRESI DI MISURA GIUSTA COSI DA NON
+            Image imgCreaNuovoContatto = ImageIO.read(new File("Immagini/imgCreaNuovoContatto24pxCHIARO.png")); //Da settare la dimensione (PRESI DI MISURA GIUSTA COSI DA NON
             btnCreaNuovoContatto.setIcon(new ImageIcon(imgCreaNuovoContatto));
         } catch (Exception e) {                                                                                //AVERE NECESSITA' PER IL MOMENTO)
             System.out.println("Icona btnCreaNuovoContattoCHIARO non caricata");
         }
         btnCreaNuovoContatto.setFocusable(false);
 
-        textureTasti();
-    }
 
-    public void textureTasti() throws IOException {
-        //btnCreaNuovoContatto SETTAGGIO ESTETICO
-        ImageIcon imgCreaNuovoContatto = new ImageIcon("Immagini/imgCreaNuovoContatto24px.png");
-        ImageIcon imgCreaNuovoContattoGrande = new ImageIcon("Immagini/imgCreaNuovoContatto32px.png");
-        try {
-             //Da settare la dimensione (PRESI DI MISURA GIUSTA COSI DA NON
-            btnCreaNuovoContatto.setIcon(imgCreaNuovoContatto);
-            btnCreaNuovoContatto.setMargin(new Insets(0,0,0,0));
-            btnCreaNuovoContatto.setContentAreaFilled(false);
-            btnCreaNuovoContatto.setBorderPainted(false);
-            btnCreaNuovoContatto.setBorder(null);
-            btnCreaNuovoContatto.setFocusPainted(false);
-            btnCreaNuovoContatto.setOpaque(true);
-        } catch (Exception e) {                                                                                //AVERE NECESSITA' PER IL MOMENTO)
-            System.out.println("Icona btnCreaNuovoContattoSCURO non caricata");
-        }
-        btnCreaNuovoContatto.setFocusable(false);
-
-        btnCreaNuovoContatto.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                try {
-                    control.clickAudio();
-                    control.switchJPanelInView(control.getCreaContatto().getCreaContatto());
-                    JScrollBarListaContatti.setBorder(BorderFactory.createTitledBorder(""));
-                    control.newCreaContatto();
-                } catch (LineUnavailableException | UnsupportedAudioFileException | IOException | InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-            }
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                btnCreaNuovoContatto.setIcon(imgCreaNuovoContattoGrande);
-                try {
-                    control.rollOverAudio();
-                } catch (LineUnavailableException | UnsupportedAudioFileException | IOException | InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-            }
-            @Override
-            public void mouseExited(MouseEvent e) {
-                btnCreaNuovoContatto.setIcon(imgCreaNuovoContatto);
-            }
-        });
-
-        ricercaContatto();
-    }
-
-    public void ricercaContatto(){
-        ImageIcon imgRicercaContatto = new ImageIcon("Immagini/imgRicercaContatto24px.png");
-        ImageIcon imgRicercaContattoGrande = new ImageIcon("Immagini/imgRicercaContatto32px.png");
-
-        btnRicercaContatto.setIcon(imgRicercaContatto);
-        btnRicercaContatto.setMargin(new Insets(0,0,0,0));
-        btnRicercaContatto.setContentAreaFilled(false);
-        btnRicercaContatto.setBorderPainted(false);
-        btnRicercaContatto.setBorder(null);
-        btnRicercaContatto.setFocusPainted(false);
-        btnRicercaContatto.setOpaque(true);
-        btnRicercaContatto.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                btnRicercaContatto.setIcon(imgRicercaContattoGrande);
-                try {
-                    control.rollOverAudio();
-                } catch (LineUnavailableException | UnsupportedAudioFileException | IOException | InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-            }
-            @Override
-            public void mouseClicked(MouseEvent e){
-                try {
-                    control.clickAudio();
-                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-                control.switchJPanelInView(control.getRicercaContatti().getRicercaContattiPane());
-                JScrollBarListaContatti.setBorder(BorderFactory.createTitledBorder(""));
-            }
-            @Override
-            public void mouseExited(MouseEvent e) {
-                btnRicercaContatto.setIcon(imgRicercaContatto);
-            }
-        });
     }
 
     //GETTER SETTER

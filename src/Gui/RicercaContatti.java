@@ -19,9 +19,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class RicercaContatti {
-
-    
-    Controller control;
+    /////////////////////////////////////////////////////       ATTRIBUTI       /////////////////////////////////////////////////////
     private JPanel ricercaContattiPane;
     private JTextField txtRicerca;
     private JRadioButton nomeRadioButton;
@@ -31,34 +29,24 @@ public class RicercaContatti {
     private JScrollPane risultatoScroll;
     private JPanel risultatoPane;
 
+    /////////////////////////////////////////////////////       OGGETTI     /////////////////////////////////////////////////////
+    Controller control;
     ArrayList<Contatti> contattiInfo = new ArrayList<>();
     RicercaContattoDAO ricerca = new RicercaContattoPostgreSQL();
+
+    /////////////////////////////////////////////////////       COSTRUTTORE     /////////////////////////////////////////////////////
     public RicercaContatti(Controller controller) throws SQLException {
         control = controller;
 
 /*TO - DO
     GESTIONE GRUPPI, GESTIONE FOTO, SISTEMI MESSAGING, BUG IN INSERIMENTO PIU' INDIRIZZI DI FISICI
 */
-        selezione();
-        /*txtRicerca.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                if(txtRicerca.getText().isBlank() || txtRicerca.getText().isEmpty() ) {
-                    risultatoPane.removeAll();
-                    risultatoScroll.revalidate();
-                    ricercaContattiPane.revalidate();
-                }
-                super.keyTyped(e);
-                try {
-                    selezione();
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });*/
+        funzionalitaTasti();
+
     }
 
-    private void selezione( ) throws SQLException {
+    /////////////////////////////////////////////////////       FUNZIONALITA' PULSANTI GUI      /////////////////////////////////////////////////////
+    private void funzionalitaTasti( ) throws SQLException {
         ButtonGroup bg1 = new ButtonGroup( );
         bg1.add(nomeRadioButton);
         bg1.add(nicknameRadioButton);
@@ -68,11 +56,7 @@ public class RicercaContatti {
         txtRicerca.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                /*if(txtRicerca.getText().isBlank() || txtRicerca.getText().isEmpty() ) {
-                    risultatoPane.removeAll();
-                    risultatoScroll.revalidate();
-                    ricercaContattiPane.revalidate();
-                }*/
+
                 super.keyTyped(e);
                 try {
                     if(bg1.isSelected(nomeRadioButton.getModel())){
@@ -103,6 +87,7 @@ public class RicercaContatti {
     }
 
 
+    /////////////////////////////////////////////////////       METODI LOGICI     /////////////////////////////////////////////////////
     public void ricercaCampi(ArrayList<Contatti> contattiInfo) throws SQLException {
         risultatoPane.removeAll();
 
@@ -144,7 +129,6 @@ public class RicercaContatti {
     }
 
     //GETTER SETTER
-
     public JTextField getTxtRicerca() {
         return txtRicerca;
     }
