@@ -1,0 +1,102 @@
+CREATE TABLE IF NOT EXISTS public.contatto
+(
+    id serial NOT NULL,
+    nome character varying(30),
+    cognome character varying(30),
+    foto character varying(100),
+    CONSTRAINT contatto_pkey PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS public.email
+(
+    idcontatto integer,
+    email character varying(50) NOT NULL,
+    CONSTRAINT email_pkey PRIMARY KEY (email),
+    CONSTRAINT fkidcontatto FOREIGN KEY (idcontatto)
+        REFERENCES public.contatto (id)
+);
+
+CREATE TABLE IF NOT EXISTS public.emailsecondario
+(
+    email character varying(50) NOT NULL,
+    idcontatto integer,
+    CONSTRAINT emailsecondario_pkey PRIMARY KEY (email),
+    CONSTRAINT fkidcontatto FOREIGN KEY (idcontatto)
+        REFERENCES public.contatto (id)
+);
+
+CREATE TABLE IF NOT EXISTS public.gruppo
+(
+    nome character varying(50) NOT NULL,
+    n_partecipanti integer,
+    CONSTRAINT gruppo_pkey PRIMARY KEY (nome)
+);
+
+CREATE TABLE IF NOT EXISTS public.indirizzoprincipale
+(
+    idindirizzo serial NOT NULL,
+    via character varying(50),
+    civico character varying(4),
+    citta character varying(30),
+    cap character(5),
+    nazione character varying(20),
+    idcontatto integer,
+    CONSTRAINT indirizzoprincipale_pkey PRIMARY KEY (idindirizzo),
+    CONSTRAINT fkidcontatto FOREIGN KEY (idcontatto)
+        REFERENCES public.contatto (id)
+);
+
+CREATE TABLE IF NOT EXISTS public.indirizzosecondario
+(
+    idindirizzo serial NOT NULL,
+    via character varying(50),
+    civico character varying(4),
+    citta character varying(30) ,
+    cap character(5),
+    nazione character varying(20),
+    idcontatto integer,
+    CONSTRAINT indirizzosecondario_pkey PRIMARY KEY (idindirizzo),
+    CONSTRAINT fkidcontatto FOREIGN KEY (idcontatto)
+        REFERENCES public.contatto (id)
+);
+
+CREATE TABLE IF NOT EXISTS public.messaging
+(
+    nickname character varying(30) NOT NULL,
+    providermessaggi character varying(30),
+    messaggiobenvenuto character varying(50),
+    idcontatto integer,
+    CONSTRAINT messaging_pkey PRIMARY KEY (nickname),
+    CONSTRAINT fkidcontatto FOREIGN KEY (idcontatto)
+        REFERENCES public.contatto (id)
+);
+
+CREATE TABLE IF NOT EXISTS public.numerocellulare
+(
+    cellulare character(10) NOT NULL,
+    idcontatto integer,
+    CONSTRAINT numerocellulare_pkey PRIMARY KEY (cellulare),
+    CONSTRAINT fkidcontatto FOREIGN KEY (idcontatto)
+        REFERENCES public.contatto (id)
+);
+
+CREATE TABLE IF NOT EXISTS public.numerofisso
+(
+    fisso character varying(11) NOT NULL,
+    idcontatto integer,
+    CONSTRAINT numerofisso_pkey PRIMARY KEY (fisso),
+    CONSTRAINT fkidcontatto FOREIGN KEY (idcontatto)
+        REFERENCES public.contatto (id)
+);
+
+CREATE TABLE IF NOT EXISTS public.partecipazione
+(
+    idcontatto integer,
+    nome character varying(50),
+    CONSTRAINT fkidcontatto FOREIGN KEY (idcontatto)
+        REFERENCES public.contatto (id),
+    CONSTRAINT fkidgruppo FOREIGN KEY (nome)
+        REFERENCES public.gruppo (nome)
+);
+
+

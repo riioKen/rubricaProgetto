@@ -11,7 +11,7 @@ public class Connessione {
     private Connection connection = null;
     private String nome = "postgres";
     private String password = "rubrica";
-    private String url = "jdbc:postgresql://localhost:5432/RubricaAggiornata";
+    private String url = "jdbc:postgresql://localhost:5432/Rubrica";
     private String driver = "org.postgresql.Driver";
 
 
