@@ -9,7 +9,7 @@ public class Contatti {
     private String indirizzo; //L'indirizzo di casa del contatto
     private String cellulare; //Il numero di celullare del contatto
     private String fisso; //Il numero di telefono fisso del contatto
-    private String nickname;
+    private String nomeGruppo;
 
 
     //COSTRUTTORE
@@ -30,20 +30,20 @@ public class Contatti {
     //GETTER SETTER
 
 
+    public String getNomeGruppo() {
+        return nomeGruppo;
+    }
+
+    public void setNomeGruppo(String nomeGruppo) {
+        this.nomeGruppo = nomeGruppo;
+    }
+
     public String getFoto() {
         return foto;
     }
 
     public void setFoto(String foto) {
         this.foto = foto;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
     }
 
     public String getNome() {

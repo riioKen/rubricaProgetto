@@ -39,7 +39,7 @@ public class RicercaContatti {
         control = controller;
 
 /*TO - DO
-    GESTIONE GRUPPI, GESTIONE FOTO, SISTEMI MESSAGING, BUG IN INSERIMENTO PIU' INDIRIZZI DI FISICI
+    GESTIONE GRUPPI, SISTEMI MESSAGING
 */
         funzionalitaTasti();
 

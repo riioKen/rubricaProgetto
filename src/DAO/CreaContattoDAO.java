@@ -6,6 +6,6 @@ import java.util.ArrayList;
 
 public interface CreaContattoDAO {
 
-    void creaContatto(String nome, String cellulare, String cognome, String fisso, String email, String indirizzo, String foto, ArrayList<JTextField> listaIndirizzi, ArrayList<JTextField> listaEmail) throws SQLException;
+    void creaContatto(String nome, String cellulare, String cognome, String fisso, String email, String indirizzo, String foto, String nomeGruppo, ArrayList<JTextField> listaIndirizzi, ArrayList<JTextField> listaEmail) throws SQLException;
 
 }

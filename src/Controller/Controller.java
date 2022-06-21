@@ -14,7 +14,7 @@ public class Controller{
 
     Contatti contatti;
     Messaging messaging;
-    GruppoContatti gruppoContatti;
+
 
 
     Homepage homepage;
@@ -140,13 +140,7 @@ public class Controller{
         this.messaging = messaging;
     }
 
-    public GruppoContatti getGruppoContatti() {
-        return gruppoContatti;
-    }
-
-    public void setGruppoContatti(GruppoContatti gruppoContatti) {
-        this.gruppoContatti = gruppoContatti;
-    }
+    
 
 
 }

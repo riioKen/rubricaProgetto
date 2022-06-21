@@ -167,8 +167,9 @@ public class SchedaInfoContatto {
 
     /////////////////////////////////////////////////////       METODI LOGICI     /////////////////////////////////////////////////////
     public void riempimentoInfoContatto(String numero) throws SQLException {
-        //ADESSO BISOGNA INSERIRE SIA GLI ALTRI INDIRIZZI EMAIL CHE INDIRIZZI FISICI ALL'INTERFACCIA SCHEDAINFOCONTATTO TIPS HO 2 ARRAYLIST STRING DA USARE PER CAPIRE QUANTITA DI INFORMAZIONI
         Contatti contatto;
+        indirizzoSecondario.clear();
+        emailSecondario.clear();
         contatto = cercaInfoContattoDAO.cercaInfoContatti(numero, indirizzoSecondario, emailSecondario);
         getTxtNome().setText(contatto.getNome());
         getTxtCognome().setText(contatto.getCognome());
@@ -235,7 +236,7 @@ public class SchedaInfoContatto {
         contatto.setEmail(getTxtEmail().getText());
         contatto.setIndirizzo(getTxtIndirizzo().getText());
         contatto.setFoto(btnImmagineCaricata.getActionCommand());
-        creaContattoDAO.creaContatto(contatto.getNome(), contatto.getCellulare(), contatto.getCognome(), contatto.getFisso(), contatto.getEmail(), contatto.getIndirizzo(), contatto.getFoto(), null, null);
+        creaContattoDAO.creaContatto(contatto.getNome(), contatto.getCellulare(), contatto.getCognome(), contatto.getFisso(), contatto.getEmail(), contatto.getIndirizzo(), contatto.getFoto(),null, null, null);
     }
 
     /////////////////////////////////////////////////////       GETTER SETTER       /////////////////////////////////////////////////////

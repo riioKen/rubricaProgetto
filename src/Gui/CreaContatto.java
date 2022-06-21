@@ -250,8 +250,8 @@ public class CreaContatto extends JPanel {
         btnPiuIndirizzi.setOpaque(true);
 
 
+        //AGGIUSTARE LA LOGICA DIETRO ALLA COMPARSA DELL'LBERRORE
         btnPiuIndirizzi.addMouseListener(new MouseAdapter() {
-            int count = 0;
             @Override
             public void mouseClicked(MouseEvent e) {
 
@@ -261,28 +261,22 @@ public class CreaContatto extends JPanel {
                 } catch (LineUnavailableException | UnsupportedAudioFileException | IOException | InterruptedException ex) {
                     ex.printStackTrace();
                 }
-                count = e.getClickCount();
-                int i = 0;
 
-                /* ******************* Fare controllo combinando listaTxtIndirizzo e txtIndirizzo (primario) con il secondario all'interno dell'if *******************
-                while(i < listaTxtIndirizzo.size()){
-                    if(!listaTxtIndirizzo.get(i).getText().isBlank())
-                        aggiuntaTxtFieldIndirizzo();
-                    i++;
-                }*/
                 if(!txtIndirizzo.getText().isBlank()) {
+                    if(listaTxtIndirizzo.size() == 0)
+                        aggiuntaTxtFieldIndirizzo();
                     lbErroreInserimento.setVisible(false);
-                    aggiuntaTxtFieldIndirizzo();
+                    for(int i = listaTxtIndirizzo.size()-1; i < listaTxtIndirizzo.size(); i++){
+                        lbErroreInserimento.setVisible(false);
+                        if(!listaTxtIndirizzo.get(i).getText().isBlank()) {
+                            aggiuntaTxtFieldIndirizzo();
+                        }
+                        if(listaTxtIndirizzo.get(i).getText().isBlank())
+                            lbErroreInserimento("Inserire l'indirizzo secondario precedente");
+                    }
                 }
                 else
                     lbErroreInserimento("Inserire l'indirizzo principale");
-
-
-
-                /*if(){
-                    aggiuntaTxtFieldIndirizzo();
-                }else
-                    lbErroreInserimento("Inserire l'indirizzo secondario precedente");*/
             }
 
             @Override
@@ -321,9 +315,19 @@ public class CreaContatto extends JPanel {
                     ex.printStackTrace();
                 }
 
+                //AGGIUSTARE LA LOGICA DIETRO ALLA COMPARSA DELL'LBERRORE
                 if(!txtEmail.getText().isBlank()) {
+                    if(listaTxtEmail.size() == 0)
+                        aggiuntaTxtFieldEmail();
                     lbErroreInserimento.setVisible(false);
-                    aggiuntaTxtFieldEmail();
+                    for(int i = listaTxtEmail.size()-1; i < listaTxtEmail.size(); i++){
+                        lbErroreInserimento.setVisible(false);
+                        if(!listaTxtEmail.get(i).getText().isBlank()) {
+                            aggiuntaTxtFieldEmail();
+                        }
+                        if(listaTxtEmail.get(i).getText().isBlank())
+                            lbErroreInserimento("Inserire email secondario precedente");
+                    }
                 }
                 else
                     lbErroreInserimento("Inserire l'email principale");
@@ -355,6 +359,7 @@ public class CreaContatto extends JPanel {
 
     }
     public void aggiuntaTxtFieldEmail(){
+
         JTextField txtEmail = new JTextField();
         JPanel appoggioEmail = new JPanel();
         appoggioEmail.setLayout(new GridLayout(0,1));
@@ -437,10 +442,10 @@ public class CreaContatto extends JPanel {
         contatti.setEmail(txtEmail.getText());
         contatti.setIndirizzo(txtIndirizzo.getText());
         contatti.setFoto(btnCaricaImmagine.getActionCommand());
-        contatti.setNickname(Objects.requireNonNull(cbWhatsapp.getSelectedItem()).toString()); //Objects.requireNonNull necessario in caso di valore NULL all'interno della CB
-
+        contatti.setNomeGruppo(Objects.requireNonNull(cbGruppi.getSelectedItem()).toString());
+        System.out.println(contatti.getNomeGruppo());
         controlloField();
-        creaContattoDAO.creaContatto(contatti.getNome(), contatti.getCellulare(), contatti.getCognome(), contatti.getFisso(), contatti.getEmail(), contatti.getIndirizzo(), contatti.getFoto(), listaTxtIndirizzo, listaTxtEmail);
+        creaContattoDAO.creaContatto(contatti.getNome(), contatti.getCellulare(), contatti.getCognome(), contatti.getFisso(), contatti.getEmail(), contatti.getIndirizzo(), contatti.getFoto(), contatti.getNomeGruppo(), listaTxtIndirizzo, listaTxtEmail);
 
         svuotaCampi();
         control.getHomepage().stampaContatti();
