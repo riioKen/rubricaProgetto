@@ -26,29 +26,18 @@ public class CreaContattoPostgreSQL implements CreaContattoDAO{
         System.out.println(nome+" "+cognome+" "+cellulare+" "+fisso+" "+email+" "+indirizzo+" "+foto);
         int id = 0;
         conn = Connessione.getInstance().getConnection();
-        //Inserimento nella tabella Contatto
+        //Inserimento nella tabella Contatto e Restituzione dell'ID del contatto appena inserito
        try {
-           PreparedStatement inserisciContatto = conn.prepareStatement("Insert into Contatto(nome, cognome, foto) VALUES ('"+nome+"', '"+cognome+"', '"+foto+"');");
-
-           inserisciContatto.executeUpdate();
+           PreparedStatement inserisciContatto = conn.prepareStatement("Insert into Contatto(nome, cognome, foto) VALUES ('"+nome+"', '"+cognome+"', '"+foto+"') RETURNING id;");
+           inserisciContatto.execute();
+           ResultSet rs = inserisciContatto.getResultSet();
+           rs.next();
+           id = rs.getInt(1);
 
        }catch(SQLException e){
-           System.out.println("ECCEZIONE::Riga 36 Classe CreaContattoPostgreSQL");
+           System.out.println("ECCEZIONE::Riga 38 Classe CreaContattoPostgreSQL");
+           e.printStackTrace();
        }
-       //Recupero dell'ID utente
-        try {
-            String recuperaIDContatto = ("SELECT id FROM Contatto WHERE nome = '"+nome+"' AND cognome = '"+cognome+"' ORDER BY id DESC LIMIT 1");
-
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(recuperaIDContatto);
-
-            while(rs.next()){
-                id = rs.getInt("id");
-            }
-
-        }catch(SQLException e){
-            System.out.println("ECCEZIONE::Riga 50 Classe CreaContattoPostgreSQL");
-        }
 
         //Inserimento nella tabella EMAIL
         try {
@@ -60,6 +49,7 @@ public class CreaContattoPostgreSQL implements CreaContattoDAO{
             inserimentoEmailSecondarie(listaEmail, id);
         }catch(SQLException e){
             System.out.println("ECCEZIONE::Riga 62 Classe CreaContattoPostgreSQL");
+            e.printStackTrace();
         }
 
         try {
@@ -70,6 +60,7 @@ public class CreaContattoPostgreSQL implements CreaContattoDAO{
 
         }catch(SQLException e){
             System.out.println("ECCEZIONE::Riga 72 Classe CreaContattoPostgreSQL");
+            e.printStackTrace();
         }
 
         try {
@@ -80,6 +71,7 @@ public class CreaContattoPostgreSQL implements CreaContattoDAO{
 
         }catch(SQLException e){
             System.out.println("ECCEZIONE::Riga 82 Classe CreaContattoPostgreSQL");
+            e.printStackTrace();
         }
         //Inserimento nella tabella IndirizzoPrincipale
         try {
@@ -87,6 +79,7 @@ public class CreaContattoPostgreSQL implements CreaContattoDAO{
 
         }catch(SQLException e){
             System.out.println("ECCEZIONE::Riga 89 Classe CreaContattoPostgreSQL");
+            e.printStackTrace();
         }
 
         //Inserimento nella tabella IndirizzoSecondario
@@ -95,6 +88,7 @@ public class CreaContattoPostgreSQL implements CreaContattoDAO{
 
         }catch(SQLException e){
             System.out.println("ECCEZIONE::Riga 97 Classe CreaContattoPostgreSQL");
+            e.printStackTrace();
         }
         //Inserimento nella tabella Partecipazione
         try {
@@ -103,6 +97,7 @@ public class CreaContattoPostgreSQL implements CreaContattoDAO{
         }
         catch (SQLException e){
             System.out.println("ECCEZIONE::Riga 105 Classe CreaContattoPostgreSQL");
+            e.printStackTrace();
         }
         conn.close();
     }
@@ -122,6 +117,7 @@ public class CreaContattoPostgreSQL implements CreaContattoDAO{
         }
         catch (SQLException e) {
             System.out.println("ECCEZIONE::Riga 117 Classe CreaContattoPostgreSQL");
+            e.printStackTrace();
         }
     }
 
@@ -150,6 +146,37 @@ public class CreaContattoPostgreSQL implements CreaContattoDAO{
         }
         catch (SQLException e){
             System.out.println("ECCEZIONE::Riga 145 Classe CreaContattoPostgreSQL");
+            e.printStackTrace();
+        }
+    }
+
+    public void splittaIndirizzoSecondario(JTextField[] txtIndirizzo, int id) throws SQLException {
+        String via, civico, cap, citta, nazione;
+        ArrayList<String> listaIndirizzo = new ArrayList<>();
+        for(int i  = 0; i < txtIndirizzo.length; i++)
+            listaIndirizzo.add(txtIndirizzo[i].getText());
+        try {
+
+            for (int i = 0; i < listaIndirizzo.size(); i++) {
+                if (!listaIndirizzo.get(i).isBlank()) {
+                    System.out.println("stampa di quante volte entra nella i " + i);
+
+                    via = listaIndirizzo.get(i).split("\\s*,\\s*")[0];
+                    civico = listaIndirizzo.get(i).split("\\s*,\\s*")[1];
+                    cap = listaIndirizzo.get(i).split("\\s*,\\s*")[2];
+                    citta = listaIndirizzo.get(i).split("\\s*,\\s*")[3];
+                    nazione = listaIndirizzo.get(i).split("\\s*,\\s*")[4];
+                    System.out.println(via + " " + citta);
+                    if (!via.isBlank() && !civico.isBlank() && !cap.isBlank() && !citta.isBlank() && !nazione.isBlank()) {
+                        PreparedStatement inserisciContattoIndirizzo = conn.prepareStatement("Insert into IndirizzoSecondario(idcontatto, via, civico, cap, citta, nazione) VALUES ('" + id + "','" + via + "', '" + civico + "', '" + cap + "', '" + citta + "','" + nazione + "');");
+                        inserisciContattoIndirizzo.executeUpdate();
+                    }
+                }
+            }
+        }
+        catch (SQLException e){
+            System.out.println("ECCEZIONE::Riga 145 Classe CreaContattoPostgreSQL");
+            e.printStackTrace();
         }
     }
 
@@ -169,6 +196,7 @@ public class CreaContattoPostgreSQL implements CreaContattoDAO{
         }
         catch(SQLException e){
             System.out.println("ECCEZIONE::Riga 164 Classe CreaContattoPostgreSQL");
+            e.printStackTrace();
         }
 
     }

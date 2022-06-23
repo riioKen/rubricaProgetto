@@ -20,6 +20,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -64,6 +65,8 @@ public class SchedaInfoContatto {
 
     ArrayList<String> indirizzoSecondario = new ArrayList<>();
     ArrayList<String> emailSecondario = new ArrayList<>();
+    JTextField[] piuEmail;
+    JTextField[] piuIndirizzo;
     String nCellulare;
 
     /////////////////////////////////////////////////////       COSTRUTTORE     /////////////////////////////////////////////////////
@@ -186,21 +189,23 @@ public class SchedaInfoContatto {
             ImageIcon immagine = new ImageIcon("Immagini/imgAggiungiFoto64pxScuro.png");
             btnImmagineCaricata.setIcon(immagine);
         }
-
-        aggiuntaEmailSecondarie();
-        aggiuntaIndirizziSecondari();
+        piuEmail = new JTextField[emailSecondario.size()];
+        piuIndirizzo = new JTextField[indirizzoSecondario.size()];
+        aggiuntaEmailSecondarie(piuEmail);
+        aggiuntaIndirizziSecondari(piuIndirizzo);
         nCellulare = getTxtCellulare().getText();
     }
-
-    public void aggiuntaEmailSecondarie(){
-        for(int i = 0;  i < emailSecondario.size(); i++){
-            JTextField piuEmail = new JTextField();
+    //TO - DO risolvere il problema dell'ottenimento degli indirizzi e degli email secondari dai rispetti JTXTFIELD. TIPS bisogna rendere i jtxt array
+    public void aggiuntaEmailSecondarie(JTextField[] piuEmail){
+        for(int i = 0;  i < piuEmail.length; i++){
+            piuEmail[i] = new JTextField();
             JPanel jpAppoggioPiuEmail = new JPanel();
             jpAppoggioPiuEmail.setLayout(new GridLayout(0,1));
-            jpAppoggioPiuEmail.add(piuEmail);
+            piuEmail[i].setText(emailSecondario.get(i));
+            jpAppoggioPiuEmail.add(piuEmail[i]);
             jpPiuEmail.setLayout(new GridLayout(0,1));
             jpPiuEmail.add(jpAppoggioPiuEmail);
-            piuEmail.setText(emailSecondario.get(i));
+
             jpPiuEmail.validate();
             jpPiuEmail.repaint();
         }
@@ -208,16 +213,16 @@ public class SchedaInfoContatto {
 
     }
 
-    public void aggiuntaIndirizziSecondari(){
+    public void aggiuntaIndirizziSecondari(JTextField[] piuIndirizzo){
         for(int i = 0;  i < indirizzoSecondario.size(); i++){
+            piuIndirizzo[i] = new JTextField();
             System.out.println("Debug riga 212 metodo aggiuntaIndirizziSecondari classe SchedaInfoContatto"+i);
-            JTextField piuIndirizzo = new JTextField();
             JPanel jpAppoggioPiuIndirizzo = new JPanel();
             jpAppoggioPiuIndirizzo.setLayout(new GridLayout(0,1));
-            jpAppoggioPiuIndirizzo.add(piuIndirizzo);
+            jpAppoggioPiuIndirizzo.add(piuIndirizzo[i]);
             jpPiuIndirizzo.setLayout(new GridLayout(0,1));
             jpPiuIndirizzo.add(jpAppoggioPiuIndirizzo);
-            piuIndirizzo.setText(indirizzoSecondario.get(i));
+            piuIndirizzo[i].setText(indirizzoSecondario.get(i));
             jpPiuIndirizzo.validate();
             jpPiuIndirizzo.repaint();
         }
@@ -237,6 +242,7 @@ public class SchedaInfoContatto {
         contatto.setIndirizzo(getTxtIndirizzo().getText());
         contatto.setFoto(btnImmagineCaricata.getActionCommand());
         creaContattoDAO.creaContatto(contatto.getNome(), contatto.getCellulare(), contatto.getCognome(), contatto.getFisso(), contatto.getEmail(), contatto.getIndirizzo(), contatto.getFoto(),null, null, null);
+        //TROVARE UN MODO PER: 1 IL CREA CONTATTO ACCETTA ARRAYLIST<JTXTFIELD> MENTRE CON AGGIORNAMENTO CONTATTO GLI STO PASSANDO UN JTXTFIELD[]. TIPS CREARE UN NUOVO DAO, OPPURE SPLITTARE IL METODO.
     }
 
     /////////////////////////////////////////////////////       GETTER SETTER       /////////////////////////////////////////////////////
