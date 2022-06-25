@@ -6,9 +6,12 @@ import Controller.*;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
+
+import DAO.AggiornamentoContattoDAO;
 import DAO.CercaInfoContattoDAO;
 import DAO.CreaContattoDAO;
 import DAO.EliminaContattoDAO;
+import ImplementazioniDAO.AggiornamentoContattoPostreSQL;
 import ImplementazioniDAO.CercaInfoContattoPostgreSQL;
 import ImplementazioniDAO.CreaContattoPostgreSQL;
 import ImplementazioniDAO.EliminaContattoPostgreSQL;
@@ -62,6 +65,7 @@ public class SchedaInfoContatto {
     CercaInfoContattoDAO cercaInfoContattoDAO = new CercaInfoContattoPostgreSQL();
     EliminaContattoDAO eliminaContattoDAO = new EliminaContattoPostgreSQL();
     CreaContattoDAO creaContattoDAO = new CreaContattoPostgreSQL();
+    Contatti contatto = new Contatti();
 
     ArrayList<String> indirizzoSecondario = new ArrayList<>();
     ArrayList<String> emailSecondario = new ArrayList<>();
@@ -72,13 +76,14 @@ public class SchedaInfoContatto {
     /////////////////////////////////////////////////////       COSTRUTTORE     /////////////////////////////////////////////////////
     public  SchedaInfoContatto(Controller controller){
         control = controller;
-
         funzionalitaTasti();
 
     }
 
     /////////////////////////////////////////////////////       FUNZIONALITA' PULSANTI GUI      /////////////////////////////////////////////////////
     public void funzionalitaTasti(){
+
+
         //FUNZIONALITA' TASTO btnEliminaContatto
         btnEliminaContatto.addActionListener(new ActionListener() {
             @Override
@@ -169,11 +174,11 @@ public class SchedaInfoContatto {
     }
 
     /////////////////////////////////////////////////////       METODI LOGICI     /////////////////////////////////////////////////////
-    public void riempimentoInfoContatto(String numero) throws SQLException {
-        Contatti contatto;
+    public void riempimentoInfoContatto(int id) throws SQLException {
         indirizzoSecondario.clear();
         emailSecondario.clear();
-        contatto = cercaInfoContattoDAO.cercaInfoContatti(numero, indirizzoSecondario, emailSecondario);
+        contatto.setId(id);
+        contatto = cercaInfoContattoDAO.cercaInfoContatti(id, indirizzoSecondario, emailSecondario);
         getTxtNome().setText(contatto.getNome());
         getTxtCognome().setText(contatto.getCognome());
         getTxtCellulare().setText(contatto.getCellulare());
@@ -181,6 +186,10 @@ public class SchedaInfoContatto {
         getTxtEmail().setText(contatto.getEmail());
         getTxtIndirizzo().setText(contatto.getIndirizzo());
 
+        //IMPLEMENTARE IL TASTO PER USCIRE SINGOLARMENTE DAL GRUPPO (Se un contatto non appartiene ad un gruppo, non vengono stampate le informazioni) FARE LA SEPARAZIONE IN PIU' METODI E CREARE I DAO PER OGNI TABELLA
+        cbGruppo.addItem(contatto.getNomeGruppo());
+        cbGruppo.addItem("...");
+        //cbGruppo.getSelectedItem().;
         if(contatto.getFoto() != null) {
             ImageIcon immagine = new ImageIcon(contatto.getFoto());
             btnImmagineCaricata.setIcon(immagine);
@@ -195,7 +204,23 @@ public class SchedaInfoContatto {
         aggiuntaIndirizziSecondari(piuIndirizzo);
         nCellulare = getTxtCellulare().getText();
     }
-    //TO - DO risolvere il problema dell'ottenimento degli indirizzi e degli email secondari dai rispetti JTXTFIELD. TIPS bisogna rendere i jtxt array
+    //////////////////////////////////////////////////////// COMPLETARE IL METODO DI SOTTO ///////////////////////////////////////////////////////////////////////////////////
+    public void aggiornamentoContatto() throws SQLException {
+        AggiornamentoContattoDAO aggiornaContatto = new AggiornamentoContattoPostreSQL();
+
+        contatto.setNome(getTxtNome().getText());
+        contatto.setCognome(getTxtCognome().getText());
+        contatto.setCellulare(getTxtCellulare().getText());
+        contatto.setFisso(getTxtFisso().getText());
+        contatto.setEmail(getTxtEmail().getText());
+        contatto.setIndirizzo(getTxtIndirizzo().getText());
+        contatto.setFoto(btnImmagineCaricata.getActionCommand());
+        System.out.println(contatto.getId());
+
+
+        aggiornaContatto.aggiornaContatto(contatto.getId(),contatto.getNome(), contatto.getCellulare(), contatto.getCognome(), contatto.getFisso(), contatto.getEmail(), contatto.getIndirizzo(), contatto.getFoto(), contatto.getNomeGruppo(), piuIndirizzo, piuEmail);
+    }
+
     public void aggiuntaEmailSecondarie(JTextField[] piuEmail){
         for(int i = 0;  i < piuEmail.length; i++){
             piuEmail[i] = new JTextField();
@@ -227,22 +252,6 @@ public class SchedaInfoContatto {
             jpPiuIndirizzo.repaint();
         }
         indirizzoSecondario.clear();
-    }
-    //////////////////////////////////////////////////////// COMPLETARE IL METODO DI SOTTO ///////////////////////////////////////////////////////////////////////////////////
-    public void aggiornamentoContatto() throws SQLException {
-        eliminaContattoDAO.eliminaContatto(nCellulare);
-
-        Contatti contatto = new Contatti();
-
-        contatto.setNome(getTxtNome().getText());
-        contatto.setCognome(getTxtCognome().getText());
-        contatto.setCellulare(getTxtCellulare().getText());
-        contatto.setFisso(getTxtFisso().getText());
-        contatto.setEmail(getTxtEmail().getText());
-        contatto.setIndirizzo(getTxtIndirizzo().getText());
-        contatto.setFoto(btnImmagineCaricata.getActionCommand());
-        creaContattoDAO.creaContatto(contatto.getNome(), contatto.getCellulare(), contatto.getCognome(), contatto.getFisso(), contatto.getEmail(), contatto.getIndirizzo(), contatto.getFoto(),null, null, null);
-        //TROVARE UN MODO PER: 1 IL CREA CONTATTO ACCETTA ARRAYLIST<JTXTFIELD> MENTRE CON AGGIORNAMENTO CONTATTO GLI STO PASSANDO UN JTXTFIELD[]. TIPS CREARE UN NUOVO DAO, OPPURE SPLITTARE IL METODO.
     }
 
     /////////////////////////////////////////////////////       GETTER SETTER       /////////////////////////////////////////////////////

@@ -150,36 +150,6 @@ public class CreaContattoPostgreSQL implements CreaContattoDAO{
         }
     }
 
-    public void splittaIndirizzoSecondario(JTextField[] txtIndirizzo, int id) throws SQLException {
-        String via, civico, cap, citta, nazione;
-        ArrayList<String> listaIndirizzo = new ArrayList<>();
-        for(int i  = 0; i < txtIndirizzo.length; i++)
-            listaIndirizzo.add(txtIndirizzo[i].getText());
-        try {
-
-            for (int i = 0; i < listaIndirizzo.size(); i++) {
-                if (!listaIndirizzo.get(i).isBlank()) {
-                    System.out.println("stampa di quante volte entra nella i " + i);
-
-                    via = listaIndirizzo.get(i).split("\\s*,\\s*")[0];
-                    civico = listaIndirizzo.get(i).split("\\s*,\\s*")[1];
-                    cap = listaIndirizzo.get(i).split("\\s*,\\s*")[2];
-                    citta = listaIndirizzo.get(i).split("\\s*,\\s*")[3];
-                    nazione = listaIndirizzo.get(i).split("\\s*,\\s*")[4];
-                    System.out.println(via + " " + citta);
-                    if (!via.isBlank() && !civico.isBlank() && !cap.isBlank() && !citta.isBlank() && !nazione.isBlank()) {
-                        PreparedStatement inserisciContattoIndirizzo = conn.prepareStatement("Insert into IndirizzoSecondario(idcontatto, via, civico, cap, citta, nazione) VALUES ('" + id + "','" + via + "', '" + civico + "', '" + cap + "', '" + citta + "','" + nazione + "');");
-                        inserisciContattoIndirizzo.executeUpdate();
-                    }
-                }
-            }
-        }
-        catch (SQLException e){
-            System.out.println("ECCEZIONE::Riga 145 Classe CreaContattoPostgreSQL");
-            e.printStackTrace();
-        }
-    }
-
     public void splittaIndirizzo(String indirizzo, int id) throws SQLException {
         try {
             String via, civico, cap, citta, nazione;

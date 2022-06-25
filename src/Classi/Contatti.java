@@ -10,16 +10,18 @@ public class Contatti {
     private String cellulare; //Il numero di celullare del contatto
     private String fisso; //Il numero di telefono fisso del contatto
     private String nomeGruppo;
+    private int id;
 
 
     //COSTRUTTORE
-    public Contatti(String nome, String cognome, String cellulare, String fisso, String indirizzo, String email) {
+    public Contatti(String nome, String cognome, String cellulare, String fisso, String indirizzo, String email, int id) {
         this.nome = nome;
         this.cognome = cognome;
         this.cellulare = cellulare;
         this.fisso = fisso;
         this.email = email;
         this.indirizzo = indirizzo;
+        this.id = id;
     }
 
     public Contatti() {
@@ -29,6 +31,14 @@ public class Contatti {
 
     //GETTER SETTER
 
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getNomeGruppo() {
         return nomeGruppo;

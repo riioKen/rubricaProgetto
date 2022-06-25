@@ -161,7 +161,6 @@ public class CreaContatto extends JPanel {
         });
 
         //FUNZIONALITA' cbGruppi    //INSERIRE FUNZIONE PER LA CREAZIONE DI UN NUOVO GRUPPO DA GUI E FARE LA RELATIVA FUNZIONE SQL PER INSERIRLA NEL DB. //AGGIUSTARE
-        //DUPLICAZIONE NELLA TABELLA PARTECIPAZIONE
         ArrayList<String> infoGruppi = new ArrayList<>();
         CercaGruppiDAO cercaGruppiDAO = new CercaGruppiPostgreSQL();
         infoGruppi = cercaGruppiDAO.cercaGruppi();

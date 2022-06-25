@@ -6,5 +6,5 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface CercaInfoContattoDAO {
-    Contatti cercaInfoContatti(String nome, ArrayList<String> indirizzosecondario, ArrayList<String> emailsecondario) throws SQLException;
+    Contatti cercaInfoContatti(int id, ArrayList<String> indirizzosecondario, ArrayList<String> emailsecondario) throws SQLException;
 }

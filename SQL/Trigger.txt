@@ -4,7 +4,7 @@ as $$
 BEGIN
 UPDATE gruppo
 SET n_partecipanti = n_partecipanti - 1
-WHERE nome = old.nome;
+WHERE nome = old.nomegruppo;
 RETURN NULL;
 END;
 $$;
@@ -15,7 +15,7 @@ as $$
 BEGIN
 UPDATE gruppo 
 SET n_partecipanti = n_partecipanti + 1
-WHERE nome = new.nome;
+WHERE nome = new.nomegruppo;
 RETURN NULL;
 END;
 $$;
@@ -27,9 +27,9 @@ $$
 DECLARE persona varchar(30);
 BEGIN
 
-IF NOT EXISTS (SELECT idcontatto, nome
+IF NOT EXISTS (SELECT idcontatto, nomegruppo
 	       FROM Partecipazione as p
-	       WHERE p.idcontatto = new.idcontatto AND p.nome = new.nome) THEN 
+	       WHERE p.idcontatto = new.idcontatto AND p.nomegruppo = new.nomegruppo) THEN 
 
 RETURN new;
 ELSE RAISE EXCEPTION 'La persona è gia nel gruppo';

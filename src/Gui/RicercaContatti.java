@@ -98,14 +98,14 @@ public class RicercaContatti {
             paneLista.setLayout(new GridLayout(0, 1));
             JButton btnSchedaContatto = new JButton();
             btnSchedaContatto.setText(contattiInfo.get(i).getNome() +" "+ contattiInfo.get(i).getCognome());//Per il momento mi accontento solo di dargli queste informazioni al JButton
-            btnSchedaContatto.setActionCommand(contattiInfo.get(i).getCellulare());
+            btnSchedaContatto.setActionCommand(String.valueOf(contattiInfo.get(i).getId()));
             btnSchedaContatto.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     try {
                         control.clickAudio();
                         control.newSchedaInfoContatto();    //Testing svuotamento dei campi nella scheda contatto
-                        control.getSchedaInfoContatto().riempimentoInfoContatto(e.getActionCommand());
+                        control.getSchedaInfoContatto().riempimentoInfoContatto(Integer.parseInt(e.getActionCommand()));
                         control.switchJPanelInView(control.getSchedaInfoContatto().getSchedaInfoContattoPane());
                         control.getHomepage().getJScrollBarListaContatti().setBorder(BorderFactory.createTitledBorder(""));
                         control.newRicercaContatti();

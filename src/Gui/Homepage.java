@@ -160,14 +160,14 @@ public class Homepage extends JFrame {
             paneLista.setLayout(new GridLayout(0, 1));
             JButton btnSchedaContatto = new JButton();
             btnSchedaContatto.setText(contattiDB.get(i).getNome() +" "+ contattiDB.get(i).getCognome());//Per il momento mi accontento solo di dargli queste informazioni al JButton
-            btnSchedaContatto.setActionCommand(contattiDB.get(i).getCellulare());
+            btnSchedaContatto.setActionCommand(String.valueOf(contattiDB.get(i).getId()));
             btnSchedaContatto.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     try {
                         control.clickAudio();
                         control.newSchedaInfoContatto();    //Testing svuotamento dei campi nella scheda contatto
-                        control.getSchedaInfoContatto().riempimentoInfoContatto(e.getActionCommand());
+                        control.getSchedaInfoContatto().riempimentoInfoContatto(Integer.parseInt(e.getActionCommand()));
                         control.switchJPanelInView(control.getSchedaInfoContatto().getSchedaInfoContattoPane());
                         JScrollBarListaContatti.setBorder(BorderFactory.createTitledBorder(""));
                     } catch (SQLException | UnsupportedAudioFileException | LineUnavailableException | IOException | InterruptedException ex) {
