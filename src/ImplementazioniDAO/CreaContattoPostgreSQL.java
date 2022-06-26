@@ -26,7 +26,7 @@ public class CreaContattoPostgreSQL implements CreaContattoDAO{
         System.out.println(nome+" "+cognome+" "+cellulare+" "+fisso+" "+email+" "+indirizzo+" "+foto);
         int id = 0;
         conn = Connessione.getInstance().getConnection();
-        //Inserimento nella tabella Contatto e Restituzione dell'ID del contatto appena inserito
+        //CONTATTO INSERITO NEL NUOVO FILE APPOSITO
        try {
            PreparedStatement inserisciContatto = conn.prepareStatement("Insert into Contatto(nome, cognome, foto) VALUES ('"+nome+"', '"+cognome+"', '"+foto+"') RETURNING id;");
            inserisciContatto.execute();
@@ -39,13 +39,14 @@ public class CreaContattoPostgreSQL implements CreaContattoDAO{
            e.printStackTrace();
        }
 
-        //Inserimento nella tabella EMAIL
+
+        //EMAIL INSERITO NEL NUOVO FILE APPOSITO
         try {
             PreparedStatement inserisciContattoEmail = conn.prepareStatement("Insert into Email (idcontatto, email) VALUES ('"+id+"','"+email+"');");
 
             inserisciContattoEmail.executeUpdate();
 
-            //Inserimento nella tabella EmailSecondario
+            //EMAIL INSERITO NEL NUOVO FILE APPOSITO
             inserimentoEmailSecondarie(listaEmail, id);
         }catch(SQLException e){
             System.out.println("ECCEZIONE::Riga 62 Classe CreaContattoPostgreSQL");
@@ -53,7 +54,7 @@ public class CreaContattoPostgreSQL implements CreaContattoDAO{
         }
 
         try {
-            //Inserimento nella tabella NumeroCellulare
+            //EMAIL INSERITO NEL NUOVO FILE APPOSITO
             PreparedStatement inserisciNumeroCellulare = conn.prepareStatement("INSERT INTO NumeroCellulare (cellulare, idcontatto) VALUES ('"+cellulare+"','"+id+"');");
 
             inserisciNumeroCellulare.executeUpdate();
@@ -64,7 +65,7 @@ public class CreaContattoPostgreSQL implements CreaContattoDAO{
         }
 
         try {
-            //Inserimento nella tabella NumeroFisso
+            //EMAIL INSERITO NEL NUOVO FILE APPOSITO
             PreparedStatement inserisciNumeroFisso = conn.prepareStatement("INSERT INTO NumeroFisso (fisso, idcontatto) VALUES ('"+fisso+"','"+id+"');");
 
             inserisciNumeroFisso.executeUpdate();
@@ -73,7 +74,7 @@ public class CreaContattoPostgreSQL implements CreaContattoDAO{
             System.out.println("ECCEZIONE::Riga 82 Classe CreaContattoPostgreSQL");
             e.printStackTrace();
         }
-        //Inserimento nella tabella IndirizzoPrincipale
+        //INDIRIZZOPRINCIPALE INSERITO NEL NUOVO FILE APPOSITO
         try {
             splittaIndirizzo(indirizzo, id);
 

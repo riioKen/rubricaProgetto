@@ -8,11 +8,11 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 
 import DAO.AggiornamentoContattoDAO;
-import DAO.CercaInfoContattoDAO;
+import DAO.ContattoDAO;
 import DAO.CreaContattoDAO;
 import DAO.EliminaContattoDAO;
 import ImplementazioniDAO.AggiornamentoContattoPostreSQL;
-import ImplementazioniDAO.CercaInfoContattoPostgreSQL;
+import ImplementazioniDAO.ContattoPostgreSQL;
 import ImplementazioniDAO.CreaContattoPostgreSQL;
 import ImplementazioniDAO.EliminaContattoPostgreSQL;
 
@@ -23,7 +23,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -62,7 +61,7 @@ public class SchedaInfoContatto {
     /////////////////////////////////////////////////////       OGGETTI     /////////////////////////////////////////////////////
     Controller control;
 
-    CercaInfoContattoDAO cercaInfoContattoDAO = new CercaInfoContattoPostgreSQL();
+    ContattoDAO contattoDAO = new ContattoPostgreSQL();
     EliminaContattoDAO eliminaContattoDAO = new EliminaContattoPostgreSQL();
     CreaContattoDAO creaContattoDAO = new CreaContattoPostgreSQL();
     Contatti contatto = new Contatti();
@@ -74,7 +73,7 @@ public class SchedaInfoContatto {
     String nCellulare;
 
     /////////////////////////////////////////////////////       COSTRUTTORE     /////////////////////////////////////////////////////
-    public  SchedaInfoContatto(Controller controller){
+    public  SchedaInfoContatto(Controller controller) throws SQLException {
         control = controller;
         funzionalitaTasti();
 
@@ -178,7 +177,7 @@ public class SchedaInfoContatto {
         indirizzoSecondario.clear();
         emailSecondario.clear();
         contatto.setId(id);
-        contatto = cercaInfoContattoDAO.cercaInfoContatti(id, indirizzoSecondario, emailSecondario);
+        contatto = contattoDAO.cercaInfoContatti(id, indirizzoSecondario, emailSecondario);
         getTxtNome().setText(contatto.getNome());
         getTxtCognome().setText(contatto.getCognome());
         getTxtCellulare().setText(contatto.getCellulare());

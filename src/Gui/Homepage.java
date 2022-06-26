@@ -3,6 +3,8 @@ package Gui;
 import Classi.*;
 import Controller.*;
 
+import DAO.ContattoDAO;
+import ImplementazioniDAO.ContattoPostgreSQL;
 import com.formdev.flatlaf.FlatDarculaLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 
@@ -16,9 +18,6 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-import DAO.StampaContattoDAO;
-import ImplementazioniDAO.*;
 
 public class Homepage extends JFrame {
 
@@ -151,8 +150,8 @@ public class Homepage extends JFrame {
 
     public void stampaContatti() throws SQLException {//Da spostare nel controller
         contattiDB.clear();
-        StampaContattoDAO stampaContatto = new StampaContattoPostgreSQL();
-        contattiDB = stampaContatto.stampaContatti();
+        ContattoDAO contattoDAO = new ContattoPostgreSQL();
+        contattiDB = contattoDAO.stampaContatti();
         int i = 0;
         paneBase.removeAll();
         while(i < contattiDB.size()){

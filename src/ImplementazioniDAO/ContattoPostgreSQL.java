@@ -2,35 +2,81 @@ package ImplementazioniDAO;
 
 import Classi.Contatti;
 import ConnessioneDB.Connessione;
-import DAO.CercaInfoContattoDAO;
+import DAO.ContattoDAO;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class CercaInfoContattoPostgreSQL implements CercaInfoContattoDAO{
+public class ContattoPostgreSQL implements ContattoDAO {
 
     private Connection conn;
+    ArrayList<Contatti> contattiDB = new ArrayList<>();
 
-
-    public CercaInfoContattoPostgreSQL(){
+    public ContattoPostgreSQL() throws SQLException {
         try{
             conn = Connessione.getInstance().getConnection();
         } catch (SQLException e) {
+            System.out.println("ECCEZIONE::Riga 17 Classe ContattoPostgreSQL");
             e.printStackTrace();
         }
     }
 
+    @Override
+    public int inserimentoContatto(String nome, String cognome, String foto) throws SQLException {
+        conn = Connessione.getInstance().getConnection();
+        String inserisciContatto = "INSERT INTO Contatto(nome, cognome, foto) VALUES ('"+nome+"', '"+cognome+"', '"+foto+"') RETURNING ID";
 
-    //METODI
+        PreparedStatement st = conn.prepareStatement(inserisciContatto);
+        st.execute();
+        ResultSet rs = st.getResultSet();
+        rs.next();
+        return rs.getInt("id");
+    }
+
+    @Override
+    public void eliminazioneContatto(String id) throws SQLException {
+        conn = Connessione.getInstance().getConnection();
+        String rimozioneContatto = "DELETE FROM Contatto WHERE id = '"+id+"'";
+
+        PreparedStatement st = conn.prepareStatement(rimozioneContatto);
+        st.executeUpdate();
+    }
+
+    @Override
+    public ArrayList<Contatti> stampaContatti() throws SQLException {
+
+        String queryStampaContatti = "SELECT * FROM Contatto as c JOIN NumeroCellulare as n ON c.id = n.idcontatto ORDER BY nome";
+        Statement st = conn.createStatement();
+        ResultSet rs = st.executeQuery(queryStampaContatti);
+
+        while (rs.next()){
+            Contatti contatti =  new Contatti();
+
+            String nome = rs.getString("nome");
+            contatti.setNome(nome);
+            String cognome = rs.getString("cognome");
+            contatti.setCognome(cognome);
+            int id = rs.getInt("id");
+            contatti.setId(id);
+            //String fisso = rs.getString("fisso");
+            //contatti.setFisso(fisso);
+
+            contattiDB.add(contatti);
+        }
+        st.close();
+        conn.close();
+        return contattiDB;
+    }
+
     @Override
     public Contatti cercaInfoContatti(int id, ArrayList<String> indirizzoSecondario, ArrayList<String> emailSecondario) throws SQLException {
         conn = Connessione.getInstance().getConnection();
         Contatti contatto = new Contatti();
 
         String queryCercaInfoContatto = ("SELECT * FROM Contatto as c JOIN Email as e ON c.id = e.idcontatto " +
-                                         "JOIN IndirizzoPrincipale as i ON c.id = i.idcontatto JOIN NumeroCellulare as n " +
-                                         "ON c.id = n.idcontatto JOIN NumeroFisso as f ON c.id = f.idcontatto " +
-                                         " JOIN Partecipazione as p ON c.id = p.idcontatto WHERE c.id = '"+id+"'");
+                "JOIN IndirizzoPrincipale as i ON c.id = i.idcontatto JOIN NumeroCellulare as n " +
+                "ON c.id = n.idcontatto JOIN NumeroFisso as f ON c.id = f.idcontatto " +
+                " JOIN Partecipazione as p ON c.id = p.idcontatto WHERE c.id = '"+id+"'");
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(queryCercaInfoContatto);
 
@@ -60,7 +106,7 @@ public class CercaInfoContattoPostgreSQL implements CercaInfoContattoDAO{
     public void estraiInformazioniSecondarie(int id, ArrayList<String> indirizzoSecondario, ArrayList<String> emailSecondario) throws SQLException {
 
         String queryCercaInfoContatto = ("SELECT * FROM Contatto as c JOIN IndirizzoSecondario as i ON i.idcontatto = c.id " +
-                                         "WHERE c.id = '"+id+"'");
+                "WHERE c.id = '"+id+"'");
         Statement stIndirizziSecondari = conn.createStatement();
         ResultSet rsIndirizziSecondari = stIndirizziSecondari.executeQuery(queryCercaInfoContatto);
         while(rsIndirizziSecondari.next()) {
@@ -80,7 +126,4 @@ public class CercaInfoContattoPostgreSQL implements CercaInfoContattoDAO{
             emailSecondario.add(rsEmailSecondari.getString("email"));
         }
     }
-
-
-
 }

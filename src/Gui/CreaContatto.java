@@ -2,10 +2,8 @@ package Gui;
 
 import Classi.Contatti;
 import Controller.Controller;
-import DAO.CercaGruppiDAO;
-import DAO.CreaContattoDAO;
-import ImplementazioniDAO.CercaGruppiPostgreSQL;
-import ImplementazioniDAO.CreaContattoPostgreSQL;
+import DAO.*;
+import ImplementazioniDAO.*;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import javax.sound.sampled.LineUnavailableException;
@@ -60,7 +58,7 @@ public class CreaContatto extends JPanel {
 
     /////////////////////////////////////////////////////       OGGETTI     /////////////////////////////////////////////////////
     Controller control;
-    Contatti contatti;
+    Contatti contatto;
 
 
     //Arraylist per stampa, DEBUG, dovrà essere sostituito con inserimento da DATABASE
@@ -432,20 +430,33 @@ public class CreaContatto extends JPanel {
         lbErroreInserimento.setVisible(false);
     }
     public void inserimentoContattoDatabase() throws SQLException {
-        CreaContattoDAO creaContattoDAO = new CreaContattoPostgreSQL();
-        contatti = new Contatti();
-        contatti.setNome(txtNome.getText());
-        contatti.setCognome(txtCognome.getText());
-        contatti.setCellulare(txtCellulare.getText());
-        contatti.setFisso(txtFisso.getText());
-        contatti.setEmail(txtEmail.getText());
-        contatti.setIndirizzo(txtIndirizzo.getText());
-        contatti.setFoto(btnCaricaImmagine.getActionCommand());
-        contatti.setNomeGruppo(Objects.requireNonNull(cbGruppi.getSelectedItem()).toString());
-        System.out.println(contatti.getNomeGruppo());
+        //CreaContattoDAO creaContattoDAO = new CreaContattoPostgreSQL();
+        ContattoDAO contattoDAO = new ContattoPostgreSQL();
+        NumeroCellulareDAO numeroCellulareDAO = new NumeroCellularePostgreSQL();
+        NumeroFissoDAO numeroFissoDAO = new NumeroFissoPostgreSQL();
+        EmailDAO emailDAO = new EmailPostgreSQL();
+        IndirizzoPrincipaleDAO indirizzoPrincipaleDAO = new IndirizzoPrincipalePostgreSQL();
+        EmailSecondarioDAO emailSecondarioDAO = new EmailSecondarioPostgreSQL();
+        IndirizzoSecondarioDAO indirizzoSecondarioDAO = new IndirizzoSecondarioPostgreSQL();
+        contatto = new Contatti();
+        contatto.setNome(txtNome.getText());
+        contatto.setCognome(txtCognome.getText());
+        contatto.setCellulare(txtCellulare.getText());
+        contatto.setFisso(txtFisso.getText());
+        contatto.setEmail(txtEmail.getText());
+        contatto.setIndirizzo(txtIndirizzo.getText());
+        contatto.setFoto(btnCaricaImmagine.getActionCommand());
+        contatto.setNomeGruppo(Objects.requireNonNull(cbGruppi.getSelectedItem()).toString());
+        System.out.println(contatto.getNomeGruppo());
         controlloField();
-        creaContattoDAO.creaContatto(contatti.getNome(), contatti.getCellulare(), contatti.getCognome(), contatti.getFisso(), contatti.getEmail(), contatti.getIndirizzo(), contatti.getFoto(), contatti.getNomeGruppo(), listaTxtIndirizzo, listaTxtEmail);
-
+        //creaContattoDAO.creaContatto(, , , , contatti.getNomeGruppo(),, );
+        int id = contattoDAO.inserimentoContatto(contatto.getNome(), contatto.getCognome(), contatto.getFoto());
+        numeroCellulareDAO.inserisciCellulare(id, contatto.getCellulare());
+        numeroFissoDAO.inserisciFisso(id, contatto.getFisso());
+        emailDAO.inserimentoEmail(id, contatto.getEmail());
+        indirizzoPrincipaleDAO.inserisciIndirizzoPrincipale(id, contatto.getIndirizzo());
+        emailSecondarioDAO.inserisciEmailSecondarie(id, listaTxtEmail);
+        indirizzoSecondarioDAO.inserisciIndirizzoSecondario(id, listaTxtIndirizzo);
         svuotaCampi();
         control.getHomepage().stampaContatti();
     }

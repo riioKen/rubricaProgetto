@@ -56,7 +56,7 @@ public class Controller{
         creaContatto = new CreaContatto(this);
     }
 
-    public void newSchedaInfoContatto(){
+    public void newSchedaInfoContatto() throws SQLException {
         schedaInfoContatto = null;
         schedaInfoContatto = new SchedaInfoContatto(this);
     }
