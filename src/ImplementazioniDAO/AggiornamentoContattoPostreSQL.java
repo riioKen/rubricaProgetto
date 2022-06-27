@@ -14,8 +14,8 @@ public class AggiornamentoContattoPostreSQL implements AggiornamentoContattoDAO 
 
     private Connection conn;
 
-    public AggiornamentoContattoPostreSQL(){
-        try{
+    public AggiornamentoContattoPostreSQL() {
+        try {
             conn = Connessione.getInstance().getConnection();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -29,14 +29,14 @@ public class AggiornamentoContattoPostreSQL implements AggiornamentoContattoDAO 
         conn = Connessione.getInstance().getConnection();
 
         try {
-            PreparedStatement aggiornaContatto = conn.prepareStatement("UPDATE Contatto SET nome = '"+nome+"' , cognome = '"+cognome+"' , foto = '"+foto+"' WHERE id = '"+id+"'");
-            PreparedStatement aggiornaEmail = conn.prepareStatement("UPDATE Email SET email = '"+email+"' WHERE idcontatto = '"+id+"'");
+            PreparedStatement aggiornaContatto = conn.prepareStatement("UPDATE Contatto SET nome = '" + nome + "' , cognome = '" + cognome + "' , foto = '" + foto + "' WHERE id = '" + id + "'");
+            PreparedStatement aggiornaEmail = conn.prepareStatement("UPDATE Email SET email = '" + email + "' WHERE idcontatto = '" + id + "'");
 
 
-            PreparedStatement rimuoviPartecipazione = conn.prepareStatement("DELETE FROM Partecipazione WHERE idcontatto = '"+id+"' AND nomegruppo = '"+nomeGruppo+"'");
-            PreparedStatement aggiungiPartecipazione = conn.prepareStatement("INSERT INTO Partecipazione(idcontatto,nomegruppo) VALUES (idcontatto = '"+id+"' , nomegruppo = '"+nomeGruppo+"')");
-            PreparedStatement aggiornaNumeroCellulare = conn.prepareStatement("UPDATE numerocellulare SET cellulare = '"+cellulare+"' WHERE idcontatto = '"+id+"'");
-            PreparedStatement aggiornaFisso = conn.prepareStatement("UPDATE numerofisso SET fisso = '"+fisso+"' WHERE idcontatto = '"+id+"'");
+            PreparedStatement rimuoviPartecipazione = conn.prepareStatement("DELETE FROM Partecipazione WHERE idcontatto = '" + id + "' AND nomegruppo = '" + nomeGruppo + "'");
+            PreparedStatement aggiungiPartecipazione = conn.prepareStatement("INSERT INTO Partecipazione(idcontatto,nomegruppo) VALUES (idcontatto = '" + id + "' , nomegruppo = '" + nomeGruppo + "')");
+            PreparedStatement aggiornaNumeroCellulare = conn.prepareStatement("UPDATE numerocellulare SET cellulare = '" + cellulare + "' WHERE idcontatto = '" + id + "'");
+            PreparedStatement aggiornaFisso = conn.prepareStatement("UPDATE numerofisso SET fisso = '" + fisso + "' WHERE idcontatto = '" + id + "'");
             aggiornaContatto.executeUpdate();
             aggiornaEmail.executeUpdate();
             rimuoviPartecipazione.executeUpdate();
@@ -45,10 +45,10 @@ public class AggiornamentoContattoPostreSQL implements AggiornamentoContattoDAO 
             aggiornaFisso.executeUpdate();
             splittaIndirizzo(indirizzo, id);
             aggiornaEmailSecondarie(listaEmail, id);
-            splittaIndirizzoSecondario(listaIndirizzi,id);
+            splittaIndirizzoSecondario(listaIndirizzi, id);
 
-        }catch(SQLException e){
-            System.out.println("ECCEZIONE::Riga 61 Classe AggiornamentoContattoPostgreSQL");
+        } catch (SQLException e) {
+            System.out.println("ECCEZIONE::Riga 51 Classe AggiornamentoContattoPostgreSQL");
             e.printStackTrace();
         }
     }
@@ -63,17 +63,16 @@ public class AggiornamentoContattoPostreSQL implements AggiornamentoContattoDAO 
             citta = divisione[3];
             nazione = divisione[4];
 
-            PreparedStatement inserisciContattoIndirizzo = conn.prepareStatement("UPDATE IndirizzoPrincipale SET via = '" + via + "' , civico = '" + civico + "' , cap = '" + cap + "' , citta = '" + citta + "' , nazione ='" + nazione + "' WHERE idcontatto = '"+id+"'");
+            PreparedStatement inserisciContattoIndirizzo = conn.prepareStatement("UPDATE IndirizzoPrincipale SET via = '" + via + "' , civico = '" + civico + "' , cap = '" + cap + "' , citta = '" + citta + "' , nazione ='" + nazione + "' WHERE idcontatto = '" + id + "'");
             inserisciContattoIndirizzo.executeUpdate();
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println("ECCEZIONE::Riga 80 Classe AggiornamentoContattoPostgreSQL");
             e.printStackTrace();
         }
 
     }
 
-    public void aggiornaEmailSecondarie(JTextField[] listaEmail, int id) throws  SQLException {
+    public void aggiornaEmailSecondarie(JTextField[] listaEmail, int id) throws SQLException {
         String email;
         try {
             if (listaEmail != null) {
@@ -85,8 +84,7 @@ public class AggiornamentoContattoPostreSQL implements AggiornamentoContattoDAO 
                     }
                 }
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println("ECCEZIONE::Riga 100 Classe CreaContattoPostgreSQL");
             e.printStackTrace();
         }
@@ -108,26 +106,17 @@ public class AggiornamentoContattoPostreSQL implements AggiornamentoContattoDAO 
                         nazione = listaIndirizzo[i].getText().split("\\s*,\\s*")[4];
                         System.out.println(via + " " + citta);
                         if (!via.isBlank() && !civico.isBlank() && !cap.isBlank() && !citta.isBlank() && !nazione.isBlank()) {
-                            PreparedStatement inserisciContattoIndirizzo = conn.prepareStatement("UPDATE IndirizzoSecondario SET via = '" + via + "' , civico =  '" + civico + "' , cap =  '" + cap + "' , citta = '" + citta + "' , nazione = '" + nazione + "' WHERE idcontatto = '"+id+"'");
+                            PreparedStatement inserisciContattoIndirizzo = conn.prepareStatement("UPDATE IndirizzoSecondario SET via = '" + via + "' , civico =  '" + civico + "' , cap =  '" + cap + "' , citta = '" + citta + "' , nazione = '" + nazione + "' WHERE idcontatto = '" + id + "'");
                             inserisciContattoIndirizzo.executeUpdate();
                         }
                     }
                 }
             }
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println("ECCEZIONE::Riga 129 Classe CreaContattoPostgreSQL");
             e.printStackTrace();
         }
     }
 
-    public void rimuoviPartecipazione(int id, String nomeGruppo) throws SQLException {
-        PreparedStatement rimuoviPartecipazione = conn.prepareStatement("DELETE FROM Partecipazione WHERE idcontatto = '"+id+"' AND nomegruppo = '"+nomeGruppo+"'");
 
-    }
-    public void aggiornaPartecipazione(int id, String nomeGruppo) throws SQLException {
-        PreparedStatement rimuoviPartecipazione = conn.prepareStatement("DELETE FROM Partecipazione WHERE idcontatto = '"+id+"' AND nomegruppo = '"+nomeGruppo+"'");
-        PreparedStatement aggiornaPartecipazione = conn.prepareStatement("INSERT INTO Partecipazione(idcontatto,nomegruppo) VALUES ( nomegruppo = '"+nomeGruppo+"' , idcontatto = '"+id+"')");
-
-    }
 }

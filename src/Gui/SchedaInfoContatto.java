@@ -9,12 +9,8 @@ import javax.swing.*;
 
 import DAO.AggiornamentoContattoDAO;
 import DAO.ContattoDAO;
-import DAO.CreaContattoDAO;
-import DAO.EliminaContattoDAO;
 import ImplementazioniDAO.AggiornamentoContattoPostreSQL;
 import ImplementazioniDAO.ContattoPostgreSQL;
-import ImplementazioniDAO.CreaContattoPostgreSQL;
-import ImplementazioniDAO.EliminaContattoPostgreSQL;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -62,12 +58,11 @@ public class SchedaInfoContatto {
     Controller control;
 
     ContattoDAO contattoDAO = new ContattoPostgreSQL();
-    EliminaContattoDAO eliminaContattoDAO = new EliminaContattoPostgreSQL();
-    CreaContattoDAO creaContattoDAO = new CreaContattoPostgreSQL();
     Contatti contatto = new Contatti();
 
     ArrayList<String> indirizzoSecondario = new ArrayList<>();
     ArrayList<String> emailSecondario = new ArrayList<>();
+    ArrayList<String> gruppi = new ArrayList<>();
     JTextField[] piuEmail;
     JTextField[] piuIndirizzo;
     String nCellulare;
@@ -89,7 +84,7 @@ public class SchedaInfoContatto {
             public void actionPerformed(ActionEvent e) {
                 try {
                     control.clickAudio();
-                    eliminaContattoDAO.eliminaContatto(txtCellulare.getText());
+                    contattoDAO.eliminaContatto(contatto.getId());
                     control.getHomepage().stampaContatti();
                 } catch (SQLException | UnsupportedAudioFileException | LineUnavailableException | IOException | InterruptedException ex) {
                     ex.printStackTrace();
@@ -174,10 +169,12 @@ public class SchedaInfoContatto {
 
     /////////////////////////////////////////////////////       METODI LOGICI     /////////////////////////////////////////////////////
     public void riempimentoInfoContatto(int id) throws SQLException {
+        int i = 0;
         indirizzoSecondario.clear();
         emailSecondario.clear();
+        gruppi.clear();
         contatto.setId(id);
-        contatto = contattoDAO.cercaInfoContatti(id, indirizzoSecondario, emailSecondario);
+        contatto = contattoDAO.cercaInfoContatti(id, indirizzoSecondario, emailSecondario, gruppi);
         getTxtNome().setText(contatto.getNome());
         getTxtCognome().setText(contatto.getCognome());
         getTxtCellulare().setText(contatto.getCellulare());
@@ -186,7 +183,12 @@ public class SchedaInfoContatto {
         getTxtIndirizzo().setText(contatto.getIndirizzo());
 
         //IMPLEMENTARE IL TASTO PER USCIRE SINGOLARMENTE DAL GRUPPO (Se un contatto non appartiene ad un gruppo, non vengono stampate le informazioni) FARE LA SEPARAZIONE IN PIU' METODI E CREARE I DAO PER OGNI TABELLA
-        cbGruppo.addItem(contatto.getNomeGruppo());
+
+        while(i < gruppi.size() ) {
+            cbGruppo.addItem(gruppi.get(i));
+            i++;
+        }
+
         cbGruppo.addItem("...");
         //cbGruppo.getSelectedItem().;
         if(contatto.getFoto() != null) {

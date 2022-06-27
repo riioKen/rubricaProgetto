@@ -34,15 +34,6 @@ public class ContattoPostgreSQL implements ContattoDAO {
     }
 
     @Override
-    public void eliminazioneContatto(String id) throws SQLException {
-        conn = Connessione.getInstance().getConnection();
-        String rimozioneContatto = "DELETE FROM Contatto WHERE id = '"+id+"'";
-
-        PreparedStatement st = conn.prepareStatement(rimozioneContatto);
-        st.executeUpdate();
-    }
-
-    @Override
     public ArrayList<Contatti> stampaContatti() throws SQLException {
 
         String queryStampaContatti = "SELECT * FROM Contatto as c JOIN NumeroCellulare as n ON c.id = n.idcontatto ORDER BY nome";
@@ -58,8 +49,6 @@ public class ContattoPostgreSQL implements ContattoDAO {
             contatti.setCognome(cognome);
             int id = rs.getInt("id");
             contatti.setId(id);
-            //String fisso = rs.getString("fisso");
-            //contatti.setFisso(fisso);
 
             contattiDB.add(contatti);
         }
@@ -69,14 +58,13 @@ public class ContattoPostgreSQL implements ContattoDAO {
     }
 
     @Override
-    public Contatti cercaInfoContatti(int id, ArrayList<String> indirizzoSecondario, ArrayList<String> emailSecondario) throws SQLException {
+    public Contatti cercaInfoContatti(int id, ArrayList<String> indirizzoSecondario, ArrayList<String> emailSecondario, ArrayList<String> gruppi) throws SQLException {
         conn = Connessione.getInstance().getConnection();
         Contatti contatto = new Contatti();
 
         String queryCercaInfoContatto = ("SELECT * FROM Contatto as c JOIN Email as e ON c.id = e.idcontatto " +
-                "JOIN IndirizzoPrincipale as i ON c.id = i.idcontatto JOIN NumeroCellulare as n " +
-                "ON c.id = n.idcontatto JOIN NumeroFisso as f ON c.id = f.idcontatto " +
-                " JOIN Partecipazione as p ON c.id = p.idcontatto WHERE c.id = '"+id+"'");
+                                         "JOIN IndirizzoPrincipale as i ON c.id = i.idcontatto JOIN NumeroCellulare as n " +
+                                         "ON c.id = n.idcontatto JOIN NumeroFisso as f ON c.id = f.idcontatto WHERE c.id = '"+id+"'");
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(queryCercaInfoContatto);
 
@@ -88,7 +76,7 @@ public class ContattoPostgreSQL implements ContattoDAO {
             contatto.setFisso(rs.getString("fisso"));
             contatto.setEmail(rs.getString("email"));
             contatto.setFoto(rs.getString("foto"));
-            contatto.setNomeGruppo(rs.getString("nomegruppo"));
+            //gruppi.add(rs.getString("nomegruppo"));
             String indirizzo = rs.getString("via");
             String civico = rs.getString("civico");
             String cap = rs.getString("cap");
@@ -98,15 +86,27 @@ public class ContattoPostgreSQL implements ContattoDAO {
 
         }
 
+        estraiGruppi( id, gruppi);
         estraiInformazioniSecondarie(id, indirizzoSecondario, emailSecondario);
         conn.close();
         return contatto;
     }
 
+    @Override
+    public void eliminaContatto(int id) throws SQLException {
+            conn = Connessione.getInstance().getConnection();
+            PreparedStatement eliminaContatto = conn.prepareStatement("DELETE FROM CONTATTO WHERE id = '"+id+"'");
+            eliminaContatto.executeUpdate();
+
+            conn.close();
+    }
+
     public void estraiInformazioniSecondarie(int id, ArrayList<String> indirizzoSecondario, ArrayList<String> emailSecondario) throws SQLException {
 
         String queryCercaInfoContatto = ("SELECT * FROM Contatto as c JOIN IndirizzoSecondario as i ON i.idcontatto = c.id " +
-                "WHERE c.id = '"+id+"'");
+                                         "WHERE c.id = '"+id+"'");
+        String queryCercaEmailSecondarie = "SELECT * FROM Contatto as c JOIN emailsecondario as es ON es.idcontatto = c.id WHERE c.id = '"+id+"'";
+
         Statement stIndirizziSecondari = conn.createStatement();
         ResultSet rsIndirizziSecondari = stIndirizziSecondari.executeQuery(queryCercaInfoContatto);
         while(rsIndirizziSecondari.next()) {
@@ -119,11 +119,21 @@ public class ContattoPostgreSQL implements ContattoDAO {
         }
 
 
-        String queryCercaEmailSecondarie = "SELECT * FROM Contatto as c JOIN emailsecondario as es ON es.idcontatto = c.id WHERE c.id = '"+id+"'";
+
         Statement stEmailSecondari = conn.createStatement();
         ResultSet rsEmailSecondari = stEmailSecondari.executeQuery(queryCercaEmailSecondarie);
         while(rsEmailSecondari.next()) {
             emailSecondario.add(rsEmailSecondari.getString("email"));
         }
+    }
+
+    public void estraiGruppi(int id, ArrayList<String> gruppi) throws SQLException {
+        String cercaGruppi = "SELECT nomegruppo FROM Partecipazione WHERE idcontatto = '"+id+"'";
+
+        Statement st = conn.createStatement();
+        ResultSet rs = st.executeQuery(cercaGruppi);
+        while(rs.next())
+            gruppi.add(rs.getString("nomegruppo"));
+
     }
 }

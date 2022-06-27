@@ -8,6 +8,6 @@ import java.util.ArrayList;
 public interface ContattoDAO {
     int inserimentoContatto(String nome, String cognome, String foto) throws SQLException;
     ArrayList<Contatti> stampaContatti() throws SQLException;
-    Contatti cercaInfoContatti(int id, ArrayList<String> indirizzoSecondario, ArrayList<String> emailSecondario) throws SQLException;
-    void eliminazioneContatto(String id) throws SQLException;
+    Contatti cercaInfoContatti(int id, ArrayList<String> indirizzoSecondario, ArrayList<String> emailSecondario, ArrayList<String> gruppi) throws SQLException;
+    void eliminaContatto(int id) throws SQLException;
 }

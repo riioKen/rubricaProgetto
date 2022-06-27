@@ -160,8 +160,8 @@ public class CreaContatto extends JPanel {
 
         //FUNZIONALITA' cbGruppi    //INSERIRE FUNZIONE PER LA CREAZIONE DI UN NUOVO GRUPPO DA GUI E FARE LA RELATIVA FUNZIONE SQL PER INSERIRLA NEL DB. //AGGIUSTARE
         ArrayList<String> infoGruppi = new ArrayList<>();
-        CercaGruppiDAO cercaGruppiDAO = new CercaGruppiPostgreSQL();
-        infoGruppi = cercaGruppiDAO.cercaGruppi();
+        GruppoDAO gruppoDAO = new GruppoPostgreSQL();
+        infoGruppi = gruppoDAO.cercaGruppi();
         cbGruppi.addItem("");
         for(int i = 0; i < infoGruppi.size(); i++)
             cbGruppi.addItem(infoGruppi.get(i));
@@ -438,6 +438,7 @@ public class CreaContatto extends JPanel {
         IndirizzoPrincipaleDAO indirizzoPrincipaleDAO = new IndirizzoPrincipalePostgreSQL();
         EmailSecondarioDAO emailSecondarioDAO = new EmailSecondarioPostgreSQL();
         IndirizzoSecondarioDAO indirizzoSecondarioDAO = new IndirizzoSecondarioPostgreSQL();
+        PartecipazioneDAO partecipazioneDAO = new PartecipazionePostgreSQL();
         contatto = new Contatti();
         contatto.setNome(txtNome.getText());
         contatto.setCognome(txtCognome.getText());
@@ -457,6 +458,7 @@ public class CreaContatto extends JPanel {
         indirizzoPrincipaleDAO.inserisciIndirizzoPrincipale(id, contatto.getIndirizzo());
         emailSecondarioDAO.inserisciEmailSecondarie(id, listaTxtEmail);
         indirizzoSecondarioDAO.inserisciIndirizzoSecondario(id, listaTxtIndirizzo);
+        partecipazioneDAO.entrataInGruppo(id, contatto.getNomeGruppo());
         svuotaCampi();
         control.getHomepage().stampaContatti();
     }
