@@ -209,20 +209,21 @@ public class CreaContatto extends JPanel {
         btnTastoHome.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                control.switchJPanelInView(control.getHomepage().getPaneBase());
-                try {
-                    control.rollOverAudio();
-                    control.getHomepage().stampaContatti();
 
+                try {
+                    control.switchJPanelInView(control.getHomepage().getPaneBase());
+                    control.clickAudio();
+                    control.getHomepage().stampaContatti();
+                    control.getHomepage().getJScrollBarListaContatti().setBorder(BorderFactory.createTitledBorder("Lista dei Contatti"));//TESTING
                 } catch (SQLException | UnsupportedAudioFileException | LineUnavailableException | IOException | InterruptedException ex) {
                     ex.printStackTrace();
                 }
-                control.getHomepage().getJScrollBarListaContatti().setBorder(BorderFactory.createTitledBorder("Lista dei Contatti"));//TESTING
+
             }
             @Override
             public void mouseEntered(MouseEvent e) {
-                btnTastoHome.setIcon(imgTastoHomeGrande);
                 try {
+                    btnTastoHome.setIcon(imgTastoHomeGrande);
                     control.rollOverAudio();
                 } catch (LineUnavailableException | UnsupportedAudioFileException | IOException | InterruptedException ex) {
                     ex.printStackTrace();

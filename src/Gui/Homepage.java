@@ -57,7 +57,6 @@ public class Homepage extends JFrame {
         ImageIcon imgCreaNuovoContatto = new ImageIcon("Immagini/imgCreaNuovoContatto24px.png");
         ImageIcon imgCreaNuovoContattoGrande = new ImageIcon("Immagini/imgCreaNuovoContatto32px.png");
         try {
-            //Da settare la dimensione (PRESI DI MISURA GIUSTA COSI DA NON
             btnCreaNuovoContatto.setIcon(imgCreaNuovoContatto);
             btnCreaNuovoContatto.setMargin(new Insets(0,0,0,0));
             btnCreaNuovoContatto.setContentAreaFilled(false);
@@ -65,7 +64,7 @@ public class Homepage extends JFrame {
             btnCreaNuovoContatto.setBorder(null);
             btnCreaNuovoContatto.setFocusPainted(false);
             btnCreaNuovoContatto.setOpaque(true);
-        } catch (Exception e) {                                                                                //AVERE NECESSITA' PER IL MOMENTO)
+        } catch (Exception e) {
             System.out.println("Icona btnCreaNuovoContattoSCURO non caricata");
         }
         btnCreaNuovoContatto.setFocusable(false);
@@ -195,11 +194,11 @@ public class Homepage extends JFrame {
         setContentPane(cardHomepage);
         setSize(600, 600);
 
-        setDefaultCloseOperation(EXIT_ON_CLOSE); //Serve a terminare il programma quando si preme la X
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocation(300, 300);
         JScrollBarListaContatti.getVerticalScrollBar().setUnitIncrement(7);
 
-        TemaScuro();  //INIZIALIZAZZIONE DEL TEMA SCURO BY DEFAULT
+        TemaScuro();
 
     }
 
@@ -230,16 +229,16 @@ public class Homepage extends JFrame {
 
         //GUI HOMEPAGE
         try {
-            Image imgSwitchTema = ImageIO.read(new File("Immagini/imgTemaScuro.png")); //Da settare la dimensione delle ICONE (PRESI DI MISURA GIUSTA COSI DA NON
+            Image imgSwitchTema = ImageIO.read(new File("Immagini/imgTemaScuro.png"));
             btnSwitchTema.setIcon(new ImageIcon(imgSwitchTema));
-        } catch (Exception e) {                                                                                //AVERE NECESSITA' PER IL MOMENTO)
+        } catch (Exception e) {
             System.out.println("Icona btnTemaScuro non caricata");
         }
 
         try {
-            Image imgCreaNuovoContatto = ImageIO.read(new File("Immagini/imgCreaNuovoContatto24px.png")); //Da settare la dimensione (PRESI DI MISURA GIUSTA COSI DA NON
+            Image imgCreaNuovoContatto = ImageIO.read(new File("Immagini/imgCreaNuovoContatto24px.png"));
             btnCreaNuovoContatto.setIcon(new ImageIcon(imgCreaNuovoContatto));
-        } catch (Exception e) {                                                                                //AVERE NECESSITA' PER IL MOMENTO)
+        } catch (Exception e) {
             System.out.println("Icona btnCreaNuovoContatto non caricata");
         }
         btnSwitchTema.setFocusable(false);
@@ -248,7 +247,6 @@ public class Homepage extends JFrame {
     }
 
 
-    //TEMA CHIARO
     public void TemaChiaro() throws IOException {
 
         FlatLightLaf.setup();

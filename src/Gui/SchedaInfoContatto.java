@@ -114,7 +114,7 @@ public class SchedaInfoContatto {
             @Override
             public void mouseClicked(MouseEvent e) {
                 try {
-                    control.rollOverAudio();
+                    control.clickAudio();
                     lbTastoHome.setIcon(imgTastoHome);
                     control.switchJPanelInView(control.getHomepage().getPaneBase());
                     control.getHomepage().stampaContatti();
@@ -173,7 +173,9 @@ public class SchedaInfoContatto {
         indirizzoSecondario.clear();
         emailSecondario.clear();
         gruppi.clear();
+
         contatto.setId(id);
+        System.out.println(contatto.getId());
         contatto = contattoDAO.cercaInfoContatti(id, indirizzoSecondario, emailSecondario, gruppi);
         getTxtNome().setText(contatto.getNome());
         getTxtCognome().setText(contatto.getCognome());
@@ -182,7 +184,7 @@ public class SchedaInfoContatto {
         getTxtEmail().setText(contatto.getEmail());
         getTxtIndirizzo().setText(contatto.getIndirizzo());
 
-        //IMPLEMENTARE IL TASTO PER USCIRE SINGOLARMENTE DAL GRUPPO (Se un contatto non appartiene ad un gruppo, non vengono stampate le informazioni) FARE LA SEPARAZIONE IN PIU' METODI E CREARE I DAO PER OGNI TABELLA
+        //IMPLEMENTARE IL TASTO PER USCIRE SINGOLARMENTE DAL GRUPPO
 
         while(i < gruppi.size() ) {
             cbGruppo.addItem(gruppi.get(i));

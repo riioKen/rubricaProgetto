@@ -44,7 +44,7 @@ public class RicercaContattoPostgreSQL implements RicercaContattoDAO {
             contatto.setEmail(rs.getString("email"));
             contatto.setCellulare(rs.getString("cellulare"));
             contatto.setFisso(rs.getString("fisso"));
-
+            contatto.setId(rs.getInt("id"));
             String indirizzo = rs.getString("via" );
             String civico = rs.getString("civico");
             String cap = rs.getString("cap");
@@ -74,7 +74,7 @@ public class RicercaContattoPostgreSQL implements RicercaContattoDAO {
             contatto.setEmail(rs.getString("email"));
             contatto.setCellulare(rs.getString("cellulare"));
             contatto.setFisso(rs.getString("fisso"));
-
+            contatto.setId(rs.getInt("id"));
             String indirizzo = rs.getString("via" );
             String civico = rs.getString("civico");
             String cap = rs.getString("cap");
@@ -111,7 +111,7 @@ public class RicercaContattoPostgreSQL implements RicercaContattoDAO {
             contatto.setEmail(rs.getString("email"));
             contatto.setCellulare(rs.getString("cellulare"));
             contatto.setFisso(rs.getString("fisso"));
-
+            contatto.setId(rs.getInt("id"));
             String indirizzo = rs.getString("via" );
             String civico = rs.getString("civico");
             String cap = rs.getString("cap");

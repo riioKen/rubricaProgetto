@@ -11,7 +11,7 @@ public class PartecipazionePostgreSQL implements PartecipazioneDAO {
 
     private Connection conn;
 
-    public PartecipazionePostgreSQL() throws SQLException{
+    public PartecipazionePostgreSQL() throws SQLException {
         try{
             conn = Connessione.getInstance().getConnection();
         } catch (SQLException e) {

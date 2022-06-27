@@ -10,10 +10,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ButtonGroup;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -21,13 +18,17 @@ import java.util.ArrayList;
 public class RicercaContatti {
     /////////////////////////////////////////////////////       ATTRIBUTI       /////////////////////////////////////////////////////
     private JPanel ricercaContattiPane;
+    private JPanel risultatoPane;
+    private JScrollPane risultatoScroll;
+
     private JTextField txtRicerca;
     private JRadioButton nomeRadioButton;
     private JRadioButton nicknameRadioButton;
     private JRadioButton emailRadioButton;
     private JRadioButton cellulareRadioButton;
-    private JScrollPane risultatoScroll;
-    private JPanel risultatoPane;
+
+
+    private JButton btnTastoHome;
 
     /////////////////////////////////////////////////////       OGGETTI     /////////////////////////////////////////////////////
     Controller control;
@@ -38,43 +39,39 @@ public class RicercaContatti {
     public RicercaContatti(Controller controller) throws SQLException {
         control = controller;
 
-/*TO - DO
-    GESTIONE GRUPPI, SISTEMI MESSAGING
-*/
         funzionalitaTasti();
 
     }
 
-    /////////////////////////////////////////////////////       FUNZIONALITA' PULSANTI GUI      /////////////////////////////////////////////////////
-    private void funzionalitaTasti( ) throws SQLException {
-        ButtonGroup bg1 = new ButtonGroup( );
-        bg1.add(nomeRadioButton);
-        bg1.add(nicknameRadioButton);
-        bg1.add(emailRadioButton);
-        bg1.add(cellulareRadioButton);
+    /////////////////////////////////////////////////////       FUNZIONALITA' TASTI     /////////////////////////////////////////////////////
+    private void funzionalitaTasti() {
+        ButtonGroup gruppoRadio = new ButtonGroup( );
+        gruppoRadio.add(nomeRadioButton);
+        gruppoRadio.add(nicknameRadioButton);
+        gruppoRadio.add(emailRadioButton);
+        gruppoRadio.add(cellulareRadioButton);
 
         txtRicerca.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
 
-                super.keyTyped(e);
                 try {
-                    if(bg1.isSelected(nomeRadioButton.getModel())){
+                    if(gruppoRadio.isSelected(nomeRadioButton.getModel()) && !txtRicerca.getText().isEmpty()){
                         contattiInfo.clear();
                         contattiInfo = ricerca.ricercaNome(txtRicerca.getText());
                         ricercaCampi(contattiInfo);
                     }
-                    if(bg1.isSelected(emailRadioButton.getModel())){
+                    if(gruppoRadio.isSelected(emailRadioButton.getModel()) && !txtRicerca.getText().isEmpty()){
                         contattiInfo.clear();
                         contattiInfo = ricerca.ricercaEmail(txtRicerca.getText());
                         ricercaCampi(contattiInfo);
                     }
-                    if(bg1.isSelected(nicknameRadioButton.getModel())){
+                    if(gruppoRadio.isSelected(nicknameRadioButton.getModel()) && !txtRicerca.getText().isEmpty()){
                         contattiInfo.clear();
                         contattiInfo = ricerca.ricercaNickname(txtRicerca.getText());
                         ricercaCampi(contattiInfo);
                     }
-                    if(bg1.isSelected(cellulareRadioButton.getModel())){
+                    if(gruppoRadio.isSelected(cellulareRadioButton.getModel()) && !txtRicerca.getText().isEmpty()){
                         contattiInfo.clear();
                         contattiInfo = ricerca.ricercaCellulare(txtRicerca.getText());
                         ricercaCampi(contattiInfo);
@@ -82,6 +79,41 @@ public class RicercaContatti {
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
+            }
+        });
+        //FUNZIONALITA' TASTO btnTastoHome
+        ImageIcon imgTastoHome = new ImageIcon("Immagini/imgRitornoHomeFreccia24px.png");
+        ImageIcon imgTastoHomeGrande = new ImageIcon("Immagini/imgRitornoHomeFreccia32px.png");
+
+        btnTastoHome.setIcon(imgTastoHome);
+        btnTastoHome.setMargin(new Insets(0,0,0,0));
+        btnTastoHome.setContentAreaFilled(false);
+        btnTastoHome.setBorderPainted(false);
+        btnTastoHome.setBorder(null);
+        btnTastoHome.setFocusPainted(false);
+        btnTastoHome.setOpaque(true);
+
+        btnTastoHome.setIcon(imgTastoHome);
+        btnTastoHome.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    control.clickAudio();
+                    control.switchJPanelInView(control.getHomepage().getPaneBase());
+                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            public void mouseEntered(MouseEvent e) {
+                try {
+                    control.rollOverAudio();
+                    btnTastoHome.setIcon(imgTastoHomeGrande);
+                } catch (LineUnavailableException | UnsupportedAudioFileException | IOException | InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            public void mouseExited(MouseEvent e) {
+                btnTastoHome.setIcon(imgTastoHome);
             }
         });
     }
