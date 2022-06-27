@@ -55,6 +55,8 @@ public class CreaContatto extends JPanel {
     private JComboBox cbWhatsapp;
     private JComboBox cbTelegram;
     private JComboBox cbGruppi;
+    private JButton btnWhatsApp;
+    private JButton btnTelegram;
 
     /////////////////////////////////////////////////////       OGGETTI     /////////////////////////////////////////////////////
     Controller control;
@@ -87,7 +89,7 @@ public class CreaContatto extends JPanel {
         String errFissoNonValido = "Hai inserito un fisso non valido";
         String errEmailNonValido = "Hai inserito un indirizzo email non valido";
         String errIndirizzoNonValido = "Hai inserito un indirizzo non valido";
-        String errSvuota = "";
+
         getBtnConferma().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -114,11 +116,7 @@ public class CreaContatto extends JPanel {
                 } else {
                     try {
                         control.clickAudio();
-
                         inserimentoContattoDatabase();
-                        control.getHomepage().stampaContatti();
-                        control.switchJPanelInView(control.getHomepage().getPaneBase());
-                        lbErroreInserimento(errSvuota);
 
                     } catch (SQLException | UnsupportedAudioFileException | LineUnavailableException | IOException | InterruptedException ex) {
                         ex.printStackTrace();
@@ -355,6 +353,71 @@ public class CreaContatto extends JPanel {
         btnCaricaImmagine.setFocusPainted(false);
         btnCaricaImmagine.setOpaque(true);
 
+        //btnWhatsApp
+        ImageIcon imgWhatsApp = new ImageIcon("Immagini/imgWA16px.png");
+        ImageIcon imgWhatsAppGrande = new ImageIcon("Immagini/imgWA24px.png");
+        btnWhatsApp.setContentAreaFilled(false);
+        btnWhatsApp.setBorderPainted(false);
+        btnWhatsApp.setBorder(null);
+        btnWhatsApp.setFocusPainted(false);
+        btnWhatsApp.setOpaque(true);
+        btnWhatsApp.setIcon(imgWhatsApp);
+        btnWhatsApp.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    control.clickAudio();
+
+                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            public void mouseEntered(MouseEvent e) {
+                try {
+                    btnWhatsApp.setIcon(imgWhatsAppGrande);
+                    control.rollOverAudio();
+                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            public void mouseExited(MouseEvent e) {
+                btnWhatsApp.setIcon(imgWhatsApp);
+            }
+        });
+
+        //btnTelegram
+        ImageIcon imgTelegram = new ImageIcon("Immagini/imgTelegram16px.png");
+        ImageIcon imgTelegramGrande = new ImageIcon("Immagini/imgTelegram24px.png");
+
+        btnTelegram.setContentAreaFilled(false);
+        btnTelegram.setBorderPainted(false);
+        btnTelegram.setBorder(null);
+        btnTelegram.setFocusPainted(false);
+        btnTelegram.setOpaque(true);
+
+        btnTelegram.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    control.clickAudio();
+
+                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            public void mouseEntered(MouseEvent e) {
+                try {
+                    btnTelegram.setIcon(imgTelegramGrande);
+                    control.rollOverAudio();
+                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            public void mouseExited(MouseEvent e) {
+                btnTelegram.setIcon(imgTelegram);
+            }
+        });
+
     }
     public void aggiuntaTxtFieldEmail(){
 
@@ -452,16 +515,24 @@ public class CreaContatto extends JPanel {
         System.out.println(contatto.getNomeGruppo());
         controlloField();
         //creaContattoDAO.creaContatto(, , , , contatti.getNomeGruppo(),, );
-        int id = contattoDAO.inserimentoContatto(contatto.getNome(), contatto.getCognome(), contatto.getFoto());
-        numeroCellulareDAO.inserisciCellulare(id, contatto.getCellulare());
-        numeroFissoDAO.inserisciFisso(id, contatto.getFisso());
-        emailDAO.inserimentoEmail(id, contatto.getEmail());
-        indirizzoPrincipaleDAO.inserisciIndirizzoPrincipale(id, contatto.getIndirizzo());
-        emailSecondarioDAO.inserisciEmailSecondarie(id, listaTxtEmail);
-        indirizzoSecondarioDAO.inserisciIndirizzoSecondario(id, listaTxtIndirizzo);
-        partecipazioneDAO.entrataInGruppo(id, contatto.getNomeGruppo());
-        svuotaCampi();
-        control.getHomepage().stampaContatti();
+        if(emailDAO.controlloDuplicatoEmail(contatto.getEmail())){
+            lbErroreInserimento.setVisible(true);
+            lbErroreInserimento("Hai inserito un'email duplicata");
+        }
+        else{
+            int id = contattoDAO.inserimentoContatto(contatto.getNome(), contatto.getCognome(), contatto.getFoto());
+            numeroCellulareDAO.inserisciCellulare(id, contatto.getCellulare());
+            numeroFissoDAO.inserisciFisso(id, contatto.getFisso());
+            emailDAO.inserimentoEmail(id, contatto.getEmail());
+            indirizzoPrincipaleDAO.inserisciIndirizzoPrincipale(id, contatto.getIndirizzo());
+            emailSecondarioDAO.inserisciEmailSecondarie(id, listaTxtEmail);
+            indirizzoSecondarioDAO.inserisciIndirizzoSecondario(id, listaTxtIndirizzo);
+            partecipazioneDAO.entraInGruppo(id, contatto.getNomeGruppo());
+            svuotaCampi();
+            lbErroreInserimento.setVisible(false);
+            control.getHomepage().stampaContatti();
+            control.switchJPanelInView(control.getHomepage().getPaneBase());
+        }
     }
 
     public void temaScuro() {

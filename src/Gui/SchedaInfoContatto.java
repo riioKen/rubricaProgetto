@@ -9,8 +9,12 @@ import javax.swing.*;
 
 import DAO.AggiornamentoContattoDAO;
 import DAO.ContattoDAO;
+import DAO.GruppoDAO;
+import DAO.PartecipazioneDAO;
 import ImplementazioniDAO.AggiornamentoContattoPostreSQL;
 import ImplementazioniDAO.ContattoPostgreSQL;
+import ImplementazioniDAO.GruppoPostgreSQL;
+import ImplementazioniDAO.PartecipazionePostgreSQL;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -21,6 +25,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class SchedaInfoContatto {
 
@@ -53,12 +58,15 @@ public class SchedaInfoContatto {
     private JButton btnEliminaContatto;
     private JComboBox cbGruppo;
     private JButton btnImmagineCaricata;
+    private JButton btnEntraGruppo;
+    private JButton btnEsciGruppo;
 
     /////////////////////////////////////////////////////       OGGETTI     /////////////////////////////////////////////////////
     Controller control;
 
     ContattoDAO contattoDAO = new ContattoPostgreSQL();
     Contatti contatto = new Contatti();
+    PartecipazioneDAO partecipazioneDAO = new PartecipazionePostgreSQL();
 
     ArrayList<String> indirizzoSecondario = new ArrayList<>();
     ArrayList<String> emailSecondario = new ArrayList<>();
@@ -72,10 +80,17 @@ public class SchedaInfoContatto {
         control = controller;
         funzionalitaTasti();
 
+
+        btnEntraGruppo.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+            }
+        });
     }
 
     /////////////////////////////////////////////////////       FUNZIONALITA' PULSANTI GUI      /////////////////////////////////////////////////////
-    public void funzionalitaTasti(){
+    public void funzionalitaTasti() throws SQLException {
 
 
         //FUNZIONALITA' TASTO btnEliminaContatto
@@ -165,6 +180,88 @@ public class SchedaInfoContatto {
                 }
             }
         });
+
+        //btnEntraGruppo
+        ImageIcon imgEntraGruppo = new ImageIcon("Immagini/imgEntrataGruppo16pxScuro.png");
+        ImageIcon imgEntraGruppoGrande = new ImageIcon("Immagini/imgEntrataGruppo24pxScuro.png");
+
+        btnEntraGruppo.setIcon(imgEntraGruppo);
+        btnEntraGruppo.setMargin(new Insets(0,0,0,0));
+        btnEntraGruppo.setContentAreaFilled(false);
+        btnEntraGruppo.setBorderPainted(false);
+        btnEntraGruppo.setBorder(null);
+        btnEntraGruppo.setFocusPainted(false);
+        btnEntraGruppo.setOpaque(true);
+
+        btnEntraGruppo.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {//Aggiustare aggiornamento gruppo e Combobox a seguito di un entrata
+                    control.clickAudio();
+                    partecipazioneDAO.entraInGruppo(contatto.getId(), Objects.requireNonNull(cbGruppo.getSelectedItem()).toString());
+                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException | SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+            public void mouseEntered(MouseEvent e) {
+                btnEntraGruppo.setIcon(imgEntraGruppoGrande);
+                try {
+                    control.rollOverAudio();
+                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            public void mouseExited(MouseEvent e) {
+                btnEntraGruppo.setIcon(imgEntraGruppo);
+            }
+        });
+
+        //btnEsciGruppo
+        PartecipazioneDAO partecipazioneDAO = new PartecipazionePostgreSQL();
+        ImageIcon imgEsciGruppo = new ImageIcon("Immagini/imgEsciGruppo16pxScuro.png");
+        ImageIcon imgEsciGruppoGrande = new ImageIcon("Immagini/imgEsciGruppo24pxScuro.png");
+
+        btnEsciGruppo.setIcon(imgEsciGruppo);
+        btnEsciGruppo.setMargin(new Insets(0,0,0,0));
+        btnEsciGruppo.setContentAreaFilled(false);
+        btnEsciGruppo.setBorderPainted(false);
+        btnEsciGruppo.setBorder(null);
+        btnEsciGruppo.setFocusPainted(false);
+        btnEsciGruppo.setOpaque(true);
+
+        btnEsciGruppo.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {//Aggiustare aggiornamento gruppo e Combobox a seguito di un uscita
+                    control.clickAudio();
+                    gruppi.remove(cbGruppo.getSelectedIndex());
+                    partecipazioneDAO.esciDalGruppo(contatto.getId(), Objects.requireNonNull(cbGruppo.getSelectedItem()).toString());
+
+                    cbGruppo.removeAllItems();
+                    int i = 0;
+                    while(i < gruppi.size() ) {
+                        cbGruppo.addItem(gruppi.get(i));
+                        i++;
+                    }
+                    cbGruppo.addItem("...");
+
+                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException | SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            public void mouseEntered(MouseEvent e) {
+                btnEsciGruppo.setIcon(imgEsciGruppoGrande);
+                try {
+                    control.rollOverAudio();
+                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            public void mouseExited(MouseEvent e) {
+                btnEsciGruppo.setIcon(imgEsciGruppo);
+            }
+        });
     }
 
     /////////////////////////////////////////////////////       METODI LOGICI     /////////////////////////////////////////////////////
@@ -184,15 +281,36 @@ public class SchedaInfoContatto {
         getTxtEmail().setText(contatto.getEmail());
         getTxtIndirizzo().setText(contatto.getIndirizzo());
 
-        //IMPLEMENTARE IL TASTO PER USCIRE SINGOLARMENTE DAL GRUPPO
+
 
         while(i < gruppi.size() ) {
             cbGruppo.addItem(gruppi.get(i));
             i++;
         }
+        cbGruppo.addItem("Gruppi Nuovi");
+        ArrayList<String> gruppiAppoggio = new ArrayList<>();
+        gruppiAppoggio.addAll(gruppi);
+        gruppi.clear();
+        GruppoDAO gruppoDAO = new GruppoPostgreSQL();
+        gruppi = gruppoDAO.cercaGruppi();
+        i=0;
+        int j = 0;  //L'USCITA DAI GRUPPI
+        while(i < gruppiAppoggio.size()) {
+            while(j < gruppi.size()){
+                if(gruppiAppoggio.get(i).equals(gruppi.get(j)))
+                    gruppi.remove(j);
+                j++;
+            }
+            i++;
+        }
 
-        cbGruppo.addItem("...");
-        //cbGruppo.getSelectedItem().;
+
+        i = 0;
+        while(i < gruppi.size()) {
+            cbGruppo.addItem(gruppi.get(i));
+            i++;
+        }
+
         if(contatto.getFoto() != null) {
             ImageIcon immagine = new ImageIcon(contatto.getFoto());
             btnImmagineCaricata.setIcon(immagine);

@@ -5,6 +5,7 @@ import DAO.EmailDAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class EmailPostgreSQL implements EmailDAO {
@@ -30,12 +31,14 @@ public class EmailPostgreSQL implements EmailDAO {
     }
 
     @Override
-    public void rimozioneEmail(String id, String email) throws SQLException {
+    public boolean controlloDuplicatoEmail(String email) throws SQLException {
         conn = Connessione.getInstance().getConnection();
-
-        String rimozioneEmail = "DELETE FROM Email WHERE idcontatto = '"+id+"' AND email = '"+email+"');";
-
+        String rimozioneEmail = "SELECT EXISTS( SELECT email FROM EMAIL WHERE email = '" + email + "');";
         PreparedStatement st = conn.prepareStatement(rimozioneEmail);
-        st.executeUpdate();
+        ResultSet rs = st.executeQuery();
+            rs.next();
+
+            return rs.getBoolean(1);
+
     }
 }

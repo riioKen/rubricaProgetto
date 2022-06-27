@@ -3,9 +3,8 @@ package ImplementazioniDAO;
 import ConnessioneDB.Connessione;
 import DAO.PartecipazioneDAO;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 
 public class PartecipazionePostgreSQL implements PartecipazioneDAO {
 
@@ -20,7 +19,7 @@ public class PartecipazionePostgreSQL implements PartecipazioneDAO {
         }
     }
     @Override
-    public void entrataInGruppo(int id, String nomeGruppo) throws SQLException {
+    public void entraInGruppo(int id, String nomeGruppo) throws SQLException {
 
         if(!nomeGruppo.isEmpty()) {
             conn = Connessione.getInstance().getConnection();
@@ -38,13 +37,26 @@ public class PartecipazionePostgreSQL implements PartecipazioneDAO {
 
     }
 
-    public void rimuoviPartecipazione(int id, String nomeGruppo) throws SQLException {
+    @Override
+    public void esciDalGruppo(int id, String nomeGruppo) throws SQLException {
+        conn = Connessione.getInstance().getConnection();
         PreparedStatement rimuoviPartecipazione = conn.prepareStatement("DELETE FROM Partecipazione WHERE idcontatto = '"+id+"' AND nomegruppo = '"+nomeGruppo+"'");
+        rimuoviPartecipazione.executeUpdate();
 
     }
-    public void aggiornaPartecipazione(int id, String nomeGruppo) throws SQLException {
-        PreparedStatement rimuoviPartecipazione = conn.prepareStatement("DELETE FROM Partecipazione WHERE idcontatto = '"+id+"' AND nomegruppo = '"+nomeGruppo+"'");
-        PreparedStatement aggiornaPartecipazione = conn.prepareStatement("INSERT INTO Partecipazione(idcontatto,nomegruppo) VALUES ( nomegruppo = '"+nomeGruppo+"' , idcontatto = '"+id+"')");
 
+    @Override
+    public ArrayList<String> estraiGruppi(int id, ArrayList<String> gruppi) throws SQLException {
+        conn = Connessione.getInstance().getConnection();
+        String cercaGruppi = "SELECT nomegruppo FROM Partecipazione WHERE idcontatto = '"+id+"'";
+
+        Statement st = conn.createStatement();
+        ResultSet rs = st.executeQuery(cercaGruppi);
+        while(rs.next())
+            gruppi.add(rs.getString("nomegruppo"));
+
+        return gruppi;
     }
+
+
 }

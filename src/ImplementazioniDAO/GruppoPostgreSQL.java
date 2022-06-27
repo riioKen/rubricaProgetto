@@ -28,7 +28,6 @@ public class GruppoPostgreSQL implements GruppoDAO {
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(queryCercaGruppi);
         String nome;
-        String membri;
         infoGruppi.clear();
         while (rs.next()){
             nome = rs.getString("nome");
