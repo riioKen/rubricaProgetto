@@ -82,9 +82,16 @@ public class Controller{
 
     }
 
-    public void JDialog(){
+    public Messaging popupProviderInserimentoInfo(Messaging messaging) throws SQLException, IOException {
+        messagingGUI = new MessagingGUI(this);
+        messaging = messagingGUI.inserimentoInfo(messaging);
+        return messaging;
+    }
+
+    public void PopupProviderOttenimentoInfo(Messaging messaging) throws SQLException, IOException {
         messagingGUI = new MessagingGUI(this);
 
+        messagingGUI.ottenimentoInfo(messaging);
     }
 
     public void startingAudio() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {

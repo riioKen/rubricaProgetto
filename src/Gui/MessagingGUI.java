@@ -1,9 +1,19 @@
 package Gui;
 
+import Classi.Messaging;
 import Controller.Controller;
+import DAO.MessagingDAO;
+import ImplementazioniDAO.MessagingPostgreSQL;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
+import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.sql.SQLException;
 
 public class MessagingGUI extends JDialog {
 
@@ -14,9 +24,15 @@ public class MessagingGUI extends JDialog {
     private JTextArea taFraseBenvenuto;
     private JTextField txtNickname;
     private JComboBox cbEmail;
+    private JLabel lbEmail;
+    private JLabel lbBenvenuto;
+    private JLabel lbNickname;
 
     Controller control;
-    public MessagingGUI(Controller controller) {
+    Messaging messaging = new Messaging();
+    MessagingDAO messagingDAO = new MessagingPostgreSQL();
+
+    public MessagingGUI(Controller controller) throws SQLException {
         control = controller;
         setContentPane(contentPane);
         setModal(true);
@@ -54,6 +70,7 @@ public class MessagingGUI extends JDialog {
 
     private void onOK() {
         // add your code here
+        //inserimentoInfo();
         dispose();
     }
 
@@ -63,10 +80,62 @@ public class MessagingGUI extends JDialog {
     }
 
     public void textureJDialog() {
-        pack();
+
+
+        setSize(400,200);
         setLocationRelativeTo(control.getHomepage());
+
+    }
+
+    public void ottenimentoInfo(Messaging messaging) throws SQLException, IOException {
+
+        txtNickname.setText(messaging.getNickname());
+        cbEmail.addItem(messaging.getEmail());
+        taFraseBenvenuto.setText(messaging.getMessaggioBenvenuto());
+
+        if(messaging.getProviderMessaggi().equals("WhatsApp")){
+            BufferedImage whatsapp = ImageIO.read(new File("Immagini/imgWA16px.png"));
+            Border border = BorderFactory.createTitledBorder("WhatsApp");
+            contentPane.setBorder(border);
+            setIconImage(whatsapp);
+        }
+        else
+        {
+            BufferedImage imgTelegram = ImageIO.read(new File("Immagini/imgTelegram16px.png"));
+            Border border = BorderFactory.createTitledBorder("Telegram");
+            contentPane.setBorder(border);
+            setIconImage(imgTelegram);
+        }
+        taFraseBenvenuto.setEditable(false);
+        txtNickname.setEditable(false);
         setVisible(true);
 
+    }
+
+    public Messaging inserimentoInfo(Messaging messaging) throws IOException {
+        lbEmail.setVisible(false);
+        cbEmail.setVisible(false);
+
+        if(messaging.getProviderMessaggi().equals("WhatsApp")){
+            BufferedImage whatsapp = ImageIO.read(new File("Immagini/imgWA16px.png"));
+            Border border = BorderFactory.createTitledBorder("WhatsApp");
+            contentPane.setBorder(border);
+            setIconImage(whatsapp);
+        }
+        else
+        {
+            BufferedImage imgTelegram = ImageIO.read(new File("Immagini/imgTelegram16px.png"));
+            Border border = BorderFactory.createTitledBorder("Telegram");
+            contentPane.setBorder(border);
+            setIconImage(imgTelegram);
+        }
+
+        setVisible(true);
+
+        messaging.setNickname(txtNickname.getText());
+        messaging.setMessaggioBenvenuto(taFraseBenvenuto.getText());
+
+        return messaging;
     }
 
 

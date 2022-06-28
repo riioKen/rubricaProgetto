@@ -1,6 +1,7 @@
 package Gui;
 
 import Classi.Contatti;
+import Classi.Messaging;
 import Controller.*;
 
 import javax.sound.sampled.LineUnavailableException;
@@ -9,11 +10,11 @@ import javax.swing.*;
 
 import DAO.AggiornamentoContattoDAO;
 import DAO.ContattoDAO;
-import DAO.GruppoDAO;
+import DAO.MessagingDAO;
 import DAO.PartecipazioneDAO;
 import ImplementazioniDAO.AggiornamentoContattoPostreSQL;
 import ImplementazioniDAO.ContattoPostgreSQL;
-import ImplementazioniDAO.GruppoPostgreSQL;
+import ImplementazioniDAO.MessagingPostgreSQL;
 import ImplementazioniDAO.PartecipazionePostgreSQL;
 
 import java.awt.*;
@@ -65,10 +66,12 @@ public class SchedaInfoContatto {
 
     /////////////////////////////////////////////////////       OGGETTI     /////////////////////////////////////////////////////
     Controller control;
+    Messaging messaging = new Messaging();
+    Contatti contatto = new Contatti();
 
     ContattoDAO contattoDAO = new ContattoPostgreSQL();
-    Contatti contatto = new Contatti();
     PartecipazioneDAO partecipazioneDAO = new PartecipazionePostgreSQL();
+    MessagingDAO messagingDAO = new MessagingPostgreSQL();
 
     ArrayList<String> indirizzoSecondario = new ArrayList<>();
     ArrayList<String> emailSecondario = new ArrayList<>();
@@ -272,10 +275,12 @@ public class SchedaInfoContatto {
         btnWhatsApp.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                btnWhatsApp.setActionCommand("WhatsApp");
                 try {
                     control.clickAudio();
-
-                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException ex) {
+                    messaging = messagingDAO.ricercaProvider(contatto.getId(), btnWhatsApp.getActionCommand());
+                    control.PopupProviderOttenimentoInfo(messaging);
+                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException | SQLException ex) {
                     ex.printStackTrace();
                 }
             }
@@ -305,10 +310,13 @@ public class SchedaInfoContatto {
         btnTelegram.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                btnTelegram.setActionCommand("Telegram");
                 try {
                     control.clickAudio();
+                    messaging = messagingDAO.ricercaProvider(contatto.getId(), btnTelegram.getActionCommand());
+                    control.PopupProviderOttenimentoInfo(messaging);
 
-                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException ex) {
+                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException | SQLException ex) {
                     ex.printStackTrace();
                 }
             }

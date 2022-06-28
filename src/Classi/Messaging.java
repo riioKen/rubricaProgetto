@@ -3,29 +3,53 @@ package Classi;
 
 public class Messaging {
     //ATTRIBUTI
-    private String nomeFornitore;
+    private String providerMessaggi;
     private String nickname;
     private String email;
+    private String messaggioBenvenuto;
+    private int idcontatto;
 
 
 
     //COSTRUTTORE
-    public Messaging(String nomeFornitore, String nickname, String email){
+    public Messaging(String providerMessaggi, String nickname, String email, String messaggioBenvenuto, int idcontatto){
 
-        this.nomeFornitore = nomeFornitore;
+        this.providerMessaggi = providerMessaggi;
         this.nickname = nickname;
         this.email = email;
+        this.idcontatto = idcontatto;
+        this.messaggioBenvenuto = messaggioBenvenuto;
     }
 
+    public Messaging() {
+
+    }
 
 
     //GETTER SETTER
-    public String getNomeFornitore() {
-        return nomeFornitore;
+
+    public String getMessaggioBenvenuto() {
+        return messaggioBenvenuto;
     }
 
-    public void setNomeFornitore(String nomeFornitore) {
-        this.nomeFornitore = nomeFornitore;
+    public void setMessaggioBenvenuto(String messaggioBenvenuto) {
+        this.messaggioBenvenuto = messaggioBenvenuto;
+    }
+
+    public int getIdcontatto() {
+        return idcontatto;
+    }
+
+    public void setIdcontatto(int idcontatto) {
+        this.idcontatto = idcontatto;
+    }
+
+    public String getProviderMessaggi() {
+        return providerMessaggi;
+    }
+
+    public void setProviderMessaggi(String providerMessaggi) {
+        this.providerMessaggi = providerMessaggi;
     }
 
     public String getNickname() {

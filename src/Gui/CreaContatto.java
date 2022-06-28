@@ -1,6 +1,7 @@
 package Gui;
 
 import Classi.Contatti;
+import Classi.Messaging;
 import Controller.Controller;
 import DAO.*;
 import ImplementazioniDAO.*;
@@ -62,7 +63,8 @@ public class CreaContatto extends JPanel {
     /////////////////////////////////////////////////////       OGGETTI     /////////////////////////////////////////////////////
     Controller control;
     Contatti contatto;
-
+    Messaging whatsApp = new Messaging();
+    Messaging telegram = new Messaging();
 
     //Arraylist per stampa, DEBUG, dovrà essere sostituito con inserimento da DATABASE
     static ArrayList<Contatti> insContatti = new ArrayList<>();
@@ -366,10 +368,11 @@ public class CreaContatto extends JPanel {
         btnWhatsApp.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                whatsApp.setProviderMessaggi("WhatsApp");
                 try {
                     control.clickAudio();
-                    control.JDialog();
-                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException ex) {
+                    whatsApp = control.popupProviderInserimentoInfo(whatsApp);
+                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException | SQLException ex) {
                     ex.printStackTrace();
                 }
             }
@@ -399,10 +402,11 @@ public class CreaContatto extends JPanel {
         btnTelegram.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                telegram.setProviderMessaggi("Telegram");
                 try {
                     control.clickAudio();
-
-                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException ex) {
+                    telegram = control.popupProviderInserimentoInfo(telegram);
+                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException | SQLException ex) {
                     ex.printStackTrace();
                 }
             }

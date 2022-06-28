@@ -4,9 +4,7 @@ import Classi.Messaging;
 import ConnessioneDB.Connessione;
 import DAO.MessagingDAO;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class MessagingPostgreSQL implements MessagingDAO {
     private Connection conn;
@@ -23,9 +21,20 @@ public class MessagingPostgreSQL implements MessagingDAO {
     @Override
     public Messaging ricercaProvider(int id, String provider) throws SQLException {
         conn = Connessione.getInstance().getConnection();
+
         String ricercaProvider = "SELECT * FROM Messaging WHERE idcontatto = '"+id+"' AND providermessaggi = '"+provider+"'";
 
-        PreparedStatement st = conn.prepareStatement();
+        Statement st = conn.createStatement();
+        ResultSet rs = st.executeQuery(ricercaProvider);
+        Messaging messaging = new Messaging();
 
+        while(rs.next()){
+            messaging.setNickname(rs.getString("nickname"));
+            messaging.setProviderMessaggi(rs.getString("providermessaggi"));
+            messaging.setEmail(rs.getString("email"));
+            messaging.setMessaggioBenvenuto(rs.getString("messaggiobenvenuto"));
+            messaging.setIdcontatto(rs.getInt("idcontatto"));
+        }
+        return messaging;
     }
 }
