@@ -1,5 +1,6 @@
 package ImplementazioniDAO;
 
+import Classi.Contatti;
 import ConnessioneDB.Connessione;
 import DAO.AggiornamentoContattoDAO;
 
@@ -8,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 
 public class AggiornamentoContattoPostreSQL implements AggiornamentoContattoDAO {
@@ -24,28 +26,25 @@ public class AggiornamentoContattoPostreSQL implements AggiornamentoContattoDAO 
 
 
     @Override
-    public void aggiornaContatto(int id, String nome, String cellulare, String cognome, String fisso, String email, String indirizzo, String foto, String nomeGruppo, JTextField[] listaIndirizzi, JTextField[] listaEmail) throws SQLException {
+    public void aggiornaContatto(Contatti contatto, Contatti contattoNew, ArrayList<String> indirizzoVecchio, ArrayList<String> arrayTxtIndirizzo, ArrayList<String> emailVecchio, ArrayList<String> arrayTxtEmail) throws SQLException {
 
         conn = Connessione.getInstance().getConnection();
 
         try {
-            PreparedStatement aggiornaContatto = conn.prepareStatement("UPDATE Contatto SET nome = '" + nome + "' , cognome = '" + cognome + "' , foto = '" + foto + "' WHERE id = '" + id + "'");
-            PreparedStatement aggiornaEmail = conn.prepareStatement("UPDATE Email SET email = '" + email + "' WHERE idcontatto = '" + id + "'");
+            PreparedStatement aggiornaContatto = conn.prepareStatement("UPDATE Contatto SET nome = '" + contattoNew.getNome() + "' , cognome = '" + contattoNew.getCognome() + "' , foto = '" + contattoNew.getFoto() + "' WHERE id = '" + contatto.getId() + "'");
+            PreparedStatement aggiornaEmail = conn.prepareStatement("UPDATE Email SET email = '" + contattoNew.getEmail() + "' WHERE idcontatto = '" + contatto.getId() + "' AND email = '"+contatto.getEmail()+"'");
 
-
-            PreparedStatement rimuoviPartecipazione = conn.prepareStatement("DELETE FROM Partecipazione WHERE idcontatto = '" + id + "' AND nomegruppo = '" + nomeGruppo + "'");
-            PreparedStatement aggiungiPartecipazione = conn.prepareStatement("INSERT INTO Partecipazione(idcontatto,nomegruppo) VALUES (idcontatto = '" + id + "' , nomegruppo = '" + nomeGruppo + "')");
-            PreparedStatement aggiornaNumeroCellulare = conn.prepareStatement("UPDATE numerocellulare SET cellulare = '" + cellulare + "' WHERE idcontatto = '" + id + "'");
-            PreparedStatement aggiornaFisso = conn.prepareStatement("UPDATE numerofisso SET fisso = '" + fisso + "' WHERE idcontatto = '" + id + "'");
+            PreparedStatement aggiornaNumeroCellulare = conn.prepareStatement("UPDATE numerocellulare SET cellulare = '" + contattoNew.getCellulare() + "' WHERE idcontatto = '" + contatto.getId() + "' AND cellulare = '" + contatto.getCellulare() + "'");
+            PreparedStatement aggiornaFisso = conn.prepareStatement("UPDATE numerofisso SET fisso = '" + contattoNew.getFisso() + "' WHERE idcontatto = '" + contatto.getId() + "' AND fisso = '"+contatto.getFisso()+"'");
             aggiornaContatto.executeUpdate();
             aggiornaEmail.executeUpdate();
-            rimuoviPartecipazione.executeUpdate();
-            aggiungiPartecipazione.executeUpdate();
+
             aggiornaNumeroCellulare.executeUpdate();
             aggiornaFisso.executeUpdate();
-            splittaIndirizzo(indirizzo, id);
-            aggiornaEmailSecondarie(listaEmail, id);
-            splittaIndirizzoSecondario(listaIndirizzi, id);
+
+            splittaIndirizzo(contatto.getIndirizzo(), contatto.getId());
+            aggiornaEmailSecondarie(arrayTxtEmail, contatto.getId(), emailVecchio);
+            splittaIndirizzoSecondario(arrayTxtIndirizzo, contatto.getId(),indirizzoVecchio);
 
         } catch (SQLException e) {
             System.out.println("ECCEZIONE::Riga 51 Classe AggiornamentoContattoPostgreSQL");
@@ -72,14 +71,15 @@ public class AggiornamentoContattoPostreSQL implements AggiornamentoContattoDAO 
 
     }
 
-    public void aggiornaEmailSecondarie(JTextField[] listaEmail, int id) throws SQLException {
+    public void aggiornaEmailSecondarie(ArrayList<String> arrayTxtEmail, int id, ArrayList<String> emailVecchie) throws SQLException {
         String email;
+
         try {
-            if (listaEmail != null) {
-                for (int i = 0; i < listaEmail.length; i++) {
-                    email = listaEmail[i].getText();
+            if (arrayTxtEmail != null) {
+                for (int i = 0; i < arrayTxtEmail.size(); i++) {
+                    email = arrayTxtEmail.get(i);
                     if (!email.isBlank()) {
-                        PreparedStatement inserisciContattoEmail = conn.prepareStatement("UPDATE EmailSecondario SET email = '" + email + "' WHERE idcontatto = '" + id + "'");
+                        PreparedStatement inserisciContattoEmail = conn.prepareStatement("UPDATE Email SET email = '" + email + "' WHERE idcontatto = '" + id + "' AND email = '"+emailVecchie.get(i)+"'");
                         inserisciContattoEmail.executeUpdate();
                     }
                 }
@@ -90,23 +90,32 @@ public class AggiornamentoContattoPostreSQL implements AggiornamentoContattoDAO 
         }
     }
 
-    public void splittaIndirizzoSecondario(JTextField[] listaIndirizzo, int id) throws SQLException {
+    public void splittaIndirizzoSecondario(ArrayList<String> arrayTxtIndirizzo, int id, ArrayList<String> indirizziVecchi) throws SQLException {
         String via, civico, cap, citta, nazione;
+        String viaVecchia, civicoVecchia, capVecchia, cittaVecchia, nazioneVecchia;
 
         try {
-            if (listaIndirizzo != null) {
-                for (int i = 0; i < listaIndirizzo.length; i++) {
-                    if (listaIndirizzo[i].getText() != null || !listaIndirizzo[i].getText().isBlank()) {
+            if (arrayTxtIndirizzo != null) {
+                for (int i = 0; i < arrayTxtIndirizzo.size(); i++) {
+                    if (arrayTxtIndirizzo.get(i) != null || !arrayTxtIndirizzo.get(i).isBlank()) {
                         System.out.println("stampa di quante volte entra nella i " + i);
 
-                        via = listaIndirizzo[i].getText().split("\\s*,\\s*")[0];
-                        civico = listaIndirizzo[i].getText().split("\\s*,\\s*")[1];
-                        cap = listaIndirizzo[i].getText().split("\\s*,\\s*")[2];
-                        citta = listaIndirizzo[i].getText().split("\\s*,\\s*")[3];
-                        nazione = listaIndirizzo[i].getText().split("\\s*,\\s*")[4];
-                        System.out.println(via + " " + citta);
+                        via = arrayTxtIndirizzo.get(i).split("\\s*,\\s*")[0];
+                        civico =arrayTxtIndirizzo.get(i).split("\\s*,\\s*")[1];
+                        cap = arrayTxtIndirizzo.get(i).split("\\s*,\\s*")[2];
+                        citta = arrayTxtIndirizzo.get(i).split("\\s*,\\s*")[3];
+                        nazione = arrayTxtIndirizzo.get(i).split("\\s*,\\s*")[4];
+
+                        viaVecchia = indirizziVecchi.get(i).split("\\s*,\\s*")[0];
+                        civicoVecchia = indirizziVecchi.get(i).split("\\s*,\\s*")[1];
+                        capVecchia = indirizziVecchi.get(i).split("\\s*,\\s*")[2];
+                        cittaVecchia = indirizziVecchi.get(i).split("\\s*,\\s*")[3];
+                        nazioneVecchia = indirizziVecchi.get(i).split("\\s*,\\s*")[4];
+
+                        System.out.println(via + " " + viaVecchia);
                         if (!via.isBlank() && !civico.isBlank() && !cap.isBlank() && !citta.isBlank() && !nazione.isBlank()) {
-                            PreparedStatement inserisciContattoIndirizzo = conn.prepareStatement("UPDATE IndirizzoSecondario SET via = '" + via + "' , civico =  '" + civico + "' , cap =  '" + cap + "' , citta = '" + citta + "' , nazione = '" + nazione + "' WHERE idcontatto = '" + id + "'");
+                            PreparedStatement inserisciContattoIndirizzo = conn.prepareStatement("UPDATE IndirizzoSecondario SET via = '" + via + "' , civico =  '" + civico + "' , cap =  '" + cap + "' , citta = '" + citta + "' , nazione = '" + nazione + "' " +
+                                                                                                      "WHERE idcontatto = '" + id + "' AND via = '"+viaVecchia+"' AND civico = '"+civicoVecchia+"' AND cap = '"+capVecchia+"' AND citta = '"+cittaVecchia+"' AND nazione = '"+nazioneVecchia+"'");
                             inserisciContattoIndirizzo.executeUpdate();
                         }
                     }

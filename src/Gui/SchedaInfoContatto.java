@@ -76,8 +76,8 @@ public class SchedaInfoContatto {
     ArrayList<String> indirizzoSecondario = new ArrayList<>();
     ArrayList<String> emailSecondario = new ArrayList<>();
     ArrayList<String> gruppi = new ArrayList<>();
-    JTextField[] piuEmail;
-    JTextField[] piuIndirizzo;
+    ArrayList<String> listaTxtEmail = new ArrayList<>();
+    ArrayList<String> listaTxtIndirizzo = new ArrayList<>();
     String nCellulare;
 
     /////////////////////////////////////////////////////       COSTRUTTORE     /////////////////////////////////////////////////////
@@ -376,66 +376,111 @@ public class SchedaInfoContatto {
             ImageIcon immagine = new ImageIcon("Immagini/imgAggiungiFoto64pxScuro.png");
             btnImmagineCaricata.setIcon(immagine);
         }
-        piuEmail = new JTextField[emailSecondario.size()];
-        piuIndirizzo = new JTextField[indirizzoSecondario.size()];
-        aggiuntaEmailSecondarie(piuEmail);
-        aggiuntaIndirizziSecondari(piuIndirizzo);
+
+        aggiuntaEmailSecondarie();
+        aggiuntaIndirizziSecondari();
+
         nCellulare = getTxtCellulare().getText();
     }
     //////////////////////////////////////////////////////// COMPLETARE IL METODO DI SOTTO ///////////////////////////////////////////////////////////////////////////////////
     public void aggiornamentoContatto() throws SQLException {
         AggiornamentoContattoDAO aggiornaContatto = new AggiornamentoContattoPostreSQL();
+        Contatti contatto_new = new Contatti();
+        contatto_new.setNome(getTxtNome().getText());
+        contatto_new.setCognome(getTxtCognome().getText());
+        contatto_new.setCellulare(getTxtCellulare().getText());
+        contatto_new.setFisso(getTxtFisso().getText());
+        contatto_new.setEmail(getTxtEmail().getText());
+        contatto_new.setIndirizzo(getTxtIndirizzo().getText());
+        contatto_new.setFoto(btnImmagineCaricata.getActionCommand());
 
-        contatto.setNome(getTxtNome().getText());
-        contatto.setCognome(getTxtCognome().getText());
-        contatto.setCellulare(getTxtCellulare().getText());
-        contatto.setFisso(getTxtFisso().getText());
-        contatto.setEmail(getTxtEmail().getText());
-        contatto.setIndirizzo(getTxtIndirizzo().getText());
-        contatto.setFoto(btnImmagineCaricata.getActionCommand());
-        System.out.println(contatto.getId());
-
-
-        aggiornaContatto.aggiornaContatto(contatto.getId(),contatto.getNome(), contatto.getCellulare(), contatto.getCognome(), contatto.getFisso(), contatto.getEmail(), contatto.getIndirizzo(), contatto.getFoto(), contatto.getNomeGruppo(), piuIndirizzo, piuEmail);
+        aggiornaContatto.aggiornaContatto(contatto, contatto_new, indirizzoSecondario, listaTxtIndirizzo, emailSecondario, listaTxtEmail);
     }
 
-    public void aggiuntaEmailSecondarie(JTextField[] piuEmail){
-        for(int i = 0;  i < piuEmail.length; i++){
-            piuEmail[i] = new JTextField();
+    public void aggiuntaEmailSecondarie(){
+        JTextField[] arrayEmail = new JTextField[emailSecondario.size()];
+        for(int i = 1;  i < arrayEmail.length; i++){
+            arrayEmail[i] = new JTextField();
             JPanel jpAppoggioPiuEmail = new JPanel();
             jpAppoggioPiuEmail.setLayout(new GridLayout(0,1));
-            piuEmail[i].setText(emailSecondario.get(i));
-            jpAppoggioPiuEmail.add(piuEmail[i]);
+            arrayEmail[i].setText(emailSecondario.get(i));
+            jpAppoggioPiuEmail.add(arrayEmail[i]);
             jpPiuEmail.setLayout(new GridLayout(0,1));
             jpPiuEmail.add(jpAppoggioPiuEmail);
 
+            listaTxtEmail.add(arrayEmail[i].getText());
             jpPiuEmail.validate();
             jpPiuEmail.repaint();
         }
-        emailSecondario.clear();
 
     }
 
-    public void aggiuntaIndirizziSecondari(JTextField[] piuIndirizzo){
-        for(int i = 0;  i < indirizzoSecondario.size(); i++){
-            piuIndirizzo[i] = new JTextField();
-            System.out.println("Debug riga 212 metodo aggiuntaIndirizziSecondari classe SchedaInfoContatto"+i);
+    public void aggiuntaIndirizziSecondari(){
+
+        JTextField[] arrayIndirizzo = new JTextField[indirizzoSecondario.size()];
+        for(int i = 0;  i < arrayIndirizzo.length; i++){
+            arrayIndirizzo[i] = new JTextField();
             JPanel jpAppoggioPiuIndirizzo = new JPanel();
             jpAppoggioPiuIndirizzo.setLayout(new GridLayout(0,1));
-            jpAppoggioPiuIndirizzo.add(piuIndirizzo[i]);
+            jpAppoggioPiuIndirizzo.add(arrayIndirizzo[i]);
             jpPiuIndirizzo.setLayout(new GridLayout(0,1));
             jpPiuIndirizzo.add(jpAppoggioPiuIndirizzo);
-            piuIndirizzo[i].setText(indirizzoSecondario.get(i));
+            arrayIndirizzo[i].setText(indirizzoSecondario.get(i));
+
+            listaTxtIndirizzo.add(arrayIndirizzo[i].getText());
             jpPiuIndirizzo.validate();
             jpPiuIndirizzo.repaint();
+
         }
-        indirizzoSecondario.clear();
+
     }
 
     /////////////////////////////////////////////////////       GETTER SETTER       /////////////////////////////////////////////////////
     public JPanel getJpPiuEmail() {
         return jpPiuEmail;
     }
+
+    public JButton getBtnImmagineCaricata() {
+        return btnImmagineCaricata;
+    }
+
+    public void setBtnImmagineCaricata(JButton btnImmagineCaricata) {
+        this.btnImmagineCaricata = btnImmagineCaricata;
+    }
+
+    public JButton getBtnEntraGruppo() {
+        return btnEntraGruppo;
+    }
+
+    public void setBtnEntraGruppo(JButton btnEntraGruppo) {
+        this.btnEntraGruppo = btnEntraGruppo;
+    }
+
+    public JButton getBtnEsciGruppo() {
+        return btnEsciGruppo;
+    }
+
+    public void setBtnEsciGruppo(JButton btnEsciGruppo) {
+        this.btnEsciGruppo = btnEsciGruppo;
+    }
+
+    public JButton getBtnWhatsApp() {
+        return btnWhatsApp;
+    }
+
+    public void setBtnWhatsApp(JButton btnWhatsApp) {
+        this.btnWhatsApp = btnWhatsApp;
+    }
+
+    public JButton getBtnTelegram() {
+        return btnTelegram;
+    }
+
+    public void setBtnTelegram(JButton btnTelegram) {
+        this.btnTelegram = btnTelegram;
+    }
+
+
 
     public void setJpPiuEmail(JPanel jpPiuEmail) {
         this.jpPiuEmail = jpPiuEmail;

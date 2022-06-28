@@ -21,13 +21,16 @@ public class EmailPostgreSQL implements EmailDAO {
         }
     }
     @Override
-    public void inserimentoEmail(int id, String email) throws SQLException {
+    public int inserimentoEmail(int id, String email) throws SQLException {
         conn = Connessione.getInstance().getConnection();
-        String inserimentoEmail = "INSERT INTO Email(idcontatto, email) VALUES ('"+id+"', '"+email+"');";
+        String inserimentoEmail = "INSERT INTO Email(idcontatto, email) VALUES ('"+id+"', '"+email+"') RETURNING IDEMAIL;";
 
         PreparedStatement st = conn.prepareStatement(inserimentoEmail);
-        st.executeUpdate();
+        st.execute();
+        ResultSet rs = st.getResultSet();
+        rs.next();
 
+        return rs.getInt("idEmail");
     }
 
     @Override

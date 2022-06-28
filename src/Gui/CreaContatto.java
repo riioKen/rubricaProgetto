@@ -93,6 +93,7 @@ public class CreaContatto extends JPanel {
         String errEmailNonValido = "Hai inserito un indirizzo email non valido";
         String errIndirizzoNonValido = "Hai inserito un indirizzo non valido";
 
+        btnConferma.setEnabled(false);
         getBtnConferma().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -406,6 +407,7 @@ public class CreaContatto extends JPanel {
                 try {
                     control.clickAudio();
                     telegram = control.popupProviderInserimentoInfo(telegram);
+                    btnConferma.setEnabled(true);
                 } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException | SQLException ex) {
                     ex.printStackTrace();
                 }
@@ -529,14 +531,14 @@ public class CreaContatto extends JPanel {
             int id = contattoDAO.inserimentoContatto(contatto.getNome(), contatto.getCognome(), contatto.getFoto());
             numeroCellulareDAO.inserisciCellulare(id, contatto.getCellulare());
             numeroFissoDAO.inserisciFisso(id, contatto.getFisso());
-            emailDAO.inserimentoEmail(id, contatto.getEmail());
+            int idEmail = emailDAO.inserimentoEmail(id, contatto.getEmail());
             indirizzoPrincipaleDAO.inserisciIndirizzoPrincipale(id, contatto.getIndirizzo());
             emailSecondarioDAO.inserisciEmailSecondarie(id, listaTxtEmail);
             indirizzoSecondarioDAO.inserisciIndirizzoSecondario(id, listaTxtIndirizzo);
             partecipazioneDAO.entraInGruppo(id, contatto.getNomeGruppo());
             System.out.println("Stampa dell'id del contatto "+contatto.getId());
-            messagingDAO.inserimentoAccountMessaging(id, contatto.getEmail(), whatsApp);
-            messagingDAO.inserimentoAccountMessaging(id, contatto.getEmail(), telegram);
+            messagingDAO.inserimentoAccountMessaging(id, idEmail, whatsApp);
+            messagingDAO.inserimentoAccountMessaging(id, idEmail, telegram);
             svuotaCampi();
             lbErroreInserimento.setVisible(false);
             control.getHomepage().stampaContatti();

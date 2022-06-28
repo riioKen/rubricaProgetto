@@ -74,9 +74,7 @@ public class ContattoPostgreSQL implements ContattoDAO {
             contatto.setCognome(rs.getString("cognome"));
             contatto.setCellulare(rs.getString("cellulare"));
             contatto.setFisso(rs.getString("fisso"));
-            contatto.setEmail(rs.getString("email"));
             contatto.setFoto(rs.getString("foto"));
-            //gruppi.add(rs.getString("nomegruppo"));
             String indirizzo = rs.getString("via");
             String civico = rs.getString("civico");
             String cap = rs.getString("cap");
@@ -87,6 +85,7 @@ public class ContattoPostgreSQL implements ContattoDAO {
         }
 
         estraiInformazioniSecondarie(id, indirizzoSecondario, emailSecondario);
+        contatto.setEmail(emailSecondario.get(0));
         conn.close();
         return contatto;
     }
@@ -104,7 +103,7 @@ public class ContattoPostgreSQL implements ContattoDAO {
 
         String queryCercaInfoContatto = ("SELECT * FROM Contatto as c JOIN IndirizzoSecondario as i ON i.idcontatto = c.id " +
                                          "WHERE c.id = '"+id+"'");
-        String queryCercaEmailSecondarie = "SELECT * FROM Contatto as c JOIN emailsecondario as es ON es.idcontatto = c.id WHERE c.id = '"+id+"'";
+        String queryCercaEmailSecondarie = "SELECT * FROM Contatto as c JOIN email as es ON es.idcontatto = c.id WHERE c.id = '"+id+"'";
 
         Statement stIndirizziSecondari = conn.createStatement();
         ResultSet rsIndirizziSecondari = stIndirizziSecondari.executeQuery(queryCercaInfoContatto);

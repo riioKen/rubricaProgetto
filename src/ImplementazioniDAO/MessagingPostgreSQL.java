@@ -22,7 +22,7 @@ public class MessagingPostgreSQL implements MessagingDAO {
     public Messaging ricercaProvider(int id, String provider) throws SQLException {
         conn = Connessione.getInstance().getConnection();
 
-        String ricercaProvider = "SELECT * FROM Messaging WHERE idcontatto = '"+id+"' AND providermessaggi = '"+provider+"'";
+        String ricercaProvider = "SELECT * FROM Messaging as m JOIN email as e ON m.idemail = e.idemail WHERE m.idcontatto = '"+id+"' AND providermessaggi = '"+provider+"'";
 
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(ricercaProvider);
@@ -39,9 +39,9 @@ public class MessagingPostgreSQL implements MessagingDAO {
     }
 
     @Override
-    public void inserimentoAccountMessaging(int id, String email, Messaging messaging) throws SQLException {
+    public void inserimentoAccountMessaging(int id, int email, Messaging messaging) throws SQLException {
         conn = Connessione.getInstance().getConnection();
-        String inserisciDati = "INSERT INTO Messaging(nickname, providermessaggi, messaggiobenvenuto, idcontatto, email)" +
+        String inserisciDati = "INSERT INTO Messaging(nickname, providermessaggi, messaggiobenvenuto, idcontatto, idEmail)" +
                                "VALUES('"+messaging.getNickname()+"'," +
                                "'"+messaging.getProviderMessaggi()+"', '"+messaging.getMessaggioBenvenuto()+"', " +
                                "'"+id+"', '"+email+"')";

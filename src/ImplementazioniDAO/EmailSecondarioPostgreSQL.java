@@ -29,7 +29,7 @@ public class EmailSecondarioPostgreSQL implements EmailSecondarioDAO {
                 for (int i = 0; i < listaEmail.size(); i++) {
                     email = listaEmail.get(i).getText();
                     if (!email.isBlank()) {
-                        PreparedStatement inserisciContattoEmail = conn.prepareStatement("Insert into EmailSecondario (email, idcontatto) VALUES ('" + email + "','" + id + "');");
+                        PreparedStatement inserisciContattoEmail = conn.prepareStatement("Insert into Email (email, idcontatto) VALUES ('" + email + "','" + id + "');");
                         inserisciContattoEmail.executeUpdate();
                     }
                 }
