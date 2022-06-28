@@ -37,4 +37,15 @@ public class MessagingPostgreSQL implements MessagingDAO {
         }
         return messaging;
     }
+
+    @Override
+    public void inserimentoAccountMessaging(int id, String email, Messaging messaging) throws SQLException {
+        conn = Connessione.getInstance().getConnection();
+        String inserisciDati = "INSERT INTO Messaging(nickname, providermessaggi, messaggiobenvenuto, idcontatto, email)" +
+                               "VALUES('"+messaging.getNickname()+"'," +
+                               "'"+messaging.getProviderMessaggi()+"', '"+messaging.getMessaggioBenvenuto()+"', " +
+                               "'"+id+"', '"+email+"')";
+        Statement st = conn.createStatement();
+        st.executeUpdate(inserisciDati);
+    }
 }

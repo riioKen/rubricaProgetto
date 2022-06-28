@@ -87,7 +87,7 @@ public class MessagingGUI extends JDialog {
 
     }
 
-    public void ottenimentoInfo(Messaging messaging) throws SQLException, IOException {
+    public void ottenimentoInfo(Messaging messaging) throws  IOException {
 
         txtNickname.setText(messaging.getNickname());
         cbEmail.addItem(messaging.getEmail());

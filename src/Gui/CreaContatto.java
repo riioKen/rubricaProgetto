@@ -508,6 +508,7 @@ public class CreaContatto extends JPanel {
         EmailSecondarioDAO emailSecondarioDAO = new EmailSecondarioPostgreSQL();
         IndirizzoSecondarioDAO indirizzoSecondarioDAO = new IndirizzoSecondarioPostgreSQL();
         PartecipazioneDAO partecipazioneDAO = new PartecipazionePostgreSQL();
+        MessagingDAO messagingDAO = new MessagingPostgreSQL();
         contatto = new Contatti();
         contatto.setNome(txtNome.getText());
         contatto.setCognome(txtCognome.getText());
@@ -533,6 +534,9 @@ public class CreaContatto extends JPanel {
             emailSecondarioDAO.inserisciEmailSecondarie(id, listaTxtEmail);
             indirizzoSecondarioDAO.inserisciIndirizzoSecondario(id, listaTxtIndirizzo);
             partecipazioneDAO.entraInGruppo(id, contatto.getNomeGruppo());
+            System.out.println("Stampa dell'id del contatto "+contatto.getId());
+            messagingDAO.inserimentoAccountMessaging(id, contatto.getEmail(), whatsApp);
+            messagingDAO.inserimentoAccountMessaging(id, contatto.getEmail(), telegram);
             svuotaCampi();
             lbErroreInserimento.setVisible(false);
             control.getHomepage().stampaContatti();
