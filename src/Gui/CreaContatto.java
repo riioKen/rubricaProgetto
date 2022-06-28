@@ -50,13 +50,14 @@ public class CreaContatto extends JPanel {
     private JButton btnPiuEmail;
     private JButton btnPiuIndirizzi;
     private JButton btnCaricaImmagine;
+    private JButton btnWhatsApp;
+    private JButton btnTelegram;
 
     private JFileChooser fileChooser;
     private JComboBox cbWhatsapp;
     private JComboBox cbTelegram;
     private JComboBox cbGruppi;
-    private JButton btnWhatsApp;
-    private JButton btnTelegram;
+
 
     /////////////////////////////////////////////////////       OGGETTI     /////////////////////////////////////////////////////
     Controller control;
@@ -367,7 +368,7 @@ public class CreaContatto extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 try {
                     control.clickAudio();
-
+                    control.JDialog();
                 } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException ex) {
                     ex.printStackTrace();
                 }
@@ -388,7 +389,7 @@ public class CreaContatto extends JPanel {
         //btnTelegram
         ImageIcon imgTelegram = new ImageIcon("Immagini/imgTelegram16px.png");
         ImageIcon imgTelegramGrande = new ImageIcon("Immagini/imgTelegram24px.png");
-
+        btnTelegram.setIcon(imgTelegram);
         btnTelegram.setContentAreaFilled(false);
         btnTelegram.setBorderPainted(false);
         btnTelegram.setBorder(null);

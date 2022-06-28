@@ -21,28 +21,22 @@ public class Controller{
     CreaContatto creaContatto;
     SchedaInfoContatto schedaInfoContatto;
     RicercaContatti ricercaContatti;
+    MessagingGUI messagingGUI;
 
     //MAIN
-    public static void main(String[] args) throws SQLException, IOException, UnsupportedAudioFileException, LineUnavailableException, InterruptedException {
+    public static void main(String[] args) throws SQLException, IOException {
         Controller controller = new Controller();
     }
 
-    public RicercaContatti getRicercaContatti() {
-        return ricercaContatti;
-    }
-
-    public void setRicercaContatti(RicercaContatti ricercaContatti) {
-        this.ricercaContatti = ricercaContatti;
-    }
 
     //COSTRUTTORE
-    public Controller() throws SQLException, IOException, UnsupportedAudioFileException, LineUnavailableException, InterruptedException {
+    public Controller() throws SQLException, IOException {
 
         homepage = new Homepage(this); //Serve a creare l'oggetto della GUI
         creaContatto = new CreaContatto(this);
         schedaInfoContatto = new SchedaInfoContatto(this);
         ricercaContatti = new RicercaContatti(this);
-        
+
         homepage.setVisible(true);
         //startingAudio();
 
@@ -88,6 +82,11 @@ public class Controller{
 
     }
 
+    public void JDialog(){
+        messagingGUI = new MessagingGUI(this);
+
+    }
+
     public void startingAudio() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {
         String audio = "Audio/avvioSoftware.wav";
         AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(audio).getAbsoluteFile());
@@ -99,6 +98,23 @@ public class Controller{
 
     }
     //GETTER SETTER
+
+
+    public RicercaContatti getRicercaContatti() {
+        return ricercaContatti;
+    }
+
+    public void setRicercaContatti(RicercaContatti ricercaContatti) {
+        this.ricercaContatti = ricercaContatti;
+    }
+
+    public MessagingGUI getMessagingGUI() {
+        return messagingGUI;
+    }
+
+    public void setMessagingGUI(MessagingGUI messagingGUI) {
+        this.messagingGUI = messagingGUI;
+    }
 
     public SchedaInfoContatto getSchedaInfoContatto() {
         return schedaInfoContatto;

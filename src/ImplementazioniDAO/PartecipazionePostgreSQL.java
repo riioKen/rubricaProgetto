@@ -58,5 +58,21 @@ public class PartecipazionePostgreSQL implements PartecipazioneDAO {
         return gruppi;
     }
 
+    @Override
+    public ArrayList<String> gruppiPartecipabili(int id, ArrayList<String> gruppi) throws SQLException {
+        conn = Connessione.getInstance().getConnection();
+        String cercaGruppi = "select nome from gruppo  " +
+                             "EXCEPT Select nomegruppo " +
+                             "from partecipazione " +
+                             "WHERE idcontatto =  '"+id+"'";
+
+        Statement st = conn.createStatement();
+        ResultSet rs = st.executeQuery(cercaGruppi);
+        while(rs.next())
+            gruppi.add(rs.getString("nome"));
+
+        return gruppi;
+    }
+
 
 }

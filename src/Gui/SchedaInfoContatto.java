@@ -60,6 +60,8 @@ public class SchedaInfoContatto {
     private JButton btnImmagineCaricata;
     private JButton btnEntraGruppo;
     private JButton btnEsciGruppo;
+    private JButton btnWhatsApp;
+    private JButton btnTelegram;
 
     /////////////////////////////////////////////////////       OGGETTI     /////////////////////////////////////////////////////
     Controller control;
@@ -199,6 +201,8 @@ public class SchedaInfoContatto {
                 try {//Aggiustare aggiornamento gruppo e Combobox a seguito di un entrata
                     control.clickAudio();
                     partecipazioneDAO.entraInGruppo(contatto.getId(), Objects.requireNonNull(cbGruppo.getSelectedItem()).toString());
+                    riempimentoInfoContatto(contatto.getId());
+
                 } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException | SQLException ex) {
                     ex.printStackTrace();
                 }
@@ -233,18 +237,11 @@ public class SchedaInfoContatto {
         btnEsciGruppo.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                try {//Aggiustare aggiornamento gruppo e Combobox a seguito di un uscita
+                try {
                     control.clickAudio();
-                    gruppi.remove(cbGruppo.getSelectedIndex());
-                    partecipazioneDAO.esciDalGruppo(contatto.getId(), Objects.requireNonNull(cbGruppo.getSelectedItem()).toString());
 
-                    cbGruppo.removeAllItems();
-                    int i = 0;
-                    while(i < gruppi.size() ) {
-                        cbGruppo.addItem(gruppi.get(i));
-                        i++;
-                    }
-                    cbGruppo.addItem("...");
+                    partecipazioneDAO.esciDalGruppo(contatto.getId(), Objects.requireNonNull(cbGruppo.getSelectedItem()).toString());
+                    riempimentoInfoContatto(contatto.getId());
 
                 } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException | SQLException ex) {
                     ex.printStackTrace();
@@ -262,6 +259,71 @@ public class SchedaInfoContatto {
                 btnEsciGruppo.setIcon(imgEsciGruppo);
             }
         });
+
+        //btnWhatsApp
+        ImageIcon imgWhatsApp = new ImageIcon("Immagini/imgWA16px.png");
+        ImageIcon imgWhatsAppGrande = new ImageIcon("Immagini/imgWA24px.png");
+        btnWhatsApp.setContentAreaFilled(false);
+        btnWhatsApp.setBorderPainted(false);
+        btnWhatsApp.setBorder(null);
+        btnWhatsApp.setFocusPainted(false);
+        btnWhatsApp.setOpaque(true);
+        btnWhatsApp.setIcon(imgWhatsApp);
+        btnWhatsApp.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    control.clickAudio();
+
+                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            public void mouseEntered(MouseEvent e) {
+                try {
+                    btnWhatsApp.setIcon(imgWhatsAppGrande);
+                    control.rollOverAudio();
+                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            public void mouseExited(MouseEvent e) {
+                btnWhatsApp.setIcon(imgWhatsApp);
+            }
+        });
+
+        //btnTelegram
+        ImageIcon imgTelegram = new ImageIcon("Immagini/imgTelegram16px.png");
+        ImageIcon imgTelegramGrande = new ImageIcon("Immagini/imgTelegram24px.png");
+
+        btnTelegram.setContentAreaFilled(false);
+        btnTelegram.setBorderPainted(false);
+        btnTelegram.setBorder(null);
+        btnTelegram.setFocusPainted(false);
+        btnTelegram.setOpaque(true);
+        btnTelegram.setIcon(imgTelegram);
+        btnTelegram.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    control.clickAudio();
+
+                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            public void mouseEntered(MouseEvent e) {
+                try {
+                    btnTelegram.setIcon(imgTelegramGrande);
+                    control.rollOverAudio();
+                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            public void mouseExited(MouseEvent e) {
+                btnTelegram.setIcon(imgTelegram);
+            }
+        });
     }
 
     /////////////////////////////////////////////////////       METODI LOGICI     /////////////////////////////////////////////////////
@@ -270,10 +332,12 @@ public class SchedaInfoContatto {
         indirizzoSecondario.clear();
         emailSecondario.clear();
         gruppi.clear();
-
+        cbGruppo.removeAllItems();
         contatto.setId(id);
+
         System.out.println(contatto.getId());
-        contatto = contattoDAO.cercaInfoContatti(id, indirizzoSecondario, emailSecondario, gruppi);
+        contatto = contattoDAO.cercaInfoContatti(id, indirizzoSecondario, emailSecondario);
+        partecipazioneDAO.estraiGruppi(contatto.getId(), gruppi);
         getTxtNome().setText(contatto.getNome());
         getTxtCognome().setText(contatto.getCognome());
         getTxtCellulare().setText(contatto.getCellulare());
@@ -281,29 +345,14 @@ public class SchedaInfoContatto {
         getTxtEmail().setText(contatto.getEmail());
         getTxtIndirizzo().setText(contatto.getIndirizzo());
 
-
-
         while(i < gruppi.size() ) {
             cbGruppo.addItem(gruppi.get(i));
             i++;
         }
-        cbGruppo.addItem("Gruppi Nuovi");
-        ArrayList<String> gruppiAppoggio = new ArrayList<>();
-        gruppiAppoggio.addAll(gruppi);
-        gruppi.clear();
-        GruppoDAO gruppoDAO = new GruppoPostgreSQL();
-        gruppi = gruppoDAO.cercaGruppi();
-        i=0;
-        int j = 0;  //L'USCITA DAI GRUPPI
-        while(i < gruppiAppoggio.size()) {
-            while(j < gruppi.size()){
-                if(gruppiAppoggio.get(i).equals(gruppi.get(j)))
-                    gruppi.remove(j);
-                j++;
-            }
-            i++;
-        }
 
+        cbGruppo.addItem("Gruppi Nuovi");
+        gruppi.clear();
+        gruppi = partecipazioneDAO.gruppiPartecipabili(contatto.getId(), gruppi);
 
         i = 0;
         while(i < gruppi.size()) {

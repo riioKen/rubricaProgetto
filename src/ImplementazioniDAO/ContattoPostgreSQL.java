@@ -24,7 +24,7 @@ public class ContattoPostgreSQL implements ContattoDAO {
     @Override
     public int inserimentoContatto(String nome, String cognome, String foto) throws SQLException {
         conn = Connessione.getInstance().getConnection();
-        String inserisciContatto = "INSERT INTO Contatto(nome, cognome, foto) VALUES ('"+nome+"', '"+cognome+"', '"+foto+"') RETURNING ID";
+        String inserisciContatto = "INSERT INTO Contatto(nome, cognome, foto) VALUES ('"+nome+"', '"+cognome+"', '"+foto+"') RETURNING ID;";
 
         PreparedStatement st = conn.prepareStatement(inserisciContatto);
         st.execute();
@@ -58,7 +58,7 @@ public class ContattoPostgreSQL implements ContattoDAO {
     }
 
     @Override
-    public Contatti cercaInfoContatti(int id, ArrayList<String> indirizzoSecondario, ArrayList<String> emailSecondario, ArrayList<String> gruppi) throws SQLException {
+    public Contatti cercaInfoContatti(int id, ArrayList<String> indirizzoSecondario, ArrayList<String> emailSecondario) throws SQLException {
         conn = Connessione.getInstance().getConnection();
         Contatti contatto = new Contatti();
 
@@ -86,7 +86,6 @@ public class ContattoPostgreSQL implements ContattoDAO {
 
         }
 
-        estraiGruppi( id, gruppi);
         estraiInformazioniSecondarie(id, indirizzoSecondario, emailSecondario);
         conn.close();
         return contatto;
@@ -125,15 +124,5 @@ public class ContattoPostgreSQL implements ContattoDAO {
         while(rsEmailSecondari.next()) {
             emailSecondario.add(rsEmailSecondari.getString("email"));
         }
-    }
-
-    public void estraiGruppi(int id, ArrayList<String> gruppi) throws SQLException {
-        String cercaGruppi = "SELECT nomegruppo FROM Partecipazione WHERE idcontatto = '"+id+"'";
-
-        Statement st = conn.createStatement();
-        ResultSet rs = st.executeQuery(cercaGruppi);
-        while(rs.next())
-            gruppi.add(rs.getString("nomegruppo"));
-
     }
 }
