@@ -250,34 +250,34 @@ public class CreaContatto extends JPanel {
         btnPiuIndirizzi.setOpaque(true);
 
 
-        //AGGIUSTARE LA LOGICA DIETRO ALLA COMPARSA DELL'LBERRORE
         btnPiuIndirizzi.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
 
                 try {
-                    control.rollOverAudio();
+                    control.clickAudio();
 
                 } catch (LineUnavailableException | UnsupportedAudioFileException | IOException | InterruptedException ex) {
                     ex.printStackTrace();
                 }
 
-                if(!txtIndirizzo.getText().isBlank()) {
-                    if(listaTxtIndirizzo.size() == 0)
+                int i = listaTxtIndirizzo.size() - 1;
+                if (!txtIndirizzo.getText().isBlank()) {
+                    if (listaTxtIndirizzo.size() == 0)
                         aggiuntaTxtFieldIndirizzo();
-                    lbErroreInserimento.setVisible(false);
-                    for(int i = listaTxtIndirizzo.size()-1; i < listaTxtIndirizzo.size(); i++){
-                        lbErroreInserimento.setVisible(false);
-                        if(!listaTxtIndirizzo.get(i).getText().isBlank()) {
-                            aggiuntaTxtFieldIndirizzo();
-                        }
-                        if(listaTxtIndirizzo.get(i).getText().isBlank())
-                            lbErroreInserimento("Inserire l'indirizzo secondario precedente");
+
+                    else if ((listaTxtIndirizzo.size() - i) == 1 && !listaTxtIndirizzo.get(i).getText().isBlank())
+                        aggiuntaTxtFieldIndirizzo();
+                    else {
+                        lbErroreInserimento("Inserire l'indirizzo secondario precedente");
+                        control.chiudiNotifica(lbErroreInserimento);
                     }
-                }
-                else
+                } else {
                     lbErroreInserimento("Inserire l'indirizzo principale");
+                    control.chiudiNotifica(lbErroreInserimento);
+                }
             }
+
 
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -310,27 +310,27 @@ public class CreaContatto extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 try {
-                    control.rollOverAudio();
+                    control.clickAudio();
                 } catch (LineUnavailableException | UnsupportedAudioFileException | IOException | InterruptedException ex) {
                     ex.printStackTrace();
                 }
 
-                //AGGIUSTARE LA LOGICA DIETRO ALLA COMPARSA DELL'LBERRORE
+                int i = listaTxtEmail.size()-1;
+
                 if(!txtEmail.getText().isBlank()) {
-                    if(listaTxtEmail.size() == 0)
+                    if (listaTxtEmail.size() == 0)
                         aggiuntaTxtFieldEmail();
-                    lbErroreInserimento.setVisible(false);
-                    for(int i = listaTxtEmail.size()-1; i < listaTxtEmail.size(); i++){
-                        lbErroreInserimento.setVisible(false);
-                        if(!listaTxtEmail.get(i).getText().isBlank()) {
-                            aggiuntaTxtFieldEmail();
-                        }
-                        if(listaTxtEmail.get(i).getText().isBlank())
-                            lbErroreInserimento("Inserire email secondario precedente");
+                    else if ((listaTxtEmail.size() - i) == 1 && !listaTxtEmail.get(i).getText().isBlank())
+                        aggiuntaTxtFieldEmail();
+                    else {
+                        lbErroreInserimento("Inserire email secondario precedente");
+                        control.chiudiNotifica(lbErroreInserimento);
                     }
                 }
-                else
+                else {
                     lbErroreInserimento("Inserire l'email principale");
+                    control.chiudiNotifica(lbErroreInserimento);
+                }
 
             }
 
@@ -522,7 +522,6 @@ public class CreaContatto extends JPanel {
         contatto.setNomeGruppo(Objects.requireNonNull(cbGruppi.getSelectedItem()).toString());
         System.out.println(contatto.getNomeGruppo());
         controlloField();
-        //creaContattoDAO.creaContatto(, , , , contatti.getNomeGruppo(),, );
         if(emailDAO.controlloDuplicatoEmail(contatto.getEmail())){
             lbErroreInserimento.setVisible(true);
             lbErroreInserimento("Hai inserito un'email duplicata");

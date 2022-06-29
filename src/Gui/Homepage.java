@@ -138,7 +138,7 @@ public class Homepage extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     timerSwitchTema();
-                } catch (IOException ex) {
+                } catch (IOException | SQLException ex) {
                     ex.printStackTrace();
                 }
             }
@@ -202,7 +202,7 @@ public class Homepage extends JFrame {
 
     }
 
-    public void timerSwitchTema() throws IOException {
+    public void timerSwitchTema() throws IOException, SQLException {
         if (timer == null) {
             timer = new Timer(100, new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
@@ -215,10 +215,12 @@ public class Homepage extends JFrame {
             timer.stop();
             TemaScuro();
             control.getCreaContatto().temaScuro();
+
         } else {
             timer.start();
             TemaChiaro();
             control.getCreaContatto().temaChiaro();
+
         }
     }
 

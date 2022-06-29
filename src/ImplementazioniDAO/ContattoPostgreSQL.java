@@ -16,7 +16,7 @@ public class ContattoPostgreSQL implements ContattoDAO {
         try{
             conn = Connessione.getInstance().getConnection();
         } catch (SQLException e) {
-            System.out.println("ECCEZIONE::Riga 17 Classe ContattoPostgreSQL");
+            System.out.println("ECCEZIONE::Riga 19 Classe ContattoPostgreSQL");
             e.printStackTrace();
         }
     }

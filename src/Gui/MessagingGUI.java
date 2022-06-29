@@ -70,7 +70,7 @@ public class MessagingGUI extends JDialog {
 
     private void onOK() {
         // add your code here
-        //inserimentoInfo();
+
         dispose();
     }
 

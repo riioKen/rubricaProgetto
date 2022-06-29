@@ -4,19 +4,19 @@ import Classi.Contatti;
 import ConnessioneDB.Connessione;
 import DAO.AggiornamentoContattoDAO;
 
-import javax.swing.*;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 
-public class AggiornamentoContattoPostreSQL implements AggiornamentoContattoDAO {
+public class AggiornamentoContattoPostgreSQL implements AggiornamentoContattoDAO {
 
     private Connection conn;
 
-    public AggiornamentoContattoPostreSQL() {
+    public AggiornamentoContattoPostgreSQL() {
         try {
             conn = Connessione.getInstance().getConnection();
         } catch (SQLException e) {
@@ -26,23 +26,19 @@ public class AggiornamentoContattoPostreSQL implements AggiornamentoContattoDAO 
 
 
     @Override
-    public void aggiornaContatto(Contatti contatto, Contatti contattoNew, ArrayList<String> indirizzoVecchio, ArrayList<String> arrayTxtIndirizzo, ArrayList<String> emailVecchio, ArrayList<String> arrayTxtEmail) throws SQLException {
-
-        conn = Connessione.getInstance().getConnection();
-
+    public void aggiornaContatto(Contatti contatto, Contatti contattoNew, ArrayList<String> indirizzoVecchio, ArrayList<String> arrayTxtIndirizzo, ArrayList<String> emailVecchio, ArrayList<String> arrayTxtEmail) {
         try {
+            conn = Connessione.getInstance().getConnection();
             PreparedStatement aggiornaContatto = conn.prepareStatement("UPDATE Contatto SET nome = '" + contattoNew.getNome() + "' , cognome = '" + contattoNew.getCognome() + "' , foto = '" + contattoNew.getFoto() + "' WHERE id = '" + contatto.getId() + "'");
-            PreparedStatement aggiornaEmail = conn.prepareStatement("UPDATE Email SET email = '" + contattoNew.getEmail() + "' WHERE idcontatto = '" + contatto.getId() + "' AND email = '"+contatto.getEmail()+"'");
 
             PreparedStatement aggiornaNumeroCellulare = conn.prepareStatement("UPDATE numerocellulare SET cellulare = '" + contattoNew.getCellulare() + "' WHERE idcontatto = '" + contatto.getId() + "' AND cellulare = '" + contatto.getCellulare() + "'");
             PreparedStatement aggiornaFisso = conn.prepareStatement("UPDATE numerofisso SET fisso = '" + contattoNew.getFisso() + "' WHERE idcontatto = '" + contatto.getId() + "' AND fisso = '"+contatto.getFisso()+"'");
             aggiornaContatto.executeUpdate();
-            aggiornaEmail.executeUpdate();
 
             aggiornaNumeroCellulare.executeUpdate();
             aggiornaFisso.executeUpdate();
 
-            splittaIndirizzo(contatto.getIndirizzo(), contatto.getId());
+            splittaIndirizzo(contattoNew.getIndirizzo(), contatto.getId());
             aggiornaEmailSecondarie(arrayTxtEmail, contatto.getId(), emailVecchio);
             splittaIndirizzoSecondario(arrayTxtIndirizzo, contatto.getId(),indirizzoVecchio);
 
@@ -52,7 +48,7 @@ public class AggiornamentoContattoPostreSQL implements AggiornamentoContattoDAO 
         }
     }
 
-    public void splittaIndirizzo(String indirizzo, int id) throws SQLException {
+    public void splittaIndirizzo(String indirizzo, int id) {
         try {
             String via, civico, cap, citta, nazione;
             String[] divisione = indirizzo.split("\\s*,\\s*");
@@ -71,13 +67,13 @@ public class AggiornamentoContattoPostreSQL implements AggiornamentoContattoDAO 
 
     }
 
-    public void aggiornaEmailSecondarie(ArrayList<String> arrayTxtEmail, int id, ArrayList<String> emailVecchie) throws SQLException {
+    public void aggiornaEmailSecondarie(ArrayList<String> arrayTxtEmail, int id, ArrayList<String> emailVecchie)  {
         String email;
-
         try {
             if (arrayTxtEmail != null) {
                 for (int i = 0; i < arrayTxtEmail.size(); i++) {
                     email = arrayTxtEmail.get(i);
+
                     if (!email.isBlank()) {
                         PreparedStatement inserisciContattoEmail = conn.prepareStatement("UPDATE Email SET email = '" + email + "' WHERE idcontatto = '" + id + "' AND email = '"+emailVecchie.get(i)+"'");
                         inserisciContattoEmail.executeUpdate();
@@ -90,7 +86,7 @@ public class AggiornamentoContattoPostreSQL implements AggiornamentoContattoDAO 
         }
     }
 
-    public void splittaIndirizzoSecondario(ArrayList<String> arrayTxtIndirizzo, int id, ArrayList<String> indirizziVecchi) throws SQLException {
+    public void splittaIndirizzoSecondario(ArrayList<String> arrayTxtIndirizzo, int id, ArrayList<String> indirizziVecchi)  {
         String via, civico, cap, citta, nazione;
         String viaVecchia, civicoVecchia, capVecchia, cittaVecchia, nazioneVecchia;
 
@@ -98,7 +94,6 @@ public class AggiornamentoContattoPostreSQL implements AggiornamentoContattoDAO 
             if (arrayTxtIndirizzo != null) {
                 for (int i = 0; i < arrayTxtIndirizzo.size(); i++) {
                     if (arrayTxtIndirizzo.get(i) != null || !arrayTxtIndirizzo.get(i).isBlank()) {
-                        System.out.println("stampa di quante volte entra nella i " + i);
 
                         via = arrayTxtIndirizzo.get(i).split("\\s*,\\s*")[0];
                         civico =arrayTxtIndirizzo.get(i).split("\\s*,\\s*")[1];

@@ -12,7 +12,7 @@ import DAO.AggiornamentoContattoDAO;
 import DAO.ContattoDAO;
 import DAO.MessagingDAO;
 import DAO.PartecipazioneDAO;
-import ImplementazioniDAO.AggiornamentoContattoPostreSQL;
+import ImplementazioniDAO.AggiornamentoContattoPostgreSQL;
 import ImplementazioniDAO.ContattoPostgreSQL;
 import ImplementazioniDAO.MessagingPostgreSQL;
 import ImplementazioniDAO.PartecipazionePostgreSQL;
@@ -54,6 +54,8 @@ public class SchedaInfoContatto {
     private JLabel lbTelegram;
     private JLabel lbRispostaTG;
     private JLabel lbTastoHome;
+    private JLabel lbMessaggioErrore;
+
 
     private JButton btnAggiornaContatto;
     private JButton btnEliminaContatto;
@@ -63,11 +65,14 @@ public class SchedaInfoContatto {
     private JButton btnEsciGruppo;
     private JButton btnWhatsApp;
     private JButton btnTelegram;
+    private JButton btnChiamataCellulare;
+    private JButton btnChiamataFisso;
 
     /////////////////////////////////////////////////////       OGGETTI     /////////////////////////////////////////////////////
     Controller control;
     Messaging messaging = new Messaging();
     Contatti contatto = new Contatti();
+
 
     ContattoDAO contattoDAO = new ContattoPostgreSQL();
     PartecipazioneDAO partecipazioneDAO = new PartecipazionePostgreSQL();
@@ -78,20 +83,15 @@ public class SchedaInfoContatto {
     ArrayList<String> gruppi = new ArrayList<>();
     ArrayList<String> listaTxtEmail = new ArrayList<>();
     ArrayList<String> listaTxtIndirizzo = new ArrayList<>();
+    JTextField[] arrayEmail;
+    JTextField[] arrayIndirizzo;
     String nCellulare;
 
     /////////////////////////////////////////////////////       COSTRUTTORE     /////////////////////////////////////////////////////
-    public  SchedaInfoContatto(Controller controller) throws SQLException {
+    public SchedaInfoContatto(Controller controller) throws SQLException {
         control = controller;
         funzionalitaTasti();
 
-
-        btnEntraGruppo.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                super.mouseClicked(e);
-            }
-        });
     }
 
     /////////////////////////////////////////////////////       FUNZIONALITA' PULSANTI GUI      /////////////////////////////////////////////////////
@@ -119,7 +119,7 @@ public class SchedaInfoContatto {
             public void actionPerformed(ActionEvent e) {
                 try {
                     control.clickAudio();
-                    aggiornamentoContatto();
+                    aggiornamentoContatto(arrayEmail, arrayIndirizzo);
                 } catch (SQLException | UnsupportedAudioFileException | LineUnavailableException | IOException | InterruptedException ex) {
                     ex.printStackTrace();
                 }
@@ -144,8 +144,9 @@ public class SchedaInfoContatto {
                 }
 
             }
+
             @Override
-            public void mouseEntered(MouseEvent e){
+            public void mouseEntered(MouseEvent e) {
                 try {
                     control.rollOverAudio();
                     lbTastoHome.setIcon(imgTastoHomeGrande);
@@ -153,14 +154,15 @@ public class SchedaInfoContatto {
                     ex.printStackTrace();
                 }
             }
+
             @Override
-            public void mouseExited(MouseEvent e){
+            public void mouseExited(MouseEvent e) {
                 lbTastoHome.setIcon(imgTastoHome);
             }
         });
 
         //FUNZIONALITA' TASTO btnImmagineCaricata
-        btnImmagineCaricata.setMargin(new Insets(0,0,0,0));
+        btnImmagineCaricata.setMargin(new Insets(0, 0, 0, 0));
         btnImmagineCaricata.setContentAreaFilled(false);
         btnImmagineCaricata.setBorderPainted(false);
         btnImmagineCaricata.setBorder(null);
@@ -191,7 +193,7 @@ public class SchedaInfoContatto {
         ImageIcon imgEntraGruppoGrande = new ImageIcon("Immagini/imgEntrataGruppo24pxScuro.png");
 
         btnEntraGruppo.setIcon(imgEntraGruppo);
-        btnEntraGruppo.setMargin(new Insets(0,0,0,0));
+        btnEntraGruppo.setMargin(new Insets(0, 0, 0, 0));
         btnEntraGruppo.setContentAreaFilled(false);
         btnEntraGruppo.setBorderPainted(false);
         btnEntraGruppo.setBorder(null);
@@ -204,7 +206,7 @@ public class SchedaInfoContatto {
                 try {//Aggiustare aggiornamento gruppo e Combobox a seguito di un entrata
                     control.clickAudio();
                     partecipazioneDAO.entraInGruppo(contatto.getId(), Objects.requireNonNull(cbGruppo.getSelectedItem()).toString());
-                    riempimentoInfoContatto(contatto.getId());
+                    aggiornaGruppi();
 
                 } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException | SQLException ex) {
                     ex.printStackTrace();
@@ -219,6 +221,7 @@ public class SchedaInfoContatto {
                     ex.printStackTrace();
                 }
             }
+
             public void mouseExited(MouseEvent e) {
                 btnEntraGruppo.setIcon(imgEntraGruppo);
             }
@@ -230,7 +233,7 @@ public class SchedaInfoContatto {
         ImageIcon imgEsciGruppoGrande = new ImageIcon("Immagini/imgEsciGruppo24pxScuro.png");
 
         btnEsciGruppo.setIcon(imgEsciGruppo);
-        btnEsciGruppo.setMargin(new Insets(0,0,0,0));
+        btnEsciGruppo.setMargin(new Insets(0, 0, 0, 0));
         btnEsciGruppo.setContentAreaFilled(false);
         btnEsciGruppo.setBorderPainted(false);
         btnEsciGruppo.setBorder(null);
@@ -244,12 +247,14 @@ public class SchedaInfoContatto {
                     control.clickAudio();
 
                     partecipazioneDAO.esciDalGruppo(contatto.getId(), Objects.requireNonNull(cbGruppo.getSelectedItem()).toString());
-                    riempimentoInfoContatto(contatto.getId());
+
+                    aggiornaGruppi();
 
                 } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException | SQLException ex) {
                     ex.printStackTrace();
                 }
             }
+
             public void mouseEntered(MouseEvent e) {
                 btnEsciGruppo.setIcon(imgEsciGruppoGrande);
                 try {
@@ -258,6 +263,7 @@ public class SchedaInfoContatto {
                     ex.printStackTrace();
                 }
             }
+
             public void mouseExited(MouseEvent e) {
                 btnEsciGruppo.setIcon(imgEsciGruppo);
             }
@@ -284,6 +290,7 @@ public class SchedaInfoContatto {
                     ex.printStackTrace();
                 }
             }
+
             public void mouseEntered(MouseEvent e) {
                 try {
                     btnWhatsApp.setIcon(imgWhatsAppGrande);
@@ -292,6 +299,7 @@ public class SchedaInfoContatto {
                     ex.printStackTrace();
                 }
             }
+
             public void mouseExited(MouseEvent e) {
                 btnWhatsApp.setIcon(imgWhatsApp);
             }
@@ -320,6 +328,7 @@ public class SchedaInfoContatto {
                     ex.printStackTrace();
                 }
             }
+
             public void mouseEntered(MouseEvent e) {
                 try {
                     btnTelegram.setIcon(imgTelegramGrande);
@@ -328,20 +337,98 @@ public class SchedaInfoContatto {
                     ex.printStackTrace();
                 }
             }
+
             public void mouseExited(MouseEvent e) {
                 btnTelegram.setIcon(imgTelegram);
             }
         });
+
+        //btnChiamataCellulare
+        ImageIcon imgChiamataCellulare = new ImageIcon("Immagini/imgChiamataMobile16pxScuro.png");
+        ImageIcon imgChiamataCellulareGrande = new ImageIcon("Immagini/imgChiamataMobile24pxScuro.png");
+
+        btnChiamataCellulare.setContentAreaFilled(false);
+        btnChiamataCellulare.setBorderPainted(false);
+        btnChiamataCellulare.setBorder(null);
+        btnChiamataCellulare.setFocusPainted(false);
+        btnChiamataCellulare.setOpaque(true);
+        btnChiamataCellulare.setIcon(imgChiamataCellulare);
+
+        btnChiamataCellulare.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    control.clickAudio();
+                    control.popupReindirizzamentoCellulare();
+                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+            public void mouseEntered(MouseEvent e) {
+                try {
+                    btnChiamataCellulare.setIcon(imgChiamataCellulareGrande);
+                    control.rollOverAudio();
+                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+            public void mouseExited(MouseEvent e) {
+                btnChiamataCellulare.setIcon(imgChiamataCellulare);
+            }
+        });
+
+        //btnChiamataFisso
+        ImageIcon imgChiamataFisso = new ImageIcon("Immagini/imgChiamataFisso16pxScuro.png");
+        ImageIcon imgChiamataFissoGrande = new ImageIcon("Immagini/imgChiamataFisso24pxScuro.png");
+
+        btnChiamataFisso.setContentAreaFilled(false);
+        btnChiamataFisso.setBorderPainted(false);
+        btnChiamataFisso.setBorder(null);
+        btnChiamataFisso.setFocusPainted(false);
+        btnChiamataFisso.setOpaque(true);
+        btnChiamataFisso.setIcon(imgChiamataFisso);
+
+        btnChiamataFisso.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    control.clickAudio();
+                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+            public void mouseEntered(MouseEvent e) {
+                try {
+                    btnChiamataFisso.setIcon(imgChiamataFissoGrande);
+                    control.rollOverAudio();
+                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+            public void mouseExited(MouseEvent e) {
+
+                btnChiamataFisso.setIcon(imgChiamataFisso);
+
+            }
+        });
+
     }
 
     /////////////////////////////////////////////////////       METODI LOGICI     /////////////////////////////////////////////////////
     public void riempimentoInfoContatto(int id) throws SQLException {
         int i = 0;
+        arrayEmail = null;
+        arrayIndirizzo = null;
         indirizzoSecondario.clear();
         emailSecondario.clear();
         gruppi.clear();
         cbGruppo.removeAllItems();
         contatto.setId(id);
+
 
         System.out.println(contatto.getId());
         contatto = contattoDAO.cercaInfoContatti(id, indirizzoSecondario, emailSecondario);
@@ -350,10 +437,9 @@ public class SchedaInfoContatto {
         getTxtCognome().setText(contatto.getCognome());
         getTxtCellulare().setText(contatto.getCellulare());
         getTxtFisso().setText(contatto.getFisso());
-        getTxtEmail().setText(contatto.getEmail());
         getTxtIndirizzo().setText(contatto.getIndirizzo());
 
-        while(i < gruppi.size() ) {
+        while (i < gruppi.size()) {
             cbGruppo.addItem(gruppi.get(i));
             i++;
         }
@@ -363,79 +449,141 @@ public class SchedaInfoContatto {
         gruppi = partecipazioneDAO.gruppiPartecipabili(contatto.getId(), gruppi);
 
         i = 0;
-        while(i < gruppi.size()) {
+        while (i < gruppi.size()) {
             cbGruppo.addItem(gruppi.get(i));
             i++;
         }
 
-        if(contatto.getFoto() != null) {
+        if (contatto.getFoto() != null && !contatto.getFoto().isEmpty()) {
             ImageIcon immagine = new ImageIcon(contatto.getFoto());
             btnImmagineCaricata.setIcon(immagine);
-        }
-        else{
+        } else {
             ImageIcon immagine = new ImageIcon("Immagini/imgAggiungiFoto64pxScuro.png");
             btnImmagineCaricata.setIcon(immagine);
         }
 
-        aggiuntaEmailSecondarie();
-        aggiuntaIndirizziSecondari();
+        arrayEmail = aggiuntaEmailSecondarie();
+        arrayIndirizzo = aggiuntaIndirizziSecondari();
 
         nCellulare = getTxtCellulare().getText();
     }
-    //////////////////////////////////////////////////////// COMPLETARE IL METODO DI SOTTO ///////////////////////////////////////////////////////////////////////////////////
-    public void aggiornamentoContatto() throws SQLException {
-        AggiornamentoContattoDAO aggiornaContatto = new AggiornamentoContattoPostreSQL();
-        Contatti contatto_new = new Contatti();
-        contatto_new.setNome(getTxtNome().getText());
-        contatto_new.setCognome(getTxtCognome().getText());
-        contatto_new.setCellulare(getTxtCellulare().getText());
-        contatto_new.setFisso(getTxtFisso().getText());
-        contatto_new.setEmail(getTxtEmail().getText());
-        contatto_new.setIndirizzo(getTxtIndirizzo().getText());
-        contatto_new.setFoto(btnImmagineCaricata.getActionCommand());
 
-        aggiornaContatto.aggiornaContatto(contatto, contatto_new, indirizzoSecondario, listaTxtIndirizzo, emailSecondario, listaTxtEmail);
+    public void aggiornaTxtEmail() {
+        for (int i = 0; i < arrayEmail.length; i++)
+            listaTxtEmail.add(arrayEmail[i].getText());
+
+        for (int i = 0; i < arrayIndirizzo.length; i++)
+            listaTxtIndirizzo.add(arrayIndirizzo[i].getText());
     }
 
-    public void aggiuntaEmailSecondarie(){
+    public void aggiornaGruppi() throws SQLException {
+        gruppi.clear();
+        cbGruppo.removeAllItems();
+        partecipazioneDAO.estraiGruppi(contatto.getId(), gruppi);
+        int i = 0;
+        while (i < gruppi.size()) {
+            cbGruppo.addItem(gruppi.get(i));
+            i++;
+        }
+
+        cbGruppo.addItem("Gruppi Nuovi");
+        gruppi.clear();
+        gruppi = partecipazioneDAO.gruppiPartecipabili(contatto.getId(), gruppi);
+
+        i = 0;
+        while (i < gruppi.size()) {
+            cbGruppo.addItem(gruppi.get(i));
+            i++;
+        }
+    }
+
+    //////////////////////////////////////////////////////// COMPLETARE IL METODO DI SOTTO ///////////////////////////////////////////////////////////////////////////////////
+    public void aggiornamentoContatto(JTextField[] arrayTxtEmail, JTextField[] arrayTxtIndirizzo) throws SQLException, IOException {
+        AggiornamentoContattoDAO aggiornaContatto = new AggiornamentoContattoPostgreSQL();
+        Contatti contatto_new = new Contatti();
+        try {
+            contatto_new.setNome(getTxtNome().getText());
+            contatto_new.setCognome(getTxtCognome().getText());
+            contatto_new.setCellulare(getTxtCellulare().getText());
+            contatto_new.setFisso(getTxtFisso().getText());
+            contatto_new.setIndirizzo(getTxtIndirizzo().getText());
+            if (!btnImmagineCaricata.getActionCommand().isEmpty())
+                contatto_new.setFoto(btnImmagineCaricata.getActionCommand());
+            else
+                contatto_new.setFoto(contatto.getFoto());
+
+            aggiornaTxtEmail();
+            aggiornaContatto.aggiornaContatto(contatto, contatto_new, indirizzoSecondario, listaTxtIndirizzo, emailSecondario, listaTxtEmail);
+        } catch (Exception e) {
+            lbMessaggioErrore.setText("Non c'è nulla da aggiornare");
+            control.chiudiNotifica(lbMessaggioErrore);
+        }
+    }
+
+    public JTextField[] aggiuntaEmailSecondarie() {
         JTextField[] arrayEmail = new JTextField[emailSecondario.size()];
-        for(int i = 1;  i < arrayEmail.length; i++){
+        for (int i = 0; i < arrayEmail.length; i++) {
             arrayEmail[i] = new JTextField();
             JPanel jpAppoggioPiuEmail = new JPanel();
-            jpAppoggioPiuEmail.setLayout(new GridLayout(0,1));
+            jpAppoggioPiuEmail.setLayout(new GridLayout(0, 1));
             arrayEmail[i].setText(emailSecondario.get(i));
             jpAppoggioPiuEmail.add(arrayEmail[i]);
-            jpPiuEmail.setLayout(new GridLayout(0,1));
+            jpPiuEmail.setLayout(new GridLayout(0, 1));
             jpPiuEmail.add(jpAppoggioPiuEmail);
 
-            listaTxtEmail.add(arrayEmail[i].getText());
             jpPiuEmail.validate();
             jpPiuEmail.repaint();
         }
 
+        return arrayEmail;
+
     }
 
-    public void aggiuntaIndirizziSecondari(){
+    public JTextField[] aggiuntaIndirizziSecondari() {
 
         JTextField[] arrayIndirizzo = new JTextField[indirizzoSecondario.size()];
-        for(int i = 0;  i < arrayIndirizzo.length; i++){
+        for (int i = 0; i < arrayIndirizzo.length; i++) {
             arrayIndirizzo[i] = new JTextField();
             JPanel jpAppoggioPiuIndirizzo = new JPanel();
-            jpAppoggioPiuIndirizzo.setLayout(new GridLayout(0,1));
+            jpAppoggioPiuIndirizzo.setLayout(new GridLayout(0, 1));
             jpAppoggioPiuIndirizzo.add(arrayIndirizzo[i]);
-            jpPiuIndirizzo.setLayout(new GridLayout(0,1));
+            jpPiuIndirizzo.setLayout(new GridLayout(0, 1));
             jpPiuIndirizzo.add(jpAppoggioPiuIndirizzo);
             arrayIndirizzo[i].setText(indirizzoSecondario.get(i));
 
-            listaTxtIndirizzo.add(arrayIndirizzo[i].getText());
             jpPiuIndirizzo.validate();
             jpPiuIndirizzo.repaint();
 
         }
-
+        return arrayIndirizzo;
     }
 
     /////////////////////////////////////////////////////       GETTER SETTER       /////////////////////////////////////////////////////
+
+    public JButton getBtnChiamataCellulare() {
+        return btnChiamataCellulare;
+    }
+
+    public void setBtnChiamataCellulare(JButton btnChiamataCellulare) {
+        this.btnChiamataCellulare = btnChiamataCellulare;
+    }
+
+    public JButton getBtnChiamataFisso() {
+        return btnChiamataFisso;
+    }
+
+    public void setBtnChiamataFisso(JButton btnChiamataFisso) {
+        this.btnChiamataFisso = btnChiamataFisso;
+    }
+
+    public JLabel getLbMessaggioErrore() {
+        return lbMessaggioErrore;
+    }
+
+    public void setLbMessaggioErrore(JLabel lbMessaggioErrore) {
+        this.lbMessaggioErrore = lbMessaggioErrore;
+    }
+
     public JPanel getJpPiuEmail() {
         return jpPiuEmail;
     }
@@ -479,7 +627,6 @@ public class SchedaInfoContatto {
     public void setBtnTelegram(JButton btnTelegram) {
         this.btnTelegram = btnTelegram;
     }
-
 
 
     public void setJpPiuEmail(JPanel jpPiuEmail) {

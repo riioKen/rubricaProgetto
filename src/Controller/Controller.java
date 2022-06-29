@@ -5,6 +5,7 @@ import Gui.*;
 
 import javax.sound.sampled.*;
 import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -22,7 +23,7 @@ public class Controller{
     SchedaInfoContatto schedaInfoContatto;
     RicercaContatti ricercaContatti;
     MessagingGUI messagingGUI;
-
+    Reindirizzamento reindirizzamento;
     //MAIN
     public static void main(String[] args) throws SQLException, IOException {
         Controller controller = new Controller();
@@ -59,6 +60,10 @@ public class Controller{
         ricercaContatti = null;
         ricercaContatti = new RicercaContatti(this);
     }
+    public void newHomepage() throws SQLException, IOException {
+        homepage = null;
+        homepage = new Homepage(this);
+    }
     public void switchJPanelInView(JPanel accendi){
         homepage.getJScrollBarListaContatti().setViewportView(accendi);
 
@@ -94,6 +99,16 @@ public class Controller{
         messagingGUI.ottenimentoInfo(messaging);
     }
 
+    public void popupReindirizzamentoCellulare(){
+        reindirizzamento = new Reindirizzamento(this);
+        reindirizzamento.chiamataCellulare();
+    }
+
+    public void popupReindirizzamentoFisso(){
+        reindirizzamento = new Reindirizzamento(this);
+        reindirizzamento.chiamataFisso();
+    }
+
     public void startingAudio() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {
         String audio = "Audio/avvioSoftware.wav";
         AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(audio).getAbsoluteFile());
@@ -104,6 +119,23 @@ public class Controller{
 
 
     }
+
+    public void chiudiNotifica(JLabel lbErrore) {
+        Thread th = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(2500);
+                    lbErrore.setVisible(false);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, e);
+                }
+            }
+        };
+        th.start();
+    }
+
+
     //GETTER SETTER
 
 
