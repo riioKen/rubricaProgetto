@@ -140,9 +140,6 @@ public class RicercaContatti {
             JPanel paneLista = new JPanel();
             paneLista.setLayout(new GridLayout(0, 1));
             JButton btnSchedaContatto = new JButton();
-            btnSchedaContatto.setMinimumSize(new Dimension(100,100));
-            btnSchedaContatto.setMaximumSize(new Dimension(100,100));
-            btnSchedaContatto.setPreferredSize(new Dimension(100,100));
             btnSchedaContatto.setText(contattiInfo.get(i).getNome() +" "+ contattiInfo.get(i).getCognome());//Per il momento mi accontento solo di dargli queste informazioni al JButton
             btnSchedaContatto.setActionCommand(String.valueOf(contattiInfo.get(i).getId()));
             btnSchedaContatto.addActionListener(new ActionListener() {
