@@ -359,7 +359,7 @@ public class SchedaInfoContatto {
             public void mouseClicked(MouseEvent e) {
                 try {
                     control.clickAudio();
-                    control.popupReindirizzamentoCellulare();
+                    control.popupReindirizzamentoCellulare(contatto.getId());
                 } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException ex) {
                     ex.printStackTrace();
                 }

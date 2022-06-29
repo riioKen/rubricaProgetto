@@ -99,14 +99,9 @@ public class Controller{
         messagingGUI.ottenimentoInfo(messaging);
     }
 
-    public void popupReindirizzamentoCellulare(){
+    public void popupReindirizzamentoCellulare(int id){
         reindirizzamento = new Reindirizzamento(this);
-        reindirizzamento.chiamataCellulare();
-    }
-
-    public void popupReindirizzamentoFisso(){
-        reindirizzamento = new Reindirizzamento(this);
-        reindirizzamento.chiamataFisso();
+        reindirizzamento.chiamataCellulare(id);
     }
 
     public void startingAudio() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {

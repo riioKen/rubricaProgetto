@@ -4,6 +4,7 @@ import Classi.Contatti;
 import ConnessioneDB.Connessione;
 import DAO.ContattoDAO;
 
+import javax.swing.plaf.nimbus.State;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -123,5 +124,25 @@ public class ContattoPostgreSQL implements ContattoDAO {
         while(rsEmailSecondari.next()) {
             emailSecondario.add(rsEmailSecondari.getString("email"));
         }
+    }
+
+    @Override
+    public Contatti estraiCellulareFisso(int id){
+        Contatti contatto = new Contatti();
+        try{
+            conn = Connessione.getInstance().getConnection();
+            String query = "SELECT * FROM NumeroCellulare as c JOIN NumeroFisso as f ON c.idcontatto = f.idcontatto WHERE c.idcontatto = '"+id+"'";
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while(rs.next()){
+                contatto.setCellulare(rs.getString("cellulare"));
+                contatto.setFisso(rs.getString("fisso"));
+            }
+
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return contatto;
     }
 }

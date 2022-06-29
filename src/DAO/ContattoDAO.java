@@ -10,4 +10,5 @@ public interface ContattoDAO {
     ArrayList<Contatti> stampaContatti() throws SQLException;
     Contatti cercaInfoContatti(int id, ArrayList<String> indirizzoSecondario, ArrayList<String> emailSecondario) throws SQLException;
     void eliminaContatto(int id) throws SQLException;
+    public Contatti estraiCellulareFisso(int id);
 }

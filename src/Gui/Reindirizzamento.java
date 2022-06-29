@@ -1,9 +1,13 @@
 package Gui;
 
+import Classi.Contatti;
 import Controller.Controller;
+import DAO.ContattoDAO;
+import ImplementazioniDAO.ContattoPostgreSQL;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.sql.SQLException;
 
 public class Reindirizzamento extends JDialog {
     private JPanel contentPane;
@@ -62,19 +66,28 @@ public class Reindirizzamento extends JDialog {
     }
 
     public void funzionalitaGUI(){
-        pack();
+        setSize(400,200);
         setLocationRelativeTo(control.getHomepage());
     }
 
-    public void chiamataCellulare(){
+    public void chiamataCellulare(int id){
+        try
+        {
+            Icon reindirizza = new ImageIcon("Immagini/imgReindirizza.png");
+            lbArrow.setIcon(reindirizza);
+            ContattoDAO contattoDAO = new ContattoPostgreSQL();
+            Contatti contatto = new Contatti();
+            contatto = contattoDAO.estraiCellulareFisso(id);
+
+
+            lbNumeroCellulare.setText(contatto.getCellulare());
+            lbNumeroFisso.setText(contatto.getFisso());
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
 
 
         setVisible(true);
     }
-
-    public void chiamataFisso(){
-
-        setVisible(true);
-    }
-
 }
