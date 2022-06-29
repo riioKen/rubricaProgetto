@@ -122,7 +122,7 @@ public class RicercaContatti {
     /////////////////////////////////////////////////////       METODI LOGICI     /////////////////////////////////////////////////////
     public void ricercaCampi(ArrayList<Contatti> contattiInfo) throws SQLException {
         risultatoPane.removeAll();
-        ArrayList<Contatti> contattiAppoggio = new ArrayList<>();
+        risultatoPane.setLayout(new GridLayout(0,1));
         int i = 0;
         risultatoPane.removeAll();
 
@@ -136,9 +136,10 @@ public class RicercaContatti {
 
 
         i = 0;
+
         while(i < contattiInfo.size()){
-            JPanel paneLista = new JPanel();
-            paneLista.setLayout(new GridLayout(0, 1));
+            //JPanel paneLista = new JPanel();
+            //paneLista.setLayout(new GridLayout(0, 1));
             JButton btnSchedaContatto = new JButton();
             btnSchedaContatto.setText(contattiInfo.get(i).getNome() +" "+ contattiInfo.get(i).getCognome());//Per il momento mi accontento solo di dargli queste informazioni al JButton
             btnSchedaContatto.setActionCommand(String.valueOf(contattiInfo.get(i).getId()));
@@ -157,14 +158,15 @@ public class RicercaContatti {
                     }
                 }
             });
-            paneLista.add(btnSchedaContatto);
-            risultatoPane.setLayout(new GridLayout(0,1));
-            risultatoPane.add(paneLista);
-
+            //paneLista.add(btnSchedaContatto);
+            risultatoPane.add(btnSchedaContatto);
+            //risultatoPane.setLayout(new GridLayout(0,1));
+            //risultatoPane.add(paneLista);
 
             risultatoPane.validate();
             i++;
         }
+
         ricercaContattiPane.repaint();
         ricercaContattiPane.validate();
         risultatoScroll.revalidate();
