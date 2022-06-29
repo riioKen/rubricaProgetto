@@ -122,13 +122,27 @@ public class RicercaContatti {
     /////////////////////////////////////////////////////       METODI LOGICI     /////////////////////////////////////////////////////
     public void ricercaCampi(ArrayList<Contatti> contattiInfo) throws SQLException {
         risultatoPane.removeAll();
-
+        ArrayList<Contatti> contattiAppoggio = new ArrayList<>();
         int i = 0;
         risultatoPane.removeAll();
+
+        for(i = 0; i < contattiInfo.size(); i++)
+            for(int j = 0; j < contattiInfo.size() && i != j; j++){
+                if((contattiInfo.get(i).getNome().equals(contattiInfo.get(j).getNome()) && (contattiInfo.get(i).getCognome().equals(contattiInfo.get(j).getCognome()))))
+                    contattiInfo.remove(i);
+            }
+
+
+
+
+        i = 0;
         while(i < contattiInfo.size()){
             JPanel paneLista = new JPanel();
             paneLista.setLayout(new GridLayout(0, 1));
             JButton btnSchedaContatto = new JButton();
+            btnSchedaContatto.setMinimumSize(new Dimension(100,100));
+            btnSchedaContatto.setMaximumSize(new Dimension(100,100));
+            btnSchedaContatto.setPreferredSize(new Dimension(100,100));
             btnSchedaContatto.setText(contattiInfo.get(i).getNome() +" "+ contattiInfo.get(i).getCognome());//Per il momento mi accontento solo di dargli queste informazioni al JButton
             btnSchedaContatto.setActionCommand(String.valueOf(contattiInfo.get(i).getId()));
             btnSchedaContatto.addActionListener(new ActionListener() {
