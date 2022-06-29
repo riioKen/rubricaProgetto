@@ -16,6 +16,7 @@ import ImplementazioniDAO.AggiornamentoContattoPostgreSQL;
 import ImplementazioniDAO.ContattoPostgreSQL;
 import ImplementazioniDAO.MessagingPostgreSQL;
 import ImplementazioniDAO.PartecipazionePostgreSQL;
+import org.postgresql.util.PSQLException;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -109,6 +110,7 @@ public class SchedaInfoContatto {
                 } catch (SQLException | UnsupportedAudioFileException | LineUnavailableException | IOException | InterruptedException ex) {
                     ex.printStackTrace();
                 }
+                control.setJScrollPaneNorth();
                 control.switchJPanelInView(control.getHomepage().getPaneBase());
             }
         });
@@ -134,6 +136,7 @@ public class SchedaInfoContatto {
             @Override
             public void mouseClicked(MouseEvent e) {
                 try {
+                    control.setJScrollPaneNorth();
                     control.clickAudio();
                     lbTastoHome.setIcon(imgTastoHome);
                     control.switchJPanelInView(control.getHomepage().getPaneBase());
@@ -182,7 +185,8 @@ public class SchedaInfoContatto {
                         btnImmagineCaricata.setIcon(immagineProfilo);
                         btnImmagineCaricata.setActionCommand(percorsoAssoluto);
                     } catch (Exception b) {
-                        System.out.println("impossibile caricare l'immagine dal disco");
+                        lbMessaggioErrore.setText("impossibile caricare l'immagine dal disco");
+                        control.chiudiNotifica(lbMessaggioErrore);
                     }
                 }
             }
@@ -203,13 +207,15 @@ public class SchedaInfoContatto {
         btnEntraGruppo.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                try {//Aggiustare aggiornamento gruppo e Combobox a seguito di un entrata
+                try {
+
                     control.clickAudio();
                     partecipazioneDAO.entraInGruppo(contatto.getId(), Objects.requireNonNull(cbGruppo.getSelectedItem()).toString());
                     aggiornaGruppi();
 
-                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException | SQLException ex) {
-                    ex.printStackTrace();
+                } catch (Exception ex) {
+                    lbMessaggioErrore.setText("La persona è gia presente nel gruppo");
+                    control.chiudiNotifica(lbMessaggioErrore);
                 }
             }
 
@@ -325,7 +331,8 @@ public class SchedaInfoContatto {
                     control.PopupProviderOttenimentoInfo(messaging);
 
                 } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException | SQLException ex) {
-                    ex.printStackTrace();
+                    lbMessaggioErrore.setText("Il profilo telegram è vuoto");
+                    control.chiudiNotifica(lbMessaggioErrore);
                 }
             }
 
@@ -394,6 +401,7 @@ public class SchedaInfoContatto {
             @Override
             public void mouseClicked(MouseEvent e) {
                 try {
+                    control.popupReindirizzamentoFisso(contatto.getId());
                     control.clickAudio();
                 } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException ex) {
                     ex.printStackTrace();
@@ -430,7 +438,7 @@ public class SchedaInfoContatto {
         contatto.setId(id);
 
 
-        System.out.println(contatto.getId());
+
         contatto = contattoDAO.cercaInfoContatti(id, indirizzoSecondario, emailSecondario);
         partecipazioneDAO.estraiGruppi(contatto.getId(), gruppi);
         getTxtNome().setText(contatto.getNome());

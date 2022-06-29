@@ -92,23 +92,26 @@ public class MessagingGUI extends JDialog {
         txtNickname.setText(messaging.getNickname());
         cbEmail.addItem(messaging.getEmail());
         taFraseBenvenuto.setText(messaging.getMessaggioBenvenuto());
-
-        if(messaging.getProviderMessaggi().equals("WhatsApp")){
-            BufferedImage whatsapp = ImageIO.read(new File("Immagini/imgWA16px.png"));
-            Border border = BorderFactory.createTitledBorder("WhatsApp");
-            contentPane.setBorder(border);
-            setIconImage(whatsapp);
+        try {
+            if (messaging.getProviderMessaggi().equals("WhatsApp")) {
+                BufferedImage whatsapp = ImageIO.read(new File("Immagini/imgWA16px.png"));
+                Border border = BorderFactory.createTitledBorder("WhatsApp");
+                contentPane.setBorder(border);
+                setIconImage(whatsapp);
+            } else {
+                BufferedImage imgTelegram = ImageIO.read(new File("Immagini/imgTelegram16px.png"));
+                Border border = BorderFactory.createTitledBorder("Telegram");
+                contentPane.setBorder(border);
+                setIconImage(imgTelegram);
+            }
+            taFraseBenvenuto.setEditable(false);
+            txtNickname.setEditable(false);
+            setVisible(true);
         }
-        else
-        {
-            BufferedImage imgTelegram = ImageIO.read(new File("Immagini/imgTelegram16px.png"));
-            Border border = BorderFactory.createTitledBorder("Telegram");
-            contentPane.setBorder(border);
-            setIconImage(imgTelegram);
+        catch(Exception e){
+            control.getSchedaInfoContatto().getLbMessaggioErrore().setText("Non esistono account messaging per l'utente");
+            control.chiudiNotifica(control.getSchedaInfoContatto().getLbMessaggioErrore());
         }
-        taFraseBenvenuto.setEditable(false);
-        txtNickname.setEditable(false);
-        setVisible(true);
 
     }
 

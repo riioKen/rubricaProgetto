@@ -51,7 +51,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="854a7" class="javax.swing.JLabel">
+          <component id="854a7" class="javax.swing.JLabel" binding="nCellulare">
             <constraints/>
             <properties>
               <text value="Numero Cellulare"/>
@@ -75,7 +75,7 @@
               <text value=""/>
             </properties>
           </component>
-          <component id="aeabc" class="javax.swing.JLabel">
+          <component id="aeabc" class="javax.swing.JLabel" binding="nFisso">
             <constraints/>
             <properties>
               <text value="Numero Fisso"/>

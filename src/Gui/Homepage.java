@@ -31,6 +31,8 @@ public class Homepage extends JFrame {
     private JButton btnCreaNuovoContatto;
     private JButton btnSwitchTema;
     private JButton btnRicercaContatto;
+    private JPanel borderLayoutBase;
+    private JLabel lbMessaggioErrore;
 
     private Timer timer;
 
@@ -65,13 +67,15 @@ public class Homepage extends JFrame {
             btnCreaNuovoContatto.setFocusPainted(false);
             btnCreaNuovoContatto.setOpaque(true);
         } catch (Exception e) {
-            System.out.println("Icona btnCreaNuovoContattoSCURO non caricata");
+            lbMessaggioErrore.setText("Icona btnCreaNuovoContattoSCURO non caricata");
+            control.chiudiNotifica(lbMessaggioErrore);
         }
         btnCreaNuovoContatto.setFocusable(false);
         btnCreaNuovoContatto.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 try {
+                    control.setJScrollPaneCenter();
                     control.clickAudio();
                     control.switchJPanelInView(control.getCreaContatto().getCreaContatto());
                     JScrollBarListaContatti.setBorder(BorderFactory.createTitledBorder(""));
@@ -119,10 +123,12 @@ public class Homepage extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e){
                 try {
+                    control.setJScrollPaneCenter();
                     control.clickAudio();
                 } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException ex) {
                     ex.printStackTrace();
                 }
+
                 control.switchJPanelInView(control.getRicercaContatti().getRicercaContattiPane());
                 JScrollBarListaContatti.setBorder(BorderFactory.createTitledBorder(""));
             }
@@ -165,6 +171,9 @@ public class Homepage extends JFrame {
                     try {
                         control.clickAudio();
                         control.newSchedaInfoContatto();    //Testing svuotamento dei campi nella scheda contatto
+                        borderLayoutBase.remove(JScrollBarListaContatti);
+                        borderLayoutBase.add(JScrollBarListaContatti, BorderLayout.CENTER);
+                        control.setJScrollPaneCenter();
                         control.getSchedaInfoContatto().riempimentoInfoContatto(Integer.parseInt(e.getActionCommand()));
                         control.switchJPanelInView(control.getSchedaInfoContatto().getSchedaInfoContattoPane());
                         JScrollBarListaContatti.setBorder(BorderFactory.createTitledBorder(""));
@@ -234,14 +243,16 @@ public class Homepage extends JFrame {
             Image imgSwitchTema = ImageIO.read(new File("Immagini/imgTemaScuro.png"));
             btnSwitchTema.setIcon(new ImageIcon(imgSwitchTema));
         } catch (Exception e) {
-            System.out.println("Icona btnTemaScuro non caricata");
+           lbMessaggioErrore.setText("Icona btnTemaScuro non caricata");
+            control.chiudiNotifica(lbMessaggioErrore);
         }
 
         try {
             Image imgCreaNuovoContatto = ImageIO.read(new File("Immagini/imgCreaNuovoContatto24px.png"));
             btnCreaNuovoContatto.setIcon(new ImageIcon(imgCreaNuovoContatto));
         } catch (Exception e) {
-            System.out.println("Icona btnCreaNuovoContatto non caricata");
+            lbMessaggioErrore.setText("Icona btnCreaNuovoContatto non caricata");
+            control.chiudiNotifica(lbMessaggioErrore);
         }
         btnSwitchTema.setFocusable(false);
 
@@ -259,7 +270,8 @@ public class Homepage extends JFrame {
             Image imgSwitchTema = ImageIO.read(new File("Immagini/imgTemaChiaro.png")); //Da settare la dimensione (PRESI DI MISURA GIUSTA COSI DA NON
             btnSwitchTema.setIcon(new ImageIcon(imgSwitchTema));
         } catch (Exception e) {                                                                                //AVERE NECESSITA' PER IL MOMENTO)
-            System.out.println("Icona btnTemaChiaroCHIARO non caricata");
+            lbMessaggioErrore.setText("Icona btnTemaChiaroCHIARO non caricata");
+            control.chiudiNotifica(lbMessaggioErrore);
         }
         btnSwitchTema.setFocusable(false);
 
@@ -268,7 +280,8 @@ public class Homepage extends JFrame {
             Image imgCreaNuovoContatto = ImageIO.read(new File("Immagini/imgCreaNuovoContatto24pxCHIARO.png")); //Da settare la dimensione (PRESI DI MISURA GIUSTA COSI DA NON
             btnCreaNuovoContatto.setIcon(new ImageIcon(imgCreaNuovoContatto));
         } catch (Exception e) {                                                                                //AVERE NECESSITA' PER IL MOMENTO)
-            System.out.println("Icona btnCreaNuovoContattoCHIARO non caricata");
+            lbMessaggioErrore.setText("Icona btnCreaNuovoContattoCHIARO non caricata");
+            control.chiudiNotifica(lbMessaggioErrore);
         }
         btnCreaNuovoContatto.setFocusable(false);
 
@@ -276,6 +289,23 @@ public class Homepage extends JFrame {
     }
 
     //GETTER SETTER
+
+
+    public JButton getBtnRicercaContatto() {
+        return btnRicercaContatto;
+    }
+
+    public void setBtnRicercaContatto(JButton btnRicercaContatto) {
+        this.btnRicercaContatto = btnRicercaContatto;
+    }
+
+    public JPanel getBorderLayoutBase() {
+        return borderLayoutBase;
+    }
+
+    public void setBorderLayoutBase(JPanel borderLayoutBase) {
+        this.borderLayoutBase = borderLayoutBase;
+    }
 
     public static ArrayList<Contatti> getContattiDB() {
         return contattiDB;

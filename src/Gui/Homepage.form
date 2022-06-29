@@ -75,13 +75,13 @@
           </component>
         </children>
       </grid>
-      <grid id="a74a2" layout-manager="BorderLayout" hgap="0" vgap="0">
+      <grid id="a74a2" binding="borderLayoutBase" layout-manager="BorderLayout" hgap="0" vgap="0">
         <constraints border-constraint="Center"/>
         <properties/>
         <border type="none"/>
         <children>
           <scrollpane id="7c568" binding="JScrollBarListaContatti">
-            <constraints border-constraint="Center"/>
+            <constraints border-constraint="North"/>
             <properties>
               <autoscrolls value="false"/>
               <enabled value="true"/>
@@ -98,6 +98,13 @@
               </grid>
             </children>
           </scrollpane>
+          <component id="d0777" class="javax.swing.JLabel" binding="lbMessaggioErrore">
+            <constraints border-constraint="South"/>
+            <properties>
+              <font name="Courier New" size="14" style="3"/>
+              <text value=""/>
+            </properties>
+          </component>
         </children>
       </grid>
     </children>

@@ -37,7 +37,7 @@ public class CreaContatto extends JPanel {
     private JLabel lbEmail;
     private JLabel lbCellulare;
     private JLabel lbFisso;
-    private JLabel lbErroreInserimento;
+    private JLabel lbMessaggioErrore;
     private JLabel imgErroreNome;
     private JLabel imgErroreCognome;
     private JLabel imgErroreFisso;
@@ -120,6 +120,7 @@ public class CreaContatto extends JPanel {
                 } else {
                     try {
                         control.clickAudio();
+                        control.setJScrollPaneNorth();
                         inserimentoContattoDatabase();
 
                     } catch (SQLException | UnsupportedAudioFileException | LineUnavailableException | IOException | InterruptedException ex) {
@@ -154,7 +155,8 @@ public class CreaContatto extends JPanel {
                         btnCaricaImmagine.setIcon(immagineProfilo);
                         btnCaricaImmagine.setActionCommand(percorsoAssoluto);
                     } catch (Exception b) {
-                        System.out.println("impossibile caricare l'immagine dal disco");
+                        lbMessaggioErrore.setText("impossibile caricare l'immagine dal disco");
+                        control.chiudiNotifica(lbMessaggioErrore);
                     }
                 }
             }
@@ -178,8 +180,8 @@ public class CreaContatto extends JPanel {
 
     public void lbErroreInserimento(String codiceErrore){
 
-        lbErroreInserimento.setText(codiceErrore);
-        lbErroreInserimento.setVisible(true);
+        lbMessaggioErrore.setText(codiceErrore);
+        lbMessaggioErrore.setVisible(true);
     }
 
     public void svuotaCampi() {
@@ -213,6 +215,7 @@ public class CreaContatto extends JPanel {
             public void mouseClicked(MouseEvent e) {
 
                 try {
+                    control.setJScrollPaneNorth();
                     control.switchJPanelInView(control.getHomepage().getPaneBase());
                     control.clickAudio();
                     control.getHomepage().stampaContatti();
@@ -270,11 +273,11 @@ public class CreaContatto extends JPanel {
                         aggiuntaTxtFieldIndirizzo();
                     else {
                         lbErroreInserimento("Inserire l'indirizzo secondario precedente");
-                        control.chiudiNotifica(lbErroreInserimento);
+                        control.chiudiNotifica(lbMessaggioErrore);
                     }
                 } else {
                     lbErroreInserimento("Inserire l'indirizzo principale");
-                    control.chiudiNotifica(lbErroreInserimento);
+                    control.chiudiNotifica(lbMessaggioErrore);
                 }
             }
 
@@ -324,12 +327,12 @@ public class CreaContatto extends JPanel {
                         aggiuntaTxtFieldEmail();
                     else {
                         lbErroreInserimento("Inserire email secondario precedente");
-                        control.chiudiNotifica(lbErroreInserimento);
+                        control.chiudiNotifica(lbMessaggioErrore);
                     }
                 }
                 else {
                     lbErroreInserimento("Inserire l'email principale");
-                    control.chiudiNotifica(lbErroreInserimento);
+                    control.chiudiNotifica(lbMessaggioErrore);
                 }
 
             }
@@ -453,7 +456,7 @@ public class CreaContatto extends JPanel {
         jpTxtIndirizzo.add(appoggioIndirizzo);
 
         listaTxtIndirizzo.add(txtPiuIndirizzi);
-        System.out.println(txtPiuIndirizzi.getText());
+
 
         creaContatto.repaint();
         creaContatto.validate();
@@ -498,7 +501,7 @@ public class CreaContatto extends JPanel {
         imgErroreCellulare.setVisible(false);
         imgErroreIndirizzo.setVisible(false);
         imgErroreEmail.setVisible(false);
-        lbErroreInserimento.setVisible(false);
+        lbMessaggioErrore.setVisible(false);
     }
     public void inserimentoContattoDatabase() throws SQLException {
         //CreaContattoDAO creaContattoDAO = new CreaContattoPostgreSQL();
@@ -520,28 +523,34 @@ public class CreaContatto extends JPanel {
         contatto.setIndirizzo(txtIndirizzo.getText());
         contatto.setFoto(btnCaricaImmagine.getActionCommand());
         contatto.setNomeGruppo(Objects.requireNonNull(cbGruppi.getSelectedItem()).toString());
-        System.out.println(contatto.getNomeGruppo());
+
         controlloField();
         if(emailDAO.controlloDuplicatoEmail(contatto.getEmail())){
-            lbErroreInserimento.setVisible(true);
+            lbMessaggioErrore.setVisible(true);
             lbErroreInserimento("Hai inserito un'email duplicata");
         }
         else{
-            int id = contattoDAO.inserimentoContatto(contatto.getNome(), contatto.getCognome(), contatto.getFoto());
-            numeroCellulareDAO.inserisciCellulare(id, contatto.getCellulare());
-            numeroFissoDAO.inserisciFisso(id, contatto.getFisso());
-            int idEmail = emailDAO.inserimentoEmail(id, contatto.getEmail());
-            indirizzoPrincipaleDAO.inserisciIndirizzoPrincipale(id, contatto.getIndirizzo());
-            emailSecondarioDAO.inserisciEmailSecondarie(id, listaTxtEmail);
-            indirizzoSecondarioDAO.inserisciIndirizzoSecondario(id, listaTxtIndirizzo);
-            partecipazioneDAO.entraInGruppo(id, contatto.getNomeGruppo());
-            System.out.println("Stampa dell'id del contatto "+contatto.getId());
-            messagingDAO.inserimentoAccountMessaging(id, idEmail, whatsApp);
-            messagingDAO.inserimentoAccountMessaging(id, idEmail, telegram);
-            svuotaCampi();
-            lbErroreInserimento.setVisible(false);
-            control.getHomepage().stampaContatti();
-            control.switchJPanelInView(control.getHomepage().getPaneBase());
+            try {
+                int id = contattoDAO.inserimentoContatto(contatto.getNome(), contatto.getCognome(), contatto.getFoto());
+                numeroCellulareDAO.inserisciCellulare(id, contatto.getCellulare());
+                numeroFissoDAO.inserisciFisso(id, contatto.getFisso());
+                int idEmail = emailDAO.inserimentoEmail(id, contatto.getEmail());
+                indirizzoPrincipaleDAO.inserisciIndirizzoPrincipale(id, contatto.getIndirizzo());
+                emailSecondarioDAO.inserisciEmailSecondarie(id, listaTxtEmail);
+                indirizzoSecondarioDAO.inserisciIndirizzoSecondario(id, listaTxtIndirizzo);
+                partecipazioneDAO.entraInGruppo(id, contatto.getNomeGruppo());
+
+                messagingDAO.inserimentoAccountMessaging(id, idEmail, whatsApp);
+                messagingDAO.inserimentoAccountMessaging(id, idEmail, telegram);
+                svuotaCampi();
+                lbMessaggioErrore.setVisible(false);
+                control.getHomepage().stampaContatti();
+                control.switchJPanelInView(control.getHomepage().getPaneBase());
+            }
+            catch(Exception e){
+                lbMessaggioErrore.setText("Hai inserito i dati in maniera errata");
+                control.chiudiNotifica(lbMessaggioErrore);
+            }
         }
     }
 
@@ -560,7 +569,8 @@ public class CreaContatto extends JPanel {
             imgErroreEmail.setIcon(imgErrore);
             imgErroreIndirizzo.setIcon(imgErrore);
         }catch(Exception e){
-            System.out.println("Una delle immagini imgErrore in CreaContatto non funziona");
+            lbMessaggioErrore.setText("Una delle immagini imgErrore in CreaContatto non funziona");
+            control.chiudiNotifica(lbMessaggioErrore);
         }
 
         textureTasti();
@@ -574,11 +584,11 @@ public class CreaContatto extends JPanel {
     //GETTER SETTER
 
     public JLabel getLbErroreInserimento() {
-        return lbErroreInserimento;
+        return lbMessaggioErrore;
     }
 
     public void setLbErroreInserimento(JLabel lbErroreInserimento) {
-        this.lbErroreInserimento = lbErroreInserimento;
+        this.lbMessaggioErrore = lbErroreInserimento;
     }
 
     public static ArrayList<Contatti> getInsContattiCopia() {

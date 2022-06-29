@@ -16,6 +16,8 @@ public class Reindirizzamento extends JDialog {
     private JLabel lbArrow;
     private JLabel lbNumeroCellulare;
     private JLabel lbNumeroFisso;
+    private JLabel nFisso;
+    private JLabel nCellulare;
 
     Controller control;
 
@@ -82,6 +84,28 @@ public class Reindirizzamento extends JDialog {
 
             lbNumeroCellulare.setText(contatto.getCellulare());
             lbNumeroFisso.setText(contatto.getFisso());
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+
+
+        setVisible(true);
+    }
+
+    public void chiamataFisso(int id){
+        try
+        {
+            Icon reindirizza = new ImageIcon("Immagini/imgReindirizza.png");
+            lbArrow.setIcon(reindirizza);
+            ContattoDAO contattoDAO = new ContattoPostgreSQL();
+            Contatti contatto = new Contatti();
+            contatto = contattoDAO.estraiCellulareFisso(id);
+
+            nFisso.setText("Numero Cellulare");
+            nCellulare.setText("Numero Fisso");
+            lbNumeroCellulare.setText(" "+contatto.getFisso());
+            lbNumeroFisso.setText(" "+contatto.getCellulare());
         }
         catch(SQLException e){
             e.printStackTrace();

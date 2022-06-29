@@ -60,9 +60,17 @@ public class Controller{
         ricercaContatti = null;
         ricercaContatti = new RicercaContatti(this);
     }
-    public void newHomepage() throws SQLException, IOException {
-        homepage = null;
-        homepage = new Homepage(this);
+    public void setJScrollPaneNorth(){
+        homepage.getBorderLayoutBase().remove(homepage.getJScrollBarListaContatti());
+        homepage.getBorderLayoutBase().add(homepage.getJScrollBarListaContatti(), BorderLayout.NORTH);
+        homepage.getBorderLayoutBase().revalidate();
+        homepage.getBorderLayoutBase().repaint();
+    }
+    public void setJScrollPaneCenter(){
+        homepage.getBorderLayoutBase().remove(homepage.getJScrollBarListaContatti());
+        homepage.getBorderLayoutBase().add(homepage.getJScrollBarListaContatti(), BorderLayout.CENTER);
+        homepage.getBorderLayoutBase().revalidate();
+        homepage.getBorderLayoutBase().repaint();
     }
     public void switchJPanelInView(JPanel accendi){
         homepage.getJScrollBarListaContatti().setViewportView(accendi);
@@ -102,6 +110,10 @@ public class Controller{
     public void popupReindirizzamentoCellulare(int id){
         reindirizzamento = new Reindirizzamento(this);
         reindirizzamento.chiamataCellulare(id);
+    }
+    public void popupReindirizzamentoFisso(int id){
+        reindirizzamento = new Reindirizzamento(this);
+        reindirizzamento.chiamataFisso(id);
     }
 
     public void startingAudio() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {

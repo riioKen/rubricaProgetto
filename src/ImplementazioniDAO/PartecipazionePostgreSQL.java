@@ -19,20 +19,19 @@ public class PartecipazionePostgreSQL implements PartecipazioneDAO {
         }
     }
     @Override
-    public void entraInGruppo(int id, String nomeGruppo) throws SQLException {
+    public void entraInGruppo(int id, String nomeGruppo) {
 
-        if(!nomeGruppo.isEmpty()) {
-            conn = Connessione.getInstance().getConnection();
+        if (!nomeGruppo.isEmpty()) {
             try {
+                conn = Connessione.getInstance().getConnection();
                 PreparedStatement inserisciPersonaInGruppo = conn.prepareStatement("INSERT INTO Partecipazione (idcontatto, nomegruppo) VALUES ('" + id + "','" + nomeGruppo + "');");
                 inserisciPersonaInGruppo.executeUpdate();
-            } catch (
-                    SQLException e) {
+                conn.close();
+            } catch (SQLException e) {
                 System.out.println("ECCEZIONE::Riga 105 Classe CreaContattoPostgreSQL");
                 e.printStackTrace();
-            }
 
-            conn.close();
+            }
         }
 
     }

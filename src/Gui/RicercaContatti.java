@@ -98,6 +98,8 @@ public class RicercaContatti {
             @Override
             public void mouseClicked(MouseEvent e) {
                 try {
+                    control.setJScrollPaneNorth();
+                    control.getHomepage().getJScrollBarListaContatti().setBorder(BorderFactory.createTitledBorder("Lista dei Contatti"));
                     control.clickAudio();
                     control.switchJPanelInView(control.getHomepage().getPaneBase());
                 } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException ex) {
