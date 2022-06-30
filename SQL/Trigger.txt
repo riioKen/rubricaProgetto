@@ -79,6 +79,35 @@ WHERE idcontatto = old.id;
 RETURN old;
 END;
 $$;
+
+CREATE OR REPLACE FUNCTION public.aggiornaemailmessaging()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
+BEGIN
+UPDATE Messaging
+SET email = new.email
+WHERE idcontatto = new.idcontatto;
+END;
+$BODY$;
+
+CREATE OR REPLACE FUNCTION public.eliminamessaging()
+    RETURNS trigger
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE NOT LEAKPROOF
+AS $BODY$
+BEGIN
+
+DELETE
+FROM messaging
+WHERE idemail = old.idemail;
+
+RETURN old;
+END;
+$BODY$;
 ------------------------------------------------------------------
 CREATE TRIGGER controlloAppartenenzaGruppi BEFORE INSERT ON Partecipazione
 FOR EACH ROW
@@ -97,3 +126,9 @@ BEFORE DELETE
 ON Contatto
 FOR EACH ROW
 EXECUTE FUNCTION eliminacontatto();
+
+CREATE TRIGGER eliminamessaging
+    BEFORE DELETE
+    ON public.email
+    FOR EACH ROW
+    EXECUTE FUNCTION public.eliminamessaging();
