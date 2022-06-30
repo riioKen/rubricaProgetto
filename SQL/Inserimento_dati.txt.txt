@@ -1,0 +1,108 @@
+------------------------------Inserimento contatti------------------------------
+INSERT INTO contatto VALUES ('3662186629','Andrea','Punto','0817331920');
+INSERT INTO contatto VALUES ('3670983020','Daniel','Riccio','0813561320');
+INSERT INTO contatto VALUES ('3461259234','Dario','Morace','065528473');
+INSERT INTO contatto VALUES ('3289294772','Domenico','Vitale','0815551644');
+INSERT INTO contatto VALUES ('3692791324','Domenico','Vitiello','0811904520');
+INSERT INTO contatto VALUES ('3501842468','Ernesto','Petroso','0816201749');
+INSERT INTO contatto VALUES ('3472412995','Filippo','Vitale','0815227841');
+INSERT INTO contatto VALUES ('3394361776','Francesco','Rea','0815553920');
+INSERT INTO contatto VALUES ('3991998743','Gabriele','Spadino','0913851824');
+INSERT INTO contatto VALUES ('3493679425','Gennaro','Reale','0112567810');
+INSERT INTO contatto VALUES ('3701703037','Giovanni','Cutolo','0815128030');
+INSERT INTO contatto VALUES ('3881978343','Giovanni','Volpe','0817334667');
+INSERT INTO contatto VALUES ('3288925911','Giuseppe','Conte','0614363154');
+INSERT INTO contatto VALUES ('3612399012','Giuseppe','De Luca','0817145670');
+INSERT INTO contatto VALUES ('3671897828','Giuseppe','Longobardo','0817334579');
+INSERT INTO contatto VALUES ('3335200911','Luca','Rea','0815551357');
+INSERT INTO contatto VALUES ('3328877453','Luciano','De Crescenzio','0812722274');
+INSERT INTO contatto VALUES ('3701809052','Luciano','Spalletti','061456312');
+INSERT INTO contatto VALUES ('3124701345','Luigi','Ruggero','0551348240');
+INSERT INTO contatto VALUES ('3333190235','Marco','Pastore','061709091');
+INSERT INTO contatto VALUES ('3501090237','Martina','Vitale','0812457812');
+INSERT INTO contatto VALUES ('3334910256','Massimiliano','Della Valle','0815551520');
+INSERT INTO contatto VALUES ('3523701527','Mattia','Sapiente','0811890256');
+INSERT INTO contatto VALUES ('3477774227','Michela','Giannetta','0815118890');
+INSERT INTO contatto VALUES ('3347852345','Niccoló','Arno','0556661459');
+INSERT INTO contatto VALUES ('3497890876','Pasquale','Iodice','065558923');
+INSERT INTO contatto VALUES ('3391936816','Raffaela','De Luca Bossa','063415342');
+INSERT INTO contatto VALUES ('3297824032','Riccardo','Rea','0811342017');	
+INSERT INTO contatto VALUES ('3884512000','Sebastiano','Pinto','0817151010');
+INSERT INTO contatto VALUES ('3519962332','Silvia ','Rossi','0812371920');
+INSERT INTO contatto VALUES ('3701709052','Simone','Passariello','061234182');
+INSERT INTO contatto VALUES ('3219351029','Pasquale','Mattarella','0815718923');
+INSERT INTO contatto VALUES ('3908901619','Vincenzo','Sannino','0816251067');
+
+
+------------------------------Inserimento indirizzi------------------------------
+INSERT INTO indirizzo (cellulare, via, civico, cap, citta, nazione) VALUES ('3662186629','Via Degli Astronauti','20','80040','Cercola','Italia');
+INSERT INTO indirizzo (cellulare, via, civico, cap, citta, nazione) VALUES ('3670983020','Via Raffaele Aruta','10','80022','Arzano','Italia');
+INSERT INTO indirizzo (cellulare, via, civico, cap, citta, nazione) VALUES ('3461259234','Via Petrarca','104','00100','Roma','Italia');
+INSERT INTO indirizzo (cellulare, via, civico, cap, citta, nazione) VALUES ('3692791324','Via Delle Palme','101','80011','Acerra','Italia');
+INSERT INTO indirizzo (cellulare, via, civico, cap, citta, nazione) VALUES ('3289294772','Via Degli Alberi','30','80021','Afragola','Italia');
+INSERT INTO indirizzo (cellulare, via, civico, cap, citta, nazione) VALUES ('3501842468','Via Marte','11','80062','Meta','Italia');
+INSERT INTO indirizzo (cellulare, via, civico, cap, citta, nazione) VALUES ('3472412995','Via Lattea','16','80021','Afragola','Italia');
+INSERT INTO indirizzo (cellulare, via, civico, cap, citta, nazione) VALUES ('3394361776','Via Nazionale Delle Puglie','159','80021','Afragola','Italia');
+INSERT INTO indirizzo (cellulare, via, civico, cap, citta, nazione) VALUES ('3991998743','Via Giuseppe Garibaldi','123','95049','Vizzini','Italia');
+INSERT INTO indirizzo (cellulare, via, civico, cap, citta, nazione) VALUES ('3493679425','Via Giuseppe Mazzini','123','13031','Arborio','Italia');
+INSERT INTO indirizzo (cellulare, via, civico, cap, citta, nazione) VALUES ('3881978343','Via Cupa Stretta','143','80040','Cercola','Italia');
+INSERT INTO indirizzo (cellulare, via, civico, cap, citta, nazione) VALUES ('3701703037','Via Delle Ginestre','39','80024','Cardito','Italia');
+INSERT INTO indirizzo (cellulare, via, civico, cap, citta, nazione) VALUES ('3612399012','Via Fiore','59','80055','Portici','Italia');
+INSERT INTO indirizzo (cellulare, via, civico, cap, citta, nazione) VALUES ('3671897828','Via Ernesto Angelo','759','80019','Qualiano','Italia');
+INSERT INTO indirizzo (cellulare, via, civico, cap, citta, nazione) VALUES ('3288925911','Via Manfredi','121','80019','Qualiano','Italia');
+INSERT INTO indirizzo (cellulare, via, civico, cap, citta, nazione) VALUES ('3335200911','Via Cupa Travi','22','80040','Cercola','Italia');
+INSERT INTO indirizzo (cellulare, via, civico, cap, citta, nazione) VALUES ('3328877453','Via Delle Query','722','80040','Cercola','Italia');
+INSERT INTO indirizzo (cellulare, via, civico, cap, citta, nazione) VALUES ('3701809052','Via Pinetina','735','80053','Castellammare','Italia');
+INSERT INTO indirizzo (cellulare, via, civico, cap, citta, nazione) VALUES ('3124701345','Via Continassa','345','80039','Saviano','Italia');
+INSERT INTO indirizzo (cellulare, via, civico, cap, citta, nazione) VALUES ('3333190235','Via Della Guerra','267','80049','Somma Vesuviana','Italia');
+INSERT INTO indirizzo (cellulare, via, civico, cap, citta, nazione) VALUES ('3501090237','Via Della Pace','189','80059','Torre Del Greco','Italia');
+INSERT INTO indirizzo (cellulare, via, civico, cap, citta, nazione) VALUES ('3334910256','Via Italia','289','80034','Marigliano','Italia');
+INSERT INTO indirizzo (cellulare, via, civico, cap, citta, nazione) VALUES ('3523701527','Via Giappone','349','80034','Marigliano','Italia');
+INSERT INTO indirizzo (cellulare, via, civico, cap, citta, nazione) VALUES ('3477774227','Via Delle Feste','549','80020','Crispano','Italia');
+INSERT INTO indirizzo (cellulare, via, civico, cap, citta, nazione) VALUES ('3347852345','Via Matteo Passariello','989','52021','Bucine','Italia');
+INSERT INTO indirizzo (cellulare, via, civico, cap, citta, nazione) VALUES ('3497890876','Via Ernesto Aruta','49','80020','Casavatore','Italia');
+INSERT INTO indirizzo (cellulare, via, civico, cap, citta, nazione) VALUES ('3219351029','Via Eugenio Montale','7','80020','Casavatore','Italia');
+INSERT INTO indirizzo (cellulare, via, civico, cap, citta, nazione) VALUES ('3391936816','Via Milano','777','80070','Bacoli','Italia');
+INSERT INTO indirizzo (cellulare, via, civico, cap, citta, nazione) VALUES ('3297824032','Via Palumbo','666','80070','Bacoli','Italia');
+INSERT INTO indirizzo (cellulare, via, civico, cap, citta, nazione) VALUES ('3884512000','Via Paletta','646','80017','Melito Di Napoli','Italia');
+INSERT INTO indirizzo (cellulare, via, civico, cap, citta, nazione) VALUES ('3519962332','Via Scopetta','623','80018','Mugnano Di Napoli','Italia');
+INSERT INTO indirizzo (cellulare, via, civico, cap, citta, nazione) VALUES ('3701709052','Via Delle Fonti','876','80044','Ottaviano','Italia');
+INSERT INTO indirizzo (cellulare, via, civico, cap, citta, nazione) VALUES ('3908901619','Via Del Pane','999','80035','Palma Campania','Italia');
+
+
+
+
+------------------------------Inserimento mail------------------------------
+INSERT INTO email VALUES ('3662186629',         'Andrea.punto@gmail.com');
+INSERT INTO email VALUES ('3670983020',         'Daniel.riccio@hotmail.com');
+INSERT INTO email VALUES ('3461259234',         'Morace.dario@gmail.com');
+INSERT INTO email VALUES ('3692791324',         'Domenico.vitiello@yahoo.com');
+INSERT INTO email VALUES ('3289294772',         'Domenico.vitale@outlook.com');
+INSERT INTO email VALUES ('3501842468',         'PetrosoErnesto@yahoo.com');
+INSERT INTO email VALUES ('3472412995',         'Fil.vitale@gmail.com');
+INSERT INTO email VALUES ('3394361776',         'Kekkorea@gmail.com');
+INSERT INTO email VALUES ('3991998743',         'Gabriele.spadino@hotmail.com');
+INSERT INTO email VALUES ('3493679425',         'Realgennaro@libero.com');
+INSERT INTO email VALUES ('3881978343',         'Giovolpe@hotmail.com');
+INSERT INTO email VALUES ('3701703037',         'Giovannicutolo@unina.it');
+INSERT INTO email VALUES ('3612399012',         'Delucagius@yahoo.com');
+INSERT INTO email VALUES ('3671897828',         'Gius.longobardo@outlook.it');
+INSERT INTO email VALUES ('3288925911',         'Giuseppe.conte@hotmail.com');
+INSERT INTO email VALUES ('3335200911',         'luca.rea@gmail.it');
+INSERT INTO email VALUES ('3328877453',         'Luc.decrescenzio@gmail.com');
+INSERT INTO email VALUES ('3701809052',         'Spallettiluciano@gmail.com');
+INSERT INTO email VALUES ('3124701345',         'Lu.ruggiero@libero.it');
+INSERT INTO email VALUES ('3333190235',         'Pastoremarco@gmail.com');
+INSERT INTO email VALUES ('3501090237',         'Vitalemartina@gmail.com');
+INSERT INTO email VALUES ('3334910256',         'Mass.della@gmail.com');
+INSERT INTO email VALUES ('3523701527',         'Matti.sapiente@gmail.com');
+INSERT INTO email VALUES ('3477774227',         'Giannettamic@hotmail.com');
+INSERT INTO email VALUES ('3347852345',         'Nik.arno@yahoo.it');
+INSERT INTO email VALUES ('3497890876',         'Pasquale.iodice@gmail.com');
+INSERT INTO email VALUES ('3219351029',         'Pasquale.matt@hotmail.com');
+INSERT INTO email VALUES ('3391936816',         'Raf.del@gmail.com');
+INSERT INTO email VALUES ('3297824032',         'Ricrea@gmail.com');
+INSERT INTO email VALUES ('3884512000',         'Sebpinto@gmail.com');
+INSERT INTO email VALUES ('3519962332',         'Rossi.silvia@unina.it');
+INSERT INTO email VALUES ('3701709052',         'Simone.passariello@outlook.it');
+INSERT INTO email VALUES ('3908901619',         'Sannino.vincenzo@outlook.it');
