@@ -132,3 +132,7 @@ CREATE TRIGGER eliminamessaging
     ON public.email
     FOR EACH ROW
     EXECUTE FUNCTION public.eliminamessaging();
+
+CREATE TRIGGER aggiornaEmailMessaging AFTER UPDATE ON Email
+FOR EACH ROW
+EXECUTE FUNCTION aggiornaEmailMessaging();
