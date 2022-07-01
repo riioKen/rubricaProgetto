@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Arch Linux) (preloaded format=pdflatex 2022.6.2)  1 JUL 2022 10:56
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Arch Linux) (preloaded format=pdflatex 2022.6.2)  1 JUL 2022 11:17
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -231,6 +231,9 @@ Overfull \hbox (27.64238pt too wide) in paragraph at lines 57--118
  []
 
 [5 </home/luca/Documenti/Progetto basi dati/Latex/Ristrutturato.png>]
+Overfull \vbox (0.30267pt too high) has occurred while \output is active []
+
+ [6]
 Overfull \hbox (2.69681pt too wide) in paragraph at lines 122--122
 []|\OT1/cmr/bx/n/10 ASSOCIAZIONE| 
  []
@@ -255,17 +258,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 120--130
 
  []
 
-[6] [7] [8] (./Basi dati.aux) ) 
+[7] [8] (./Basi dati.aux) ) 
 Here is how much of TeX's memory you used:
  2063 strings out of 478238
  34412 string characters out of 5850457
- 340783 words of memory out of 5000000
+ 339783 words of memory out of 5000000
  20312 multiletter control sequences out of 15000+600000
  473514 words of font info for 42 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,9n,62p,255b,187s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb>
-Output written on "Basi dati.pdf" (8 pages, 505674 bytes).
+Output written on "Basi dati.pdf" (8 pages, 505779 bytes).
 PDF statistics:
  63 PDF objects out of 1000 (max. 8388607)
  36 compressed objects within 1 object stream

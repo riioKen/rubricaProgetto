@@ -71,7 +71,7 @@
             Cap\newline
             Città\newline
             Nazione\newline
-            IdContatto: Chiave esterna della classe contatto\newline\\
+            IdContatto: chiave esterna della classe contatto\newline\\
             \hline
             IndirizzoSecondario & Classe che contiene le informazioni sull'indirizzo secondario &
             IdIndirizzo: codice univoco indirizzo\newline
@@ -80,20 +80,20 @@
             Cap\newline
             Città\newline
             Nazione\newline
-            IdContatto: Chiave esterna della classe contatto\newline\\
+            IdContatto: chiave esterna della classe contatto\newline\\
             \hline
             Email & Classe che contiene le informazioni sull' indirizzo email principale di un contatto &
-            IdEmail\newline
+            IdEmail: codice univoco email\newline
             Email\newline
             IdContatto: chiave esterna della classe contatto\\
             \hline
-            NumeroCellulare & Classe cha contiene il numero di cellulare del contatto &
-            IdCellulare\newline
+            NumeroCellulare & Classe che contiene il numero di cellulare del contatto &
+            IdCellulare: codice univoco cellulare\newline
             NumeroCellulare\newline
             IdContatto: chiave esterna di contatto\\
             \hline
             NumeroFisso & Classe che contiene il numero di telefono fisso &
-            IdFisso\newline
+            IdFisso:  codice univoco fisso\newline
             NumeroFisso\newline
             IdContatto: chiave esterna di contatto\\
             \hline
@@ -103,15 +103,15 @@
             MessaggioBenevnuto: piccola frase di benvenuto\newline
             IdContatto\newline
             IdEmail\newline
-            IdAccount\\
+            IdAccount: codice univoco di messaging\\
             \hline
             Gruppo & Classe che contiene informazioni sui gruppi &
-            Nome: il nome del gruppo\newline
+            Nome: codice univoco di gruppo\newline
             NumeroPartecipanti: il numero di partecipanti al gruppo\\
             \hline
             Partecipazione & Classe che contiene informazioni sui contatti nei gruppi &
-            IdContatto\newline
-            NomeGruppo: nome del gruppo\\
+            IdContatto: chiave esterna di contatto\newline
+            NomeGruppo: chiave esterna di gruppo\\
             \hline
     
         \end{tabular}
@@ -128,16 +128,17 @@
         \end{tabular}
     \\ \\ \\
     \section{\LARGE Dizionario dei vincoli}
-    1)Il numero di telefono deve essere obbligatoriamente uguale a 10 cifre\\
-    2)Il numero di telefono fisso deve essere  obbligatoriamente uguale a 10 cifre
+    1)Il numero di telefono cellulare deve essere obbligatoriamente uguale a 10 cifre.\\
+    2)Il numero di telefono fisso deve essere  obbligatoriamente compreso tra 9 e 11 cifre.\\
+    3)Il cap deve essere obbligatoriamente uguale a 5 cifre.
     \section{\LARGE Schema logico}
     Contatto: (\textbf{ID}, Nome, Cognome, Foto);\\
-    Email: (\textbf{IdEmail}, IdContatto, email);\\
+    Email: (\textbf{IdEmail}, IdContatto, Email);\\
     Gruppo: (\textbf{Nome}, NumeroPartecipanti);\\
     Partecipazione: (IdContatto, NomeGruppo);\\
-    NummeroCellulare: (\textbf{IdCellulare}, cellulare, IdContatto);\\
+    NummeroCellulare: (\textbf{IdCellulare}, Cellulare, IdContatto);\\
     NumeroFisso: (\textbf{IdFisso}, Fisso,  IdContatto);\\
-    Messaging: (\textbf{Nickname}, ProviderMessaggi, MessaggioBenevnuto, IdContatto, IdEmail, IdAccount);\\
+    Messaging: (\textbf{IdAccount}, Nickname, ProviderMessaggi, MessaggioBenvenuto, IdContatto, IdEmail);\\
     IndirizzoPrincipale: (\textbf{IdIndirizzo}, Via, Civico, Cap, Città, Nazione, IdContatto);\\
     IndirizzoSecondario: (\textbf{IdIndirizzo}, Via, Civico, Cap, Città, Nazione, IdContatto);
 
@@ -150,9 +151,9 @@
     3)Il trigger "PartecipantiAggiungi" si attiva dopo l'esecuzione di un inserimento
     sulla tabella partecipazione ed esegue la funzione "AumentoPartecipanti()".\\
     4)Il trigger "RimuoviNumeroCellulare" si attiva prima dell'esecuzione di una cancellazione sulla tabella 
-    contatto ed esegue la funzione "EliminaContatto()".
+    contatto ed esegue la funzione "EliminaContatto()".\\
     5)Il trigger "EliminaMessaging" si attiva prima dell'esecuzione di una cancellazione sulla tabella email
-    ed esegue la funzione "EliminaMessaging()".
+    ed esegue la funzione "EliminaMessaging()".\\
     6)Il trigger "AggiornaEmailMessaging" si attiva dopo un aggiornamento sulla tabella email ed esegue la funzione
     "AggiornaEmailMessaging()".
 
@@ -160,14 +161,14 @@
     \section{\LARGE Descrizione functions}
     1)La funzione "RimuoviPartecipanti()" si occupa di decrementare il numero di partecipanti
     attivi nel gruppo.\\
-    2)La funziona "AumentoPartecipanti()" si occupa di aumentare il numero di partecipanti
+    2)La funzione "AumentoPartecipanti()" si occupa di aumentare il numero di partecipanti
     attivi nel gruppo\\
     3)La funzione "ControlloAppartenenzaGruppo()" si occupa di controllare che non ci siano
     contatti duplicati presenti nel gruppo.\\
     4)La funzione "EliminaContatto()" si occupa di eliminare il contatto eliminando prima tutte 
-    le dipendenze alle altre tabelle.
+    le dipendenze alle altre tabelle.\\
     5)La funzione "AggiornaEmailMessaging()" si occupa di aggiornare l'email degli account di messaggistica
-    quando viene modificata nella tabella email.
+    quando viene modificata nella tabella email.\\
     6)La funzione "EliminaMessaging()"  si occupa di eliminare la dipendenza dell'email dalla tabella
     messaging quando viene eliminata un'email principale. 
 
