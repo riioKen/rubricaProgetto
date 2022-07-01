@@ -199,6 +199,8 @@ public class Homepage extends JFrame {
         cardHomepage.setLayout(new CardLayout());
         cardHomepage.add(homepage);
 
+        ImageIcon icon = new ImageIcon("Immagini/imgIcona.png");
+        setIconImage(icon.getImage());
         setTitle("Homepage");
         setContentPane(cardHomepage);
         setSize(600, 600);
