@@ -1711,7 +1711,7 @@
 											"top": 140,
 											"width": 215,
 											"height": 13,
-											"text": "+ProviderMessaggi: String[1]",
+											"text": "+ProviderMessaggi: Fornitore",
 											"horizontalAlignment": 0
 										},
 										{
@@ -3147,6 +3147,219 @@
 							"headQualifiersCompartment": {
 								"$ref": "AAAAAAGBp3iDSLDJPJg="
 							}
+						},
+						{
+							"_type": "UMLClassView",
+							"_id": "AAAAAAGBuPUK973FYeI=",
+							"_parent": {
+								"$ref": "AAAAAAFF+qBtyKM79qY="
+							},
+							"model": {
+								"$ref": "AAAAAAGBuPUK9b3DOMc="
+							},
+							"subViews": [
+								{
+									"_type": "UMLNameCompartmentView",
+									"_id": "AAAAAAGBuPUK973GdFE=",
+									"_parent": {
+										"$ref": "AAAAAAGBuPUK973FYeI="
+									},
+									"model": {
+										"$ref": "AAAAAAGBuPUK9b3DOMc="
+									},
+									"subViews": [
+										{
+											"_type": "LabelView",
+											"_id": "AAAAAAGBuPUK+L3HbK0=",
+											"_parent": {
+												"$ref": "AAAAAAGBuPUK973GdFE="
+											},
+											"font": "Arial;13;0",
+											"left": 213,
+											"top": 109,
+											"width": 143,
+											"height": 13,
+											"text": "«Enum»"
+										},
+										{
+											"_type": "LabelView",
+											"_id": "AAAAAAGBuPUK+L3IWKE=",
+											"_parent": {
+												"$ref": "AAAAAAGBuPUK973GdFE="
+											},
+											"font": "Arial;13;1",
+											"left": 213,
+											"top": 124,
+											"width": 143,
+											"height": 13,
+											"text": "Fornitore"
+										},
+										{
+											"_type": "LabelView",
+											"_id": "AAAAAAGBuPUK+L3Jbf4=",
+											"_parent": {
+												"$ref": "AAAAAAGBuPUK973GdFE="
+											},
+											"visible": false,
+											"font": "Arial;13;0",
+											"left": 256,
+											"top": -160,
+											"width": 73.67724609375,
+											"height": 13,
+											"text": "(from Model)"
+										},
+										{
+											"_type": "LabelView",
+											"_id": "AAAAAAGBuPUK+L3Kxm8=",
+											"_parent": {
+												"$ref": "AAAAAAGBuPUK973GdFE="
+											},
+											"visible": false,
+											"font": "Arial;13;0",
+											"left": 256,
+											"top": -160,
+											"height": 13,
+											"horizontalAlignment": 1
+										}
+									],
+									"font": "Arial;13;0",
+									"left": 208,
+									"top": 104,
+									"width": 153,
+									"height": 38,
+									"stereotypeLabel": {
+										"$ref": "AAAAAAGBuPUK+L3HbK0="
+									},
+									"nameLabel": {
+										"$ref": "AAAAAAGBuPUK+L3IWKE="
+									},
+									"namespaceLabel": {
+										"$ref": "AAAAAAGBuPUK+L3Jbf4="
+									},
+									"propertyLabel": {
+										"$ref": "AAAAAAGBuPUK+L3Kxm8="
+									}
+								},
+								{
+									"_type": "UMLAttributeCompartmentView",
+									"_id": "AAAAAAGBuPUK+L3Lg5k=",
+									"_parent": {
+										"$ref": "AAAAAAGBuPUK973FYeI="
+									},
+									"model": {
+										"$ref": "AAAAAAGBuPUK9b3DOMc="
+									},
+									"subViews": [
+										{
+											"_type": "UMLAttributeView",
+											"_id": "AAAAAAGBuPXDNb+ZzLc=",
+											"_parent": {
+												"$ref": "AAAAAAGBuPUK+L3Lg5k="
+											},
+											"model": {
+												"$ref": "AAAAAAGBuPXDHb+TUUw="
+											},
+											"font": "Arial;13;0",
+											"left": 213,
+											"top": 147,
+											"width": 143,
+											"height": 13,
+											"text": "+WhatsApp",
+											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLAttributeView",
+											"_id": "AAAAAAGBuPXt1L/QTZE=",
+											"_parent": {
+												"$ref": "AAAAAAGBuPUK+L3Lg5k="
+											},
+											"model": {
+												"$ref": "AAAAAAGBuPXtzb/K6s0="
+											},
+											"font": "Arial;13;0",
+											"left": 213,
+											"top": 162,
+											"width": 143,
+											"height": 13,
+											"text": "+Telegram",
+											"horizontalAlignment": 0
+										}
+									],
+									"font": "Arial;13;0",
+									"left": 208,
+									"top": 142,
+									"width": 153,
+									"height": 38
+								},
+								{
+									"_type": "UMLOperationCompartmentView",
+									"_id": "AAAAAAGBuPUK+L3MTo0=",
+									"_parent": {
+										"$ref": "AAAAAAGBuPUK973FYeI="
+									},
+									"model": {
+										"$ref": "AAAAAAGBuPUK9b3DOMc="
+									},
+									"font": "Arial;13;0",
+									"left": 208,
+									"top": 180,
+									"width": 153,
+									"height": 10
+								},
+								{
+									"_type": "UMLReceptionCompartmentView",
+									"_id": "AAAAAAGBuPUK+L3Na9A=",
+									"_parent": {
+										"$ref": "AAAAAAGBuPUK973FYeI="
+									},
+									"model": {
+										"$ref": "AAAAAAGBuPUK9b3DOMc="
+									},
+									"visible": false,
+									"font": "Arial;13;0",
+									"left": 128,
+									"top": -80,
+									"width": 10,
+									"height": 10
+								},
+								{
+									"_type": "UMLTemplateParameterCompartmentView",
+									"_id": "AAAAAAGBuPUK+L3Ou6o=",
+									"_parent": {
+										"$ref": "AAAAAAGBuPUK973FYeI="
+									},
+									"model": {
+										"$ref": "AAAAAAGBuPUK9b3DOMc="
+									},
+									"visible": false,
+									"font": "Arial;13;0",
+									"left": 128,
+									"top": -80,
+									"width": 10,
+									"height": 10
+								}
+							],
+							"font": "Arial;13;0",
+							"containerChangeable": true,
+							"left": 208,
+							"top": 104,
+							"width": 153,
+							"height": 86,
+							"nameCompartment": {
+								"$ref": "AAAAAAGBuPUK973GdFE="
+							},
+							"attributeCompartment": {
+								"$ref": "AAAAAAGBuPUK+L3Lg5k="
+							},
+							"operationCompartment": {
+								"$ref": "AAAAAAGBuPUK+L3MTo0="
+							},
+							"receptionCompartment": {
+								"$ref": "AAAAAAGBuPUK+L3Na9A="
+							},
+							"templateParameterCompartment": {
+								"$ref": "AAAAAAGBuPUK+L3Ou6o="
+							}
 						}
 					]
 				},
@@ -3581,8 +3794,7 @@
 								"$ref": "AAAAAAGBgCwivEzEnIA="
 							},
 							"name": "ProviderMessaggi",
-							"type": "String",
-							"multiplicity": "1"
+							"type": "Fornitore"
 						},
 						{
 							"_type": "UMLAttribute",
@@ -3703,6 +3915,33 @@
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
 					"name": "Reindiriza"
+				},
+				{
+					"_type": "UMLClass",
+					"_id": "AAAAAAGBuPUK9b3DOMc=",
+					"_parent": {
+						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
+					},
+					"name": "Fornitore",
+					"stereotype": "Enum",
+					"attributes": [
+						{
+							"_type": "UMLAttribute",
+							"_id": "AAAAAAGBuPXDHb+TUUw=",
+							"_parent": {
+								"$ref": "AAAAAAGBuPUK9b3DOMc="
+							},
+							"name": "WhatsApp"
+						},
+						{
+							"_type": "UMLAttribute",
+							"_id": "AAAAAAGBuPXtzb/K6s0=",
+							"_parent": {
+								"$ref": "AAAAAAGBuPUK9b3DOMc="
+							},
+							"name": "Telegram"
+						}
+					]
 				}
 			]
 		}
