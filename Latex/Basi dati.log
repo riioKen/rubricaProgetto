@@ -1,0 +1,274 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Arch Linux) (preloaded format=pdflatex 2022.6.2)  1 JUL 2022 10:56
+entering extended mode
+ restricted \write18 enabled.
+ file:line:error style messages enabled.
+ %&-line parsing enabled.
+**"/home/luca/Documenti/Progetto basi dati/Latex/Basi dati.tex"
+(/home/luca/Documenti/Progetto basi dati/Latex/Basi dati.tex
+LaTeX2e <2021-11-15> patch level 1
+L3 programming layer <2022-04-10> (/usr/share/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2021/10/04 v1.4n Standard LaTeX document class
+(/usr/share/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2021/10/04 v1.4n Standard LaTeX file (size option)
+)
+\c@part=\count185
+\c@section=\count186
+\c@subsection=\count187
+\c@subsubsection=\count188
+\c@paragraph=\count189
+\c@subparagraph=\count190
+\c@figure=\count191
+\c@table=\count192
+\abovecaptionskip=\skip47
+\belowcaptionskip=\skip48
+\bibindent=\dimen138
+) (/usr/share/texmf-dist/tex/latex/base/inputenc.sty
+Package: inputenc 2021/02/14 v1.3d Input encoding file
+\inpenc@prehook=\toks16
+\inpenc@posthook=\toks17
+) (/usr/share/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
+ (/usr/share/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks18
+) (/usr/share/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2021/03/04 v1.4d Standard LaTeX Graphics (DPC,SPQR)
+ (/usr/share/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
+) (/usr/share/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 107.
+ (/usr/share/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
+))
+\Gin@req@height=\dimen139
+\Gin@req@width=\dimen140
+) (/usr/share/texmf-dist/tex/latex/tools/tabularx.sty
+Package: tabularx 2020/01/15 v2.11c `tabularx' package (DPC)
+ (/usr/share/texmf-dist/tex/latex/tools/array.sty
+Package: array 2021/10/04 v2.5f Tabular extension package (FMi)
+\col@sep=\dimen141
+\ar@mcellbox=\box50
+\extrarowheight=\dimen142
+\NC@list=\toks19
+\extratabsurround=\skip49
+\backup@length=\skip50
+\ar@cellbox=\box51
+)
+\TX@col@width=\dimen143
+\TX@old@table=\dimen144
+\TX@old@col=\dimen145
+\TX@target=\dimen146
+\TX@delta=\dimen147
+\TX@cols=\count193
+\TX@ftn=\toks20
+) (/usr/share/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
+ (/usr/share/texmf-dist/tex/generic/iftex/ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+ (/usr/share/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2022/02/03 v1.0f TeX engine tests
+))
+\Gm@cnth=\count194
+\Gm@cntv=\count195
+\c@Gm@tempcnt=\count196
+\Gm@bindingoffset=\dimen148
+\Gm@wd@mp=\dimen149
+\Gm@odd@mp=\dimen150
+\Gm@even@mp=\dimen151
+\Gm@layoutwidth=\dimen152
+\Gm@layoutheight=\dimen153
+\Gm@layouthoffset=\dimen154
+\Gm@layoutvoffset=\dimen155
+\Gm@dimlist=\toks21
+) (/usr/share/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+File: l3backend-pdftex.def 2022-04-14 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count197
+\l__pdf_internal_box=\box52
+) (./Basi dati.aux)
+\openout1 = `"Basi dati.aux"'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+ (/usr/share/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count198
+\scratchdimen=\dimen156
+\scratchbox=\box53
+\nofMPsegments=\count199
+\nofMParguments=\count266
+\everyMPshowfont=\toks22
+\MPscratchCnt=\count267
+\MPscratchDim=\dimen157
+\MPnumerator=\count268
+\makeMPintoPDFobject=\count269
+\everyMPtoPDFconversion=\toks23
+) (/usr/share/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
+ (/usr/share/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
+))
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: a4paper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: heightrounded 
+* h-part:(L,W,R)=(71.13188pt, 436.7489pt, 89.62709pt)
+* v-part:(T,H,B)=(101.40665pt, 591.5302pt, 152.11pt)
+* \paperwidth=597.50787pt
+* \paperheight=845.04684pt
+* \textwidth=436.7489pt
+* \textheight=586.0pt
+* \oddsidemargin=-1.1381pt
+* \evensidemargin=-1.1381pt
+* \topmargin=-7.86334pt
+* \headheight=12.0pt
+* \headsep=25.0pt
+* \topskip=10.0pt
+* \footskip=30.0pt
+* \marginparwidth=65.0pt
+* \marginparsep=11.0pt
+* \columnsep=10.0pt
+* \skip\footins=9.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 11.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 11.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 11.
+</home/luca/Documenti/Progetto basi dati/Latex/Foto.png, id=1, 1204.5pt x 1199.48125pt>
+File: /home/luca/Documenti/Progetto basi dati/Latex/Foto.png Graphic file (type png)
+<use /home/luca/Documenti/Progetto basi dati/Latex/Foto.png>
+Package pdftex.def Info: /home/luca/Documenti/Progetto basi dati/Latex/Foto.png  used on input line 14.
+(pdftex.def)             Requested size: 180.6672pt x 179.91443pt.
+[1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} </home/luca/Documenti/Progetto basi dati/Latex/Foto.png>] (./Basi dati.toc)
+\tf@toc=\write3
+\openout3 = `"Basi dati.toc"'.
+
+ [2]
+</home/luca/Documenti/Progetto basi dati/Latex/Non_ristrutturato.png, id=17, 1086.0575pt x 718.685pt>
+File: /home/luca/Documenti/Progetto basi dati/Latex/Non_ristrutturato.png Graphic file (type png)
+<use /home/luca/Documenti/Progetto basi dati/Latex/Non_ristrutturato.png>
+Package pdftex.def Info: /home/luca/Documenti/Progetto basi dati/Latex/Non_ristrutturato.png  used on input line 49.
+(pdftex.def)             Requested size: 543.02742pt x 359.34161pt.
+
+Overfull \hbox (106.27852pt too wide) in paragraph at lines 49--50
+[] 
+ []
+
+[3]
+</home/luca/Documenti/Progetto basi dati/Latex/Ristrutturato.png, id=21, 1099.10625pt x 763.85374pt>
+File: /home/luca/Documenti/Progetto basi dati/Latex/Ristrutturato.png Graphic file (type png)
+<use /home/luca/Documenti/Progetto basi dati/Latex/Ristrutturato.png>
+Package pdftex.def Info: /home/luca/Documenti/Progetto basi dati/Latex/Ristrutturato.png  used on input line 53.
+(pdftex.def)             Requested size: 527.565pt x 366.64563pt.
+
+Overfull \hbox (90.8161pt too wide) in paragraph at lines 53--54
+[] 
+ []
+
+[4 </home/luca/Documenti/Progetto basi dati/Latex/Non_ristrutturato.png>]
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 57.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 57.
+
+Underfull \hbox (badness 2443) in paragraph at lines 61--61
+[]|\OT1/cmr/m/n/10 Classe che con-tiene tutte le in-for-
+ []
+
+
+Underfull \hbox (badness 2181) in paragraph at lines 67--67
+[]|\OT1/cmr/m/n/10 Classe che con-tiene le in-for-mazioni
+ []
+
+
+Underfull \hbox (badness 2181) in paragraph at lines 76--76
+[]|\OT1/cmr/m/n/10 Classe che con-tiene le in-for-mazioni
+ []
+
+
+Underfull \hbox (badness 2443) in paragraph at lines 100--100
+[]|\OT1/cmr/m/n/10 Classe che con-tiene tutte le in-for-
+ []
+
+
+Underfull \hbox (badness 3668) in paragraph at lines 109--111
+\OT1/cmr/m/n/10 NumeroPartecipanti: il nu-mero di
+ []
+
+
+Overfull \hbox (27.64238pt too wide) in paragraph at lines 57--118
+[] 
+ []
+
+[5 </home/luca/Documenti/Progetto basi dati/Latex/Ristrutturato.png>]
+Overfull \hbox (2.69681pt too wide) in paragraph at lines 122--122
+[]|\OT1/cmr/bx/n/10 ASSOCIAZIONE| 
+ []
+
+
+Overfull \hbox (27.64238pt too wide) in paragraph at lines 120--130
+[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 120--130
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 120--130
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 120--130
+
+ []
+
+[6] [7] [8] (./Basi dati.aux) ) 
+Here is how much of TeX's memory you used:
+ 2063 strings out of 478238
+ 34412 string characters out of 5850457
+ 340783 words of memory out of 5000000
+ 20312 multiletter control sequences out of 15000+600000
+ 473514 words of font info for 42 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 55i,9n,62p,255b,187s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb>
+Output written on "Basi dati.pdf" (8 pages, 505674 bytes).
+PDF statistics:
+ 63 PDF objects out of 1000 (max. 8388607)
+ 36 compressed objects within 1 object stream
+ 0 named destinations out of 1000 (max. 500000)
+ 16 words of extra memory for PDF output out of 10000 (max. 10000000)
+

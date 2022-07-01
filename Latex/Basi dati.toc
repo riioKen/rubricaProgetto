@@ -1,0 +1,9 @@
+\contentsline {section}{\numberline {1}\LARGE La traccia}{3}{}%
+\contentsline {section}{\numberline {2}\LARGE Class diagram}{4}{}%
+\contentsline {section}{\numberline {3}\LARGE Class diagram ristrutturato}{5}{}%
+\contentsline {section}{\numberline {4}\LARGE Dizionario delle classi}{6}{}%
+\contentsline {section}{\numberline {5}\LARGE Dizionario delle associazioni}{7}{}%
+\contentsline {section}{\numberline {6}\LARGE Dizionario dei vincoli}{7}{}%
+\contentsline {section}{\numberline {7}\LARGE Schema logico}{7}{}%
+\contentsline {section}{\numberline {8}\LARGE Descrizione dei triggers}{8}{}%
+\contentsline {section}{\numberline {9}\LARGE Descrizione functions}{8}{}%
