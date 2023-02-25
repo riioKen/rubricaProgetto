@@ -1,7 +1,6 @@
 package Gui;
 
-import Classi.Contatti;
-import Classi.Messaging;
+import Model.*;
 import Controller.Controller;
 import DAO.*;
 import ImplementazioniDAO.*;
@@ -63,6 +62,10 @@ public class CreaContatto extends JPanel {
     /////////////////////////////////////////////////////       OGGETTI     /////////////////////////////////////////////////////
     Controller control;
     Contatti contatto;
+    Email email;
+    Indirizzo indirizzo;
+    NumeroCellulare numeroCellulare;
+    NumeroFisso numeroFisso;
     Messaging whatsApp = new Messaging();
     Messaging telegram = new Messaging();
 
@@ -515,27 +518,32 @@ public class CreaContatto extends JPanel {
         PartecipazioneDAO partecipazioneDAO = new PartecipazionePostgreSQL();
         MessagingDAO messagingDAO = new MessagingPostgreSQL();
         contatto = new Contatti();
+        email = new Email();
+        indirizzo = new Indirizzo();
+        numeroCellulare = new NumeroCellulare();
+        numeroFisso = new NumeroFisso();
+
         contatto.setNome(txtNome.getText());
         contatto.setCognome(txtCognome.getText());
-        contatto.setCellulare(txtCellulare.getText());
-        contatto.setFisso(txtFisso.getText());
-        contatto.setEmail(txtEmail.getText());
-        contatto.setIndirizzo(txtIndirizzo.getText());
+        numeroCellulare.setNumeroCellulare(txtCellulare.getText());
+        numeroFisso.setNumeroFisso(txtFisso.getText());
+        email.setEmail(txtEmail.getText());
+        indirizzo.splitIndirizzo(txtIndirizzo.getText());
         contatto.setFoto(btnCaricaImmagine.getActionCommand());
         contatto.setNomeGruppo(Objects.requireNonNull(cbGruppi.getSelectedItem()).toString());
 
         controlloField();
-        if(emailDAO.controlloDuplicatoEmail(contatto.getEmail())){
+        if(emailDAO.controlloDuplicatoEmail(email.getEmail())){
             lbMessaggioErrore.setVisible(true);
             lbErroreInserimento("Hai inserito un'email duplicata");
         }
         else{
             try {
                 int id = contattoDAO.inserimentoContatto(contatto.getNome(), contatto.getCognome(), contatto.getFoto());
-                numeroCellulareDAO.inserisciCellulare(id, contatto.getCellulare());
-                numeroFissoDAO.inserisciFisso(id, contatto.getFisso());
-                int idEmail = emailDAO.inserimentoEmail(id, contatto.getEmail());
-                indirizzoPrincipaleDAO.inserisciIndirizzoPrincipale(id, contatto.getIndirizzo());
+                numeroCellulareDAO.inserisciCellulare(id, numeroCellulare.getNumeroCellulare());
+                numeroFissoDAO.inserisciFisso(id, numeroFisso.getNumeroFisso());
+                int idEmail = emailDAO.inserimentoEmail(id, email.getEmail());
+                indirizzoPrincipaleDAO.inserisciIndirizzoPrincipale(id, indirizzo);
                 emailSecondarioDAO.inserisciEmailSecondarie(id, listaTxtEmail);
                 indirizzoSecondarioDAO.inserisciIndirizzoSecondario(id, listaTxtIndirizzo);
                 partecipazioneDAO.entraInGruppo(id, contatto.getNomeGruppo());
@@ -553,6 +561,7 @@ public class CreaContatto extends JPanel {
             }
         }
     }
+
 
     public void temaScuro() {
 

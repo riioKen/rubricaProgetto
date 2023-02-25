@@ -1,6 +1,6 @@
 package Gui;
 
-import Classi.Messaging;
+import Model.Messaging;
 import Controller.Controller;
 import DAO.MessagingDAO;
 import ImplementazioniDAO.MessagingPostgreSQL;
@@ -8,7 +8,6 @@ import ImplementazioniDAO.MessagingPostgreSQL;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
-import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;

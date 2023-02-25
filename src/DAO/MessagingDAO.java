@@ -1,6 +1,6 @@
 package DAO;
 
-import Classi.Messaging;
+import Model.Messaging;
 
 import java.sql.SQLException;
 

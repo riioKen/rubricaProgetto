@@ -2,9 +2,11 @@ package ImplementazioniDAO;
 
 import ConnessioneDB.Connessione;
 import DAO.NumeroFissoDAO;
+import Model.NumeroFisso;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class NumeroFissoPostgreSQL implements NumeroFissoDAO {
@@ -30,12 +32,27 @@ public class NumeroFissoPostgreSQL implements NumeroFissoDAO {
     }
 
     @Override
-    public void modificaFisso(String id, String fisso) throws SQLException {
+    public void modificaFisso(int id, NumeroFisso fisso, String fissoNew) throws SQLException {
         conn = Connessione.getInstance().getConnection();
-        //String inserisciContatto = "INSERT INTO Contatto(nome, cognome, foto) VALUES ('"+nome+"', '"+cognome+"', '"+foto+"')";
+        String updateFisso = "UPDATE NumeroFisso SET fisso = '"+fissoNew+"' WHERE fisso = '"+fisso.getNumeroFisso()+"'";
 
-        //PreparedStatement st = conn.prepareStatement(inserisciContatto);
-        //st.executeUpdate();
+        PreparedStatement st = conn.prepareStatement(updateFisso);
+        st.executeUpdate();
 
+    }
+
+    @Override
+    public NumeroFisso getFisso(int id) throws SQLException {
+        String getFisso = ("SELECT fisso FROM NumeroFisso WHERE idContatto = "+id+"");
+
+        PreparedStatement st = conn.prepareStatement(getFisso);
+        ResultSet rs = st.executeQuery();
+        NumeroFisso fisso = new NumeroFisso();
+        while (rs.next()){
+            fisso.setNumeroFisso(rs.getString("fisso"));
+        }
+
+        System.out.println(fisso);
+        return fisso;
     }
 }

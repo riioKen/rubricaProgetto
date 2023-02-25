@@ -1,6 +1,6 @@
 package DAO;
 
-import Classi.Contatti;
+import Model.Contatti;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

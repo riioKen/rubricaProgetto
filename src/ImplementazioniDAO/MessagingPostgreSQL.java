@@ -1,6 +1,6 @@
 package ImplementazioniDAO;
 
-import Classi.Messaging;
+import Model.Messaging;
 import ConnessioneDB.Connessione;
 import DAO.MessagingDAO;
 

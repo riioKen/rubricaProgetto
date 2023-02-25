@@ -1,26 +1,19 @@
-package Classi;
+package Model;
 
 public class Contatti {
     //ATTRIBUTI
     private String nome; //Il nome del contatto
     private String cognome; //Il cognome del contatto
     private String foto; //SI INSERISCONO METTENDO DIRETTAMENTE IL PERCORSO DELLA FOTO NEL DATABASE COSI VIENE CARICATA
-    private String email; //L'indirizzo email del contatto
-    private String indirizzo; //L'indirizzo di casa del contatto
-    private String cellulare; //Il numero di celullare del contatto
-    private String fisso; //Il numero di telefono fisso del contatto
     private String nomeGruppo;
     private int id;
 
 
     //COSTRUTTORE
-    public Contatti(String nome, String cognome, String cellulare, String fisso, String indirizzo, String email, int id) {
+    public Contatti(String nome, String cognome, int id) {
         this.nome = nome;
         this.cognome = cognome;
-        this.cellulare = cellulare;
-        this.fisso = fisso;
-        this.email = email;
-        this.indirizzo = indirizzo;
+
         this.id = id;
     }
 
@@ -72,35 +65,14 @@ public class Contatti {
         this.cognome = cognome;
     }
 
-    public String getCellulare() {
-        return cellulare;
-    }
-
-    public void setCellulare(String cellulare) {
-        this.cellulare = cellulare;
-    }
-
-    public String getFisso() {
-        return fisso;
-    }
-
-    public void setFisso(String fisso) {
-        this.fisso = fisso;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getIndirizzo() {
-        return indirizzo;
-    }
-
-    public void setIndirizzo(String indirizzo) {
-        this.indirizzo = indirizzo;
+    @Override
+    public String toString() {
+        return "Contatti{" +
+                "nome='" + nome + '\'' +
+                ", cognome='" + cognome + '\'' +
+                ", foto='" + foto + '\'' +
+                ", nomeGruppo='" + nomeGruppo + '\'' +
+                ", id=" + id +
+                '}';
     }
 }

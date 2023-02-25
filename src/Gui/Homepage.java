@@ -1,6 +1,6 @@
 package Gui;
 
-import Classi.*;
+import Model.*;
 import Controller.*;
 
 import DAO.ContattoDAO;

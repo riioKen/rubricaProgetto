@@ -1,6 +1,6 @@
 package ImplementazioniDAO;
 
-import Classi.Contatti;
+import Model.Contatti;
 import ConnessioneDB.Connessione;
 import DAO.RicercaContattoDAO;
 
@@ -41,15 +41,15 @@ public class RicercaContattoPostgreSQL implements RicercaContattoDAO {
             Contatti contatto = new Contatti();
             contatto.setNome(rs.getString("nome"));
             contatto.setCognome(rs.getString("cognome"));
-            contatto.setCellulare(rs.getString("cellulare"));
-            contatto.setFisso(rs.getString("fisso"));
+//            contatto.setCellulare(rs.getString("cellulare"));
+//            contatto.setFisso(rs.getString("fisso"));
             contatto.setId(rs.getInt("id"));
             String indirizzo = rs.getString("via" );
             String civico = rs.getString("civico");
             String cap = rs.getString("cap");
             String citta = rs.getString("citta");
             String nazione = rs.getString("nazione");
-            contatto.setIndirizzo(indirizzo+", "+civico+", "+cap+", "+citta+", "+nazione);
+//            contatto.setIndirizzo(indirizzo+", "+civico+", "+cap+", "+citta+", "+nazione);
             contattiInfo.add(contatto);
         }
         return contattiInfo;
@@ -70,15 +70,15 @@ public class RicercaContattoPostgreSQL implements RicercaContattoDAO {
             Contatti contatto = new Contatti();
             contatto.setNome(rs.getString("nome"));
             contatto.setCognome(rs.getString("cognome"));
-            contatto.setCellulare(rs.getString("cellulare"));
-            contatto.setFisso(rs.getString("fisso"));
+//            contatto.setCellulare(rs.getString("cellulare"));
+//            contatto.setFisso(rs.getString("fisso"));
             contatto.setId(rs.getInt("id"));
             String indirizzo = rs.getString("via" );
             String civico = rs.getString("civico");
             String cap = rs.getString("cap");
             String citta = rs.getString("citta");
             String nazione = rs.getString("nazione");
-            contatto.setIndirizzo(indirizzo+", "+civico+", "+cap+", "+citta+", "+nazione);
+//            contatto.setIndirizzo(indirizzo+", "+civico+", "+cap+", "+citta+", "+nazione);
             contattiInfo.add(contatto);
         }
         return contattiInfo;

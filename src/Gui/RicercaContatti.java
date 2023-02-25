@@ -1,6 +1,6 @@
 package Gui;
 
-import Classi.Contatti;
+import Model.Contatti;
 import Controller.Controller;
 import DAO.RicercaContattoDAO;
 

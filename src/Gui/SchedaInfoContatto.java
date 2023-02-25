@@ -1,22 +1,13 @@
 package Gui;
 
-import Classi.Contatti;
-import Classi.Messaging;
+import DAO.*;
+import ImplementazioniDAO.*;
+import Model.*;
 import Controller.*;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
-
-import DAO.AggiornamentoContattoDAO;
-import DAO.ContattoDAO;
-import DAO.MessagingDAO;
-import DAO.PartecipazioneDAO;
-import ImplementazioniDAO.AggiornamentoContattoPostgreSQL;
-import ImplementazioniDAO.ContattoPostgreSQL;
-import ImplementazioniDAO.MessagingPostgreSQL;
-import ImplementazioniDAO.PartecipazionePostgreSQL;
-import org.postgresql.util.PSQLException;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -73,16 +64,21 @@ public class SchedaInfoContatto {
     Controller control;
     Messaging messaging = new Messaging();
     Contatti contatto = new Contatti();
+    NumeroFisso numeroFisso = new NumeroFisso();
+    NumeroCellulare numeroCellulare = new NumeroCellulare();
+    ArrayList<String> listaEemailOld = new ArrayList<>();
+    Indirizzo indirizzo = new Indirizzo();
 
 
     ContattoDAO contattoDAO = new ContattoPostgreSQL();
     PartecipazioneDAO partecipazioneDAO = new PartecipazionePostgreSQL();
     MessagingDAO messagingDAO = new MessagingPostgreSQL();
+    IndirizzoSecondarioDAO indirizzoSecondarioDAO = new IndirizzoSecondarioPostgreSQL();
 
-    ArrayList<String> indirizzoSecondario = new ArrayList<>();
+    ArrayList<Indirizzo> indirizzoSecondario = new ArrayList<>();
     ArrayList<String> emailSecondario = new ArrayList<>();
     ArrayList<String> gruppi = new ArrayList<>();
-    ArrayList<String> listaTxtEmail = new ArrayList<>();
+    ArrayList<String> listaTxtEmailNew = new ArrayList<>();
     ArrayList<String> listaTxtIndirizzo = new ArrayList<>();
     JTextField[] arrayEmail;
     JTextField[] arrayIndirizzo;
@@ -437,15 +433,24 @@ public class SchedaInfoContatto {
         cbGruppo.removeAllItems();
         contatto.setId(id);
 
+        NumeroCellulareDAO numeroCellulareDAO = new NumeroCellularePostgreSQL();
+        NumeroFissoDAO numeroFissoDAO = new NumeroFissoPostgreSQL();
+        IndirizzoPrincipaleDAO indirizzoPrincipaleDAO= new IndirizzoPrincipalePostgreSQL();
+        numeroCellulare = numeroCellulareDAO.getCellulare(id);
+        numeroFisso = numeroFissoDAO.getFisso(id);
+        System.out.println(numeroCellulare);
 
 
         contatto = contattoDAO.cercaInfoContatti(id, indirizzoSecondario, emailSecondario);
         partecipazioneDAO.estraiGruppi(contatto.getId(), gruppi);
         getTxtNome().setText(contatto.getNome());
         getTxtCognome().setText(contatto.getCognome());
-        getTxtCellulare().setText(contatto.getCellulare());
-        getTxtFisso().setText(contatto.getFisso());
-        getTxtIndirizzo().setText(contatto.getIndirizzo());
+        getTxtCellulare().setText(numeroCellulare.getNumeroCellulare());
+        getTxtFisso().setText(numeroFisso.getNumeroFisso());
+
+        indirizzo = indirizzoPrincipaleDAO.estraiIndirizzoPrincipale(contatto.getId());
+
+        getTxtIndirizzo().setText(indirizzo.getVia()+", "+ indirizzo.getCivico()+", "+indirizzo.getCap()+", "+ indirizzo.getCitta()+", "+indirizzo.getNazione());
 
         while (i < gruppi.size()) {
             cbGruppo.addItem(gruppi.get(i));
@@ -478,7 +483,7 @@ public class SchedaInfoContatto {
 
     public void aggiornaTxtEmail() {
         for (int i = 0; i < arrayEmail.length; i++)
-            listaTxtEmail.add(arrayEmail[i].getText());
+            listaTxtEmailNew.add(arrayEmail[i].getText());
 
         for (int i = 0; i < arrayIndirizzo.length; i++)
             listaTxtIndirizzo.add(arrayIndirizzo[i].getText());
@@ -508,22 +513,39 @@ public class SchedaInfoContatto {
     //////////////////////////////////////////////////////// COMPLETARE IL METODO DI SOTTO ///////////////////////////////////////////////////////////////////////////////////
     public void aggiornamentoContatto(JTextField[] arrayTxtEmail, JTextField[] arrayTxtIndirizzo) throws SQLException, IOException {
         AggiornamentoContattoDAO aggiornaContatto = new AggiornamentoContattoPostgreSQL();
+        NumeroCellulareDAO numeroCellulareDAO = new NumeroCellularePostgreSQL();
+        NumeroFissoDAO numeroFissoDAO = new NumeroFissoPostgreSQL();
+        IndirizzoPrincipaleDAO indirizzoPrincipaleDAO = new IndirizzoPrincipalePostgreSQL();
         Contatti contatto_new = new Contatti();
+        NumeroFisso numeroFisso_new = new NumeroFisso();
+        NumeroCellulare numeroCellulare_new = new NumeroCellulare();
+        EmailDAO emailDAO = new EmailPostgreSQL();
+        Indirizzo indirizzo_new = new Indirizzo();
+
         try {
             contatto_new.setNome(getTxtNome().getText());
             contatto_new.setCognome(getTxtCognome().getText());
-            contatto_new.setCellulare(getTxtCellulare().getText());
-            contatto_new.setFisso(getTxtFisso().getText());
-            contatto_new.setIndirizzo(getTxtIndirizzo().getText());
-            if (!btnImmagineCaricata.getActionCommand().isEmpty())
+            numeroCellulare_new.setNumeroCellulare(getTxtCellulare().getText());
+            numeroFisso_new.setNumeroFisso(getTxtFisso().getText());
+            indirizzo_new = Indirizzo.splitIndirizzo(getTxtIndirizzo().getText());
+            if (!btnImmagineCaricata.getActionCommand().isEmpty() && !btnImmagineCaricata.getActionCommand().isBlank() && btnImmagineCaricata.getActionCommand() != null) {
                 contatto_new.setFoto(btnImmagineCaricata.getActionCommand());
-            else
+            }
+            else if((contatto.getFoto() != null || !contatto.getFoto().equals("null") || !contatto.getFoto().isEmpty())){
                 contatto_new.setFoto(contatto.getFoto());
+            }
+            else {
+                contatto_new.setFoto("Immagini/imgAggiungiFoto64pxScuro.png");
+            }
 
             aggiornaTxtEmail();
-            aggiornaContatto.aggiornaContatto(contatto, contatto_new, indirizzoSecondario, listaTxtIndirizzo, emailSecondario, listaTxtEmail);
+            aggiornaContatto.aggiornaContatto(contatto, indirizzo, contatto_new, indirizzo_new, indirizzoSecondario, listaTxtIndirizzo);
+            emailDAO.editEmail(listaEemailOld, listaTxtEmailNew);
+            numeroCellulareDAO.modificaCellulare(contatto.getId(), numeroCellulare, numeroCellulare_new.getNumeroCellulare());
+            numeroFissoDAO.modificaFisso(contatto.getId(), numeroFisso, numeroFisso_new.getNumeroFisso());
+            indirizzoPrincipaleDAO.aggiornaIndirizzoPrincipale(contatto.getId(), indirizzo_new);
         } catch (Exception e) {
-            lbMessaggioErrore.setText("Non c'è nulla da aggiornare");
+            lbMessaggioErrore.setText("Dati inseriti errati"); //DA MODIFICARE
             control.chiudiNotifica(lbMessaggioErrore);
         }
     }
@@ -535,6 +557,7 @@ public class SchedaInfoContatto {
             JPanel jpAppoggioPiuEmail = new JPanel();
             jpAppoggioPiuEmail.setLayout(new GridLayout(0, 1));
             arrayEmail[i].setText(emailSecondario.get(i));
+            listaEemailOld.add(emailSecondario.get(i));
             jpAppoggioPiuEmail.add(arrayEmail[i]);
             jpPiuEmail.setLayout(new GridLayout(0, 1));
             jpPiuEmail.add(jpAppoggioPiuEmail);
@@ -548,21 +571,63 @@ public class SchedaInfoContatto {
     }
 
     public JTextField[] aggiuntaIndirizziSecondari() {
+        ImageIcon imgRimuovi = new ImageIcon("Immagini/imgRimuovi16px.png");
+        ImageIcon imgRimuoviGrande = new ImageIcon("Immagini/imgRimuovi24px.png");
 
         JTextField[] arrayIndirizzo = new JTextField[indirizzoSecondario.size()];
         for (int i = 0; i < arrayIndirizzo.length; i++) {
             arrayIndirizzo[i] = new JTextField();
+            JButton jButton = new JButton();
+            jButton.setMargin(new Insets(0, -50, 0, 0));
+            jButton.setSize(new Dimension(24,24));
+            jButton.setContentAreaFilled(false);
+            jButton.setBorderPainted(false);
+            jButton.setBorder(null);
+            jButton.setFocusPainted(false);
+            jButton.setOpaque(true);
+            jButton.setIcon(imgRimuovi);
+            jButton.setActionCommand(String.valueOf(indirizzoSecondario.get(i).getId()));
+            jButton.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    try {
+
+                        indirizzoSecondarioDAO.rimuoviIndirizzoSecondario(Long.parseLong(jButton.getActionCommand()));
+                        control.clickAudio();
+                    } catch (SQLException | UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+                public void mouseEntered(MouseEvent e) {
+                    try {
+                        jButton.setIcon(imgRimuoviGrande);
+                        control.rollOverAudio();
+                    } catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+                public void mouseExited(MouseEvent e) {
+
+                    jButton.setIcon(imgRimuovi);
+
+                }
+            });
+
             JPanel jpAppoggioPiuIndirizzo = new JPanel();
-            jpAppoggioPiuIndirizzo.setLayout(new GridLayout(0, 1));
+            jpAppoggioPiuIndirizzo.setLayout(new GridLayout(0, 2));
             jpAppoggioPiuIndirizzo.add(arrayIndirizzo[i]);
+            jpAppoggioPiuIndirizzo.add(jButton);
             jpPiuIndirizzo.setLayout(new GridLayout(0, 1));
+
             jpPiuIndirizzo.add(jpAppoggioPiuIndirizzo);
-            arrayIndirizzo[i].setText(indirizzoSecondario.get(i));
+            arrayIndirizzo[i].setText(indirizzoSecondario.get(i).getVia() + ", " + indirizzoSecondario.get(i).getCivico() + ", " + indirizzoSecondario.get(i).getCap() + ", " + indirizzoSecondario.get(i).getCitta() + ", " + indirizzoSecondario.get(i).getNazione());
 
             jpPiuIndirizzo.validate();
             jpPiuIndirizzo.repaint();
 
         }
+
+
         return arrayIndirizzo;
     }
 

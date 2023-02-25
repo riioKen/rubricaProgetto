@@ -1,4 +1,4 @@
-package Classi;
+package Model;
 
 
 public class Messaging {
@@ -66,5 +66,16 @@ public class Messaging {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "Messaging{" +
+                "providerMessaggi='" + providerMessaggi + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", email='" + email + '\'' +
+                ", messaggioBenvenuto='" + messaggioBenvenuto + '\'' +
+                ", idcontatto=" + idcontatto +
+                '}';
     }
 }

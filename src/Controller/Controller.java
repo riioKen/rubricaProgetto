@@ -1,6 +1,6 @@
 package Controller;
 
-import Classi.*;
+import Model.*;
 import Gui.*;
 
 import javax.sound.sampled.*;

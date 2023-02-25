@@ -51,4 +51,18 @@ public class IndirizzoSecondarioPostgreSQL implements IndirizzoSecondarioDAO {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void rimuoviIndirizzoSecondario(long id) throws SQLException {
+        conn = Connessione.getInstance().getConnection();
+
+        try{
+            PreparedStatement eliminaIndirizzo = conn.prepareStatement("DELETE FROM IndirizzoSecondario WHERE idindirizzo = '" + id + "'");
+            eliminaIndirizzo.executeUpdate();
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+    }
 }

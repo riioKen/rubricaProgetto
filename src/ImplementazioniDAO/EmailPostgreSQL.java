@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class EmailPostgreSQL implements EmailDAO {
 
@@ -43,5 +44,19 @@ public class EmailPostgreSQL implements EmailDAO {
 
             return rs.getBoolean(1);
 
+    }
+
+    @Override
+    public void editEmail(ArrayList<String> listaEemailOld, ArrayList<String> listaTxtEmailNew) {
+        for (int i = 0; i < listaEemailOld.size(); i++){
+            String updateEmail = "UPDATE Email SET email = '"+listaTxtEmailNew.get(i)+"' WHERE email = '"+listaEemailOld.get(i)+"'";
+
+            try {
+                PreparedStatement st = conn.prepareStatement(updateEmail);
+                st.execute();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
     }
 }

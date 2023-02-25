@@ -1,9 +1,14 @@
 package Gui;
 
-import Classi.Contatti;
+import DAO.NumeroCellulareDAO;
+import DAO.NumeroFissoDAO;
+import ImplementazioniDAO.NumeroCellularePostgreSQL;
+import ImplementazioniDAO.NumeroFissoPostgreSQL;
+import Model.Contatti;
 import Controller.Controller;
 import DAO.ContattoDAO;
 import ImplementazioniDAO.ContattoPostgreSQL;
+import Model.NumeroCellulare;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -79,11 +84,12 @@ public class Reindirizzamento extends JDialog {
             lbArrow.setIcon(reindirizza);
             ContattoDAO contattoDAO = new ContattoPostgreSQL();
             Contatti contatto = new Contatti();
-            contatto = contattoDAO.estraiCellulareFisso(id);
+            NumeroCellulareDAO numeroCellulareDAO = new NumeroCellularePostgreSQL();
+            NumeroFissoDAO numeroFissoDAO = new NumeroFissoPostgreSQL();
 
-
-            lbNumeroCellulare.setText(contatto.getCellulare());
-            lbNumeroFisso.setText(contatto.getFisso());
+            NumeroCellulare numeroCellulare = numeroCellulareDAO.getCellulare(contatto.getId());
+            lbNumeroCellulare.setText(numeroCellulare.getNumeroCellulare());
+            lbNumeroFisso.setText(numeroFissoDAO.getFisso(contatto.getId()).getNumeroFisso());
         }
         catch(SQLException e){
             e.printStackTrace();
@@ -100,12 +106,15 @@ public class Reindirizzamento extends JDialog {
             lbArrow.setIcon(reindirizza);
             ContattoDAO contattoDAO = new ContattoPostgreSQL();
             Contatti contatto = new Contatti();
-            contatto = contattoDAO.estraiCellulareFisso(id);
+
+
+            NumeroCellulareDAO numeroCellulareDAO = new NumeroCellularePostgreSQL();
+            NumeroFissoDAO numeroFissoDAO = new NumeroFissoPostgreSQL();
 
             nFisso.setText("Numero Cellulare");
             nCellulare.setText("Numero Fisso");
-            lbNumeroCellulare.setText(" "+contatto.getFisso());
-            lbNumeroFisso.setText(" "+contatto.getCellulare());
+            lbNumeroCellulare.setText(" "+numeroCellulareDAO.getCellulare(contatto.getId()));
+            lbNumeroFisso.setText(" "+numeroFissoDAO.getFisso(contatto.getId()));
         }
         catch(SQLException e){
             e.printStackTrace();
